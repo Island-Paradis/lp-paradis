@@ -43,6 +43,9 @@ RUN \
   else echo "Lockfile not found." && exit 1; \
   fi
 
+# Ensure public exists (even if empty) so COPY in runner stage doesn't fail
+RUN mkdir -p public
+
 FROM base AS runner
 WORKDIR /app
 
@@ -52,9 +55,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# Only copy public if it exists
-RUN mkdir -p ./public
-COPY --from=builder /app/public ./public || true
+COPY --from=builder /app/public ./public
 
 # Set the correct permission for prerender cache
 RUN mkdir .next
