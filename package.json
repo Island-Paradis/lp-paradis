@@ -2,6 +2,7 @@
   "name": "paradis-landing-page",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -10,13 +11,19 @@
     "format": "biome format --write"
   },
   "dependencies": {
+    "@payloadcms/db-postgres": "^3.75.0",
+    "@payloadcms/next": "^3.75.0",
+    "@payloadcms/richtext-lexical": "^3.75.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "graphql": "^16.12.0",
     "lucide-react": "^0.563.0",
     "next": "16.1.6",
+    "payload": "^3.75.0",
     "radix-ui": "^1.4.3",
     "react": "19.2.3",
     "react-dom": "19.2.3",
+    "sharp": "^0.34.5",
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
