@@ -14,7 +14,7 @@ export default function Home() {
         </div>
         <div className="flex flex-col gap-11 justify-center items-center w-full">
           <div className="items-center text-center max-w-2xl">
-            <h1 className="text-7xl font-bold text-zinc-900 dark:text-zinc-100 text-center text-pretty">
+            <h1 className="text-5xl md:text-7xl font-bold text-zinc-900 dark:text-zinc-100 text-center text-pretty">
               We're building <br />
               <span className="underline decoration-gray-600">
                 something great
@@ -22,7 +22,7 @@ export default function Home() {
             </h1>
           </div>
           <div className="items-center text-center max-w-2xl">
-            <p className="text-xl font-medium text-zinc-600 dark:text-zinc-100">
+            <p className="text-xl font-medium text-zinc-600 dark:text-zinc-100 px-4">
               We’re building something awesome! Our website is under
               construction and will be back shortly with a fresh new look.
             </p>
