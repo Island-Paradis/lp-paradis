@@ -5,7 +5,7 @@ export default function Home() {
     <div className="flex flex-col items-center justify-center gap-20">
       <div className="flex flex-col gap-12">
         <div className="w-full flex items-center justify-center">
-          <div className="flex items-baseline flex-row gap-2 bg-white p-2 px-4 rounded-full backdrop-blur-2xl">
+          <div className="flex items-center flex-row gap-2 bg-white p-2 px-4 rounded-full backdrop-blur-2xl">
             <span className="w-3 h-3 bg-amber-400 rounded-full" />
             <p className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">
               Currently under construction
