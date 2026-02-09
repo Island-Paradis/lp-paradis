@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { gilroy } from "@/fonts/gilroy";
 import "./globals.css";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "Paradis",
@@ -22,6 +23,11 @@ export default function RootLayout({
           </footer>
         </div>
       </body>
+      <Script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1780456850526968"
+        crossOrigin="anonymous"
+      />
     </html>
   );
 }
