@@ -17,6 +17,9 @@ importers:
       '@payloadcms/richtext-lexical':
         specifier: ^3.75.0
         version: 3.75.0(@faceless-ui/modal@3.0.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(@faceless-ui/scroll-info@2.0.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(@payloadcms/next@3.75.0(@types/react@19.2.13)(graphql@16.12.0)(monaco-editor@0.55.1)(next@16.1.6(@babel/core@7.29.0)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.77.4))(payload@3.75.0(graphql@16.12.0)(typescript@5.9.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3))(@types/react@19.2.13)(monaco-editor@0.55.1)(next@16.1.6(@babel/core@7.29.0)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.77.4))(payload@3.75.0(graphql@16.12.0)(typescript@5.9.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3)(yjs@13.6.29)
+      '@payloadcms/translations':
+        specifier: ^3.84.1
+        version: 3.84.1
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -1292,6 +1295,9 @@ packages:
 
   '@payloadcms/translations@3.75.0':
     resolution: {integrity: sha512-WbSf105UVAeanl7zPUcemhIgVM9mR8wF92nmNmic4I5+rDChC99btfvlnQrUEOt/+Y7THSiaQTgL4ytun8xd0w==}
+
+  '@payloadcms/translations@3.84.1':
+    resolution: {integrity: sha512-1g4IsXvRfeQCn8YmPweaj8MMAFK9oSxYWKJG15j+Ah9Nra+f35/ZdOt/k80+vfoJmdKsOK/AnuzVdSTWy2GQpg==}
 
   '@payloadcms/ui@3.75.0':
     resolution: {integrity: sha512-myvQ/WdipF7u9WCioNurMmxLn6PwN5wDrSTPJLBiIUAvgz47o6v/ZXNPpKkRKV9Vy7H0HDtOBXdmSLMZtmX8Qg==}
@@ -5612,6 +5618,10 @@ snapshots:
       - yjs
 
   '@payloadcms/translations@3.75.0':
+    dependencies:
+      date-fns: 4.1.0
+
+  '@payloadcms/translations@3.84.1':
     dependencies:
       date-fns: 4.1.0
 

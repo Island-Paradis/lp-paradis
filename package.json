@@ -14,6 +14,7 @@
     "@payloadcms/db-postgres": "^3.75.0",
     "@payloadcms/next": "^3.75.0",
     "@payloadcms/richtext-lexical": "^3.75.0",
+    "@payloadcms/translations": "^3.84.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "graphql": "^16.12.0",
