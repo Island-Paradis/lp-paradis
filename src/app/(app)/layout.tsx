@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { gilroy } from "@/fonts/gilroy";
+
 
 export const metadata: Metadata = {
   title: "Paradis",
@@ -21,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased ${inter.className}`}>
+      <body className={`antialiased ${inter.className} ${gilroy.className}`}>
         <Header />
         {children}
         <Footer />
