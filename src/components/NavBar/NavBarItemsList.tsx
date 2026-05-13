@@ -12,7 +12,7 @@ export default function NavBarItemsList({
 }: NavBarItemsListProps) {
   return (
     <ul
-      className={twJoin("w-full flex flex-row items-center justify-center gap-2", className)}
+      className={twJoin("w-full flex flex-col lg:flex-row items-center justify-center gap-2", className)}
     >
       {children}
     </ul>

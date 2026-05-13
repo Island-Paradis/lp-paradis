@@ -1,21 +1,40 @@
+"use client";
 import React from "react";
 import { twMerge } from "tailwind-merge";
+import * as Icons from "@solar-icons/react";
 
-export default function Button(
-  props: React.ButtonHTMLAttributes<HTMLButtonElement> & {
-    variant?: "primary" | "outline";
-  },
-) {
+type IconName = keyof typeof Icons;
+
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: "primary" | "outline";
+  children: React.ReactNode;
+  trailingIcon?: IconName;
+}
+
+export default function Button(props: ButtonProps) {
+  const { trailingIcon, variant, className, ...rest } = props;
+
+  const IconComponent = trailingIcon
+    ? (Icons[trailingIcon] as React.ComponentType<any>)
+    : null;
+
   return (
     <button
-      {...props}
+      {...rest}
       className={twMerge(
-        "w-full px-4 py-3 rounded-3xl text-nowrap cursor-pointer transition-colors duration-300",
-        props.variant === "primary"
+        "px-4 py-3 rounded-3xl text-nowrap flex items-center flex-row gap-3 cursor-pointer transition-colors duration-300",
+        variant === "primary"
           ? "bg-primary text-white"
-          : "border border-primary text-primary",
-        props.className,
+          : "border border-secondary text-primary",
+        className,
       )}
-    />
+    >
+      {props.children}
+      {IconComponent && (
+        <div className="icon">
+          <IconComponent />
+        </div>
+      )}
+    </button>
   );
 }

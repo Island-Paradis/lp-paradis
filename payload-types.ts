@@ -750,12 +750,24 @@ export interface Homepage {
     enabled?: boolean | null;
     title?: string | null;
     subtitle?: string | null;
+    primaryCta?: {
+      label?: string | null;
+      url?: string | null;
+    };
     items?: (number | Project)[] | null;
   };
   services?: {
     enabled?: boolean | null;
     title?: string | null;
     subtitle?: string | null;
+    ourServicesCT?: {
+      title?: string | null;
+      description?: string | null;
+    };
+    primaryCta?: {
+      label?: string | null;
+      url?: string | null;
+    };
     items?: (number | Service)[] | null;
   };
   testimonials?: {
@@ -895,6 +907,12 @@ export interface HomepageSelect<T extends boolean = true> {
         enabled?: T;
         title?: T;
         subtitle?: T;
+        primaryCta?:
+          | T
+          | {
+              label?: T;
+              url?: T;
+            };
         items?: T;
       };
   services?:
@@ -903,6 +921,18 @@ export interface HomepageSelect<T extends boolean = true> {
         enabled?: T;
         title?: T;
         subtitle?: T;
+        ourServicesCT?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+            };
+        primaryCta?:
+          | T
+          | {
+              label?: T;
+              url?: T;
+            };
         items?: T;
       };
   testimonials?:

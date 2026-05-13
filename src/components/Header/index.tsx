@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { getPayload } from "payload";
 import config from "@payload-config";
 import type { Media } from "../../../payload-types";
@@ -27,24 +26,26 @@ export default async function Header() {
         width={logoWidth}
         height={logoHeight}
       />
-      <NavBar.ItemList>
-        {menu.links?.map((link) => (
-          <NavBar.Item key={link.id ?? link.url} href={link.url}>
-            {link.label}
-          </NavBar.Item>
-        ))}
-      </NavBar.ItemList>
-      <NavBar.ButtonWrap>
-        {menu.buttons?.map((btn) => (
-          <Button
-            key={btn.id}
-            className="px-5 py-2"
-            variant={btn.variant ?? "primary"}
-          >
-            {btn.label}
-          </Button>
-        ))}
-      </NavBar.ButtonWrap>
+      <NavBar.MobileMenu>
+        <NavBar.ItemList>
+          {menu.links?.map((link) => (
+            <NavBar.Item key={link.id ?? link.url} href={link.url}>
+              {link.label}
+            </NavBar.Item>
+          ))}
+        </NavBar.ItemList>
+        <NavBar.ButtonWrap>
+          {menu.buttons?.map((btn) => (
+            <Button
+              key={btn.id}
+              className="px-5 py-2"
+              variant={btn.variant ?? "primary"}
+            >
+              {btn.label}
+            </Button>
+          ))}
+        </NavBar.ButtonWrap>
+      </NavBar.MobileMenu>
     </NavBar.Root>
   );
 }

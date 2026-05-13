@@ -86,6 +86,24 @@ export const HomePage: GlobalConfig = {
           label: "Section Subtitle",
         },
         {
+          name: "primaryCta",
+          type: "group",
+          label: "Primary CTA",
+          fields: [
+            {
+              name: "label",
+              type: "text",
+              localized: true,
+              label: "Label",
+            },
+            {
+              name: "url",
+              type: "text",
+              label: "URL",
+            },
+          ],
+        },
+        {
           name: "items",
           type: "relationship",
           relationTo: "projects",
@@ -114,6 +132,43 @@ export const HomePage: GlobalConfig = {
           name: "subtitle",
           type: "textarea",
           label: "Section Subtitle",
+        },
+        {
+          name: "ourServicesCT",
+          type: "group",
+          label: "Our Services Container",
+          fields: [
+            {
+              name: "title",
+              type: "text",
+              localized: true,
+              label: "Title",
+            },
+            {
+              name: "description",
+              type: "textarea",
+              localized: true,
+              label: "Description",
+            },
+          ],
+        },
+        {
+          name: "primaryCta",
+          type: "group",
+          label: "Primary CTA",
+          fields: [
+            {
+              name: "label",
+              type: "text",
+              localized: true,
+              label: "Label",
+            },
+            {
+              name: "url",
+              type: "text",
+              label: "URL",
+            },
+          ],
         },
         {
           name: "items",

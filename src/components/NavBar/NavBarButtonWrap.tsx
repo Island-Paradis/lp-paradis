@@ -10,6 +10,6 @@ export default function NavBarButtonWrap({
   className,
 }: NavBarButtonWrapProps) {
   return (
-    <div className={twJoin("flex flex-row gap-3", className)}>{children}</div>
+    <div className={twJoin("flex flex-col gap-3 lg:flex-row", className)}>{children}</div>
   );
 }
