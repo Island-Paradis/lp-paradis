@@ -23,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased ${inter.className} ${gilroy.className}`}>
+      <body className={`antialiased ${inter.className}`}>
         <Header />
         {children}
         <Footer />
