@@ -2,26 +2,18 @@ import Badge from "@/components/Badge";
 import Button from "@/components/Button";
 import Hero from "@/components/Hero";
 import MarqueeServices from "@/components/MarqueeServices";
+import { getHomepagePayload } from "@/service/payload-functions";
 import config from "@payload-config";
 import { getPayload } from "payload";
 
 export default async function Home() {
-  const payload = await getPayload({ config });
-  const { hero, services } = await payload.findGlobal({
-    slug: "homepage",
-    depth: 1,
-    locale: "en",
-  });
+  const { hero, services } = await getHomepagePayload("en");
 
   return (
     <main>
-      {typeof hero?.item === "object" && hero.item && hero.enabled && (
-        <Hero {...hero.item} />
-      )}
-      {Array.isArray(services?.items) && services?.items.length > 0 && (
-        <MarqueeServices
-          services={services.items.filter((item) => typeof item === "object")}
-        />
+      {hero && hero.item && hero.enabled && <Hero {...hero.item} />}
+      {services && services.items && services.items.length > 0 && (
+        <MarqueeServices services={services.items} />
       )}
       <div className="w-full h-full flex flex-col items-center justify-center">
         <section className="container lg:mx-auto px-4 xl:px-0 py-12 flex flex-col gap-5">

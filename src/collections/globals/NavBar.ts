@@ -18,12 +18,14 @@ export const Menu: GlobalConfig = {
         {
           name: "image",
           type: "upload",
+          required: true,
           relationTo: "media",
           label: "Logo Image",
         },
         {
           name: "url",
           type: "text",
+          required: true,
           label: "Logo URL",
           defaultValue: "/",
           admin: {
@@ -33,12 +35,14 @@ export const Menu: GlobalConfig = {
         {
           name: "width",
           type: "number",
+          required: true,
           label: "Width (px)",
           defaultValue: 134,
         },
         {
           name: "height",
           type: "number",
+          required: true,
           label: "Height (px)",
           defaultValue: 25,
         },

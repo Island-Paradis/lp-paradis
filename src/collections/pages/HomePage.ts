@@ -32,6 +32,7 @@ export const HomePage: GlobalConfig = {
     {
       name: "slug",
       type: "text",
+      required: true,
       label: "Page Slug",
       defaultValue: "home",
       admin: {
@@ -58,6 +59,7 @@ export const HomePage: GlobalConfig = {
         {
           name: "item",
           type: "relationship",
+          required: true,
           relationTo: "hero",
           hasMany: false,
           label: "Hero",
@@ -78,11 +80,13 @@ export const HomePage: GlobalConfig = {
         {
           name: "title",
           type: "text",
+          required: true,
           label: "Section Title",
         },
         {
           name: "subtitle",
           type: "textarea",
+          required: true,
           label: "Section Subtitle",
         },
         {
@@ -95,11 +99,13 @@ export const HomePage: GlobalConfig = {
               type: "text",
               localized: true,
               label: "Label",
+              defaultValue: "View Our Work",
             },
             {
               name: "url",
               type: "text",
               label: "URL",
+              defaultValue: "/projects",
             },
           ],
         },
@@ -126,12 +132,16 @@ export const HomePage: GlobalConfig = {
         {
           name: "title",
           type: "text",
+          required: true,
           label: "Section Title",
+          defaultValue: "Our Services",
         },
         {
           name: "subtitle",
           type: "textarea",
+          required: true,
           label: "Section Subtitle",
+          defaultValue: "",
         },
         {
           name: "ourServicesCT",
@@ -143,12 +153,14 @@ export const HomePage: GlobalConfig = {
               type: "text",
               localized: true,
               label: "Title",
+              defaultValue: "What We Offer",
             },
             {
               name: "description",
               type: "textarea",
               localized: true,
               label: "Description",
+              defaultValue: "",
             },
           ],
         },
@@ -160,12 +172,14 @@ export const HomePage: GlobalConfig = {
             {
               name: "label",
               type: "text",
+              required: true,
               localized: true,
               label: "Label",
             },
             {
               name: "url",
               type: "text",
+              required: true,
               label: "URL",
             },
           ],
@@ -194,11 +208,13 @@ export const HomePage: GlobalConfig = {
           name: "title",
           type: "text",
           label: "Section Title",
+          defaultValue: "Testimonials",
         },
         {
           name: "subtitle",
           type: "textarea",
           label: "Section Subtitle",
+          defaultValue: "",
         },
         {
           name: "items",
@@ -224,11 +240,13 @@ export const HomePage: GlobalConfig = {
           name: "title",
           type: "text",
           label: "Section Title",
+          defaultValue: "Frequently Asked Questions",
         },
         {
           name: "subtitle",
           type: "textarea",
           label: "Section Subtitle",
+          defaultValue: "",
         },
         {
           name: "items",

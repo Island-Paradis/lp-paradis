@@ -3,8 +3,10 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { gilroy } from "@/fonts/gilroy";
-
+import {
+  getFooterPayload,
+  getNavBarPayload,
+} from "@/service/payload-functions";
 
 export const metadata: Metadata = {
   title: "Paradis",
@@ -16,17 +18,20 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const headerData = await getNavBarPayload("en");
+  const footerData = await getFooterPayload("en");
+
   return (
     <html lang="en">
       <body className={`antialiased ${inter.className}`}>
-        <Header />
+        <Header {...headerData} />
         {children}
-        <Footer />
+        <Footer {...footerData} />
       </body>
     </html>
   );

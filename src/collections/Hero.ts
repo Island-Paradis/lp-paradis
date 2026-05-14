@@ -31,6 +31,7 @@ export const Hero: CollectionConfig = {
     {
       name: "description",
       type: "textarea",
+      required: true,
       localized: true,
       label: "Description",
     },
@@ -42,6 +43,7 @@ export const Hero: CollectionConfig = {
         {
           name: "label",
           type: "text",
+          required: true,
           localized: true,
           label: "Label",
         },
@@ -49,6 +51,7 @@ export const Hero: CollectionConfig = {
           name: "url",
           type: "text",
           label: "URL",
+          defaultValue: "#",
         },
       ],
     },
@@ -60,6 +63,7 @@ export const Hero: CollectionConfig = {
         {
           name: "label",
           type: "text",
+          required: true,
           localized: true,
           label: "Label",
         },
@@ -67,6 +71,7 @@ export const Hero: CollectionConfig = {
           name: "url",
           type: "text",
           label: "URL",
+          defaultValue: "#",
         },
       ],
     },

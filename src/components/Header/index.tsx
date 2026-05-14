@@ -3,20 +3,17 @@ import config from "@payload-config";
 import type { Media } from "../../../payload-types";
 import Button from "../Button";
 import { NavBar } from "../NavBar";
+import { getNavBarPayload } from "@/service/payload-functions";
+import { PopulatedNavBar } from "@/service/types";
 
-export default async function Header() {
-  const payload = await getPayload({ config });
-  const menu = await payload.findGlobal({
-    slug: "menu",
-    depth: 1,
-    locale: "en",
-  });
+export default async function Header(args:PopulatedNavBar) {
+  
 
-  const logoImage = menu.logo?.image as Media | null | undefined;
+  const logoImage = args.logo?.image as Media | null | undefined;
   const logoSrc = logoImage?.url ?? "/logo.svg";
-  const logoHref = menu.logo?.url ?? "/";
-  const logoWidth = menu.logo?.width ?? 134;
-  const logoHeight = menu.logo?.height ?? 25;
+  const logoHref = args.logo?.url ?? "/";
+  const logoWidth = args.logo?.width ?? 134;
+  const logoHeight = args.logo?.height ?? 25;
 
   return (
     <NavBar.Root>
@@ -28,16 +25,16 @@ export default async function Header() {
       />
       <NavBar.MobileMenu>
         <NavBar.ItemList>
-          {menu.links?.map((link) => (
-            <NavBar.Item key={link.id ?? link.url} href={link.url}>
+          {args.links && args.links.length > 0 && args.links.map((link, index) => (
+            <NavBar.Item key={index} href={link.url}>
               {link.label}
             </NavBar.Item>
           ))}
         </NavBar.ItemList>
         <NavBar.ButtonWrap>
-          {menu.buttons?.map((btn) => (
+          {args.buttons && args.buttons.length > 0 && args.buttons.map((btn, index) => (
             <Button
-              key={btn.id}
+              key={index}
               className="px-5 py-2"
               variant={btn.variant ?? "primary"}
             >

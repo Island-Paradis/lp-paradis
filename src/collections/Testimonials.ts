@@ -24,17 +24,20 @@ export const Testimonials: CollectionConfig = {
     {
       name: "role",
       type: "text",
+      required: true,
       localized: true,
       label: "Role / Position",
     },
     {
       name: "company",
       type: "text",
+      required: true,
       label: "Company",
     },
     {
       name: "avatar",
       type: "upload",
+      required: true,
       relationTo: "media",
       label: "Avatar",
     },
@@ -48,6 +51,7 @@ export const Testimonials: CollectionConfig = {
     {
       name: "rating",
       type: "select",
+      required: true,
       label: "Rating",
       defaultValue: "5",
       options: [
@@ -63,11 +67,6 @@ export const Testimonials: CollectionConfig = {
       type: "checkbox",
       label: "Featured",
       defaultValue: false,
-    },
-    {
-      name: "order",
-      type: "number",
-      label: "Order",
-    },
+    }
   ],
 };

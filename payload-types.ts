@@ -190,13 +190,13 @@ export interface Hero {
   id: number;
   headline: string;
   subheadline?: string | null;
-  description?: string | null;
-  primaryCta?: {
-    label?: string | null;
+  description: string;
+  primaryCta: {
+    label: string;
     url?: string | null;
   };
-  secondaryCta?: {
-    label?: string | null;
+  secondaryCta: {
+    label: string;
     url?: string | null;
   };
   backgroundImage?: (number | null) | Media;
@@ -209,11 +209,11 @@ export interface Hero {
  */
 export interface Contact {
   id: number;
-  sectionTitle?: string | null;
-  sectionSubtitle?: string | null;
-  email?: string | null;
-  phone?: string | null;
-  address?: string | null;
+  sectionTitle: string;
+  sectionSubtitle: string;
+  email: string;
+  phone: string;
+  address: string;
   socialLinks?:
     | {
         platform:
@@ -227,7 +227,7 @@ export interface Contact {
           | 'whatsapp'
           | 'other';
         url: string;
-        label?: string | null;
+        label: string;
         id?: string | null;
       }[]
     | null;
@@ -251,7 +251,7 @@ export interface Project {
    */
   slug: string;
   description: string;
-  coverImage?: (number | null) | Media;
+  coverImage: number | Media;
   tags?:
     | {
         tag: string;
@@ -261,16 +261,12 @@ export interface Project {
   /**
    * External link to the live project
    */
-  url?: string | null;
+  url: string;
   githubUrl?: string | null;
   /**
    * Show this project in the featured section
    */
   featured?: boolean | null;
-  /**
-   * Display order (lower numbers appear first)
-   */
-  order?: number | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -286,13 +282,13 @@ export interface Service {
    */
   slug: string;
   /**
-   * Lucide icon name (e.g. 'code', 'server', 'globe')
+   * Solar icon name (e.g. 'code', 'server', 'globe')
    */
   icon?: string | null;
   /**
    * Brief description shown on the services card
    */
-  shortDescription: string;
+  shortDescription?: string | null;
   description?: {
     root: {
       type: string;
@@ -318,10 +314,6 @@ export interface Service {
       }[]
     | null;
   coverImage?: (number | null) | Media;
-  /**
-   * Display order (lower numbers appear first)
-   */
-  order?: number | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -332,13 +324,12 @@ export interface Service {
 export interface Testimonial {
   id: number;
   authorName: string;
-  role?: string | null;
-  company?: string | null;
-  avatar?: (number | null) | Media;
+  role: string;
+  company: string;
+  avatar: number | Media;
   quote: string;
-  rating?: ('1' | '2' | '3' | '4' | '5') | null;
+  rating: '1' | '2' | '3' | '4' | '5';
   featured?: boolean | null;
-  order?: number | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -364,11 +355,11 @@ export interface Faq {
     };
     [k: string]: unknown;
   };
-  category?: ('general' | 'services' | 'pricing' | 'technical' | 'support') | null;
+  category: 'general' | 'services' | 'pricing' | 'technical' | 'support';
   /**
    * Display order (lower numbers appear first)
    */
-  order?: number | null;
+  order: number;
   updatedAt: string;
   createdAt: string;
 }
@@ -612,7 +603,6 @@ export interface ProjectsSelect<T extends boolean = true> {
   url?: T;
   githubUrl?: T;
   featured?: T;
-  order?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -633,7 +623,6 @@ export interface ServicesSelect<T extends boolean = true> {
         id?: T;
       };
   coverImage?: T;
-  order?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -649,7 +638,6 @@ export interface TestimonialsSelect<T extends boolean = true> {
   quote?: T;
   rating?: T;
   featured?: T;
-  order?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -740,33 +728,33 @@ export interface Homepage {
   /**
    * Identifier for this page setup.
    */
-  slug?: string | null;
+  slug: string;
   showNavbar?: boolean | null;
-  hero?: {
+  hero: {
     enabled?: boolean | null;
-    item?: (number | null) | Hero;
+    item: number | Hero;
   };
-  projects?: {
+  projects: {
     enabled?: boolean | null;
-    title?: string | null;
-    subtitle?: string | null;
+    title: string;
+    subtitle: string;
     primaryCta?: {
       label?: string | null;
       url?: string | null;
     };
     items?: (number | Project)[] | null;
   };
-  services?: {
+  services: {
     enabled?: boolean | null;
-    title?: string | null;
-    subtitle?: string | null;
+    title: string;
+    subtitle: string;
     ourServicesCT?: {
       title?: string | null;
       description?: string | null;
     };
-    primaryCta?: {
-      label?: string | null;
-      url?: string | null;
+    primaryCta: {
+      label: string;
+      url: string;
     };
     items?: (number | Service)[] | null;
   };
@@ -795,14 +783,14 @@ export interface Homepage {
  */
 export interface Menu {
   id: number;
-  logo?: {
-    image?: (number | null) | Media;
+  logo: {
+    image: number | Media;
     /**
      * Where the logo links to
      */
-    url?: string | null;
-    width?: number | null;
-    height?: number | null;
+    url: string;
+    width: number;
+    height: number;
   };
   /**
    * Navigation links shown in the navbar

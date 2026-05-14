@@ -54,14 +54,14 @@ export const Services: CollectionConfig = {
       name: "icon",
       type: "text",
       label: "Icon",
+      defaultValue: "code",
       admin: {
-        description: "Lucide icon name (e.g. 'code', 'server', 'globe')",
+        description: "Solar icon name (e.g. 'code', 'server', 'globe')",
       },
     },
     {
       name: "shortDescription",
       type: "textarea",
-      required: true,
       localized: true,
       label: "Short Description",
       admin: {
@@ -96,14 +96,6 @@ export const Services: CollectionConfig = {
       type: "upload",
       relationTo: "media",
       label: "Cover Image",
-    },
-    {
-      name: "order",
-      type: "number",
-      label: "Order",
-      admin: {
-        description: "Display order (lower numbers appear first)",
-      },
-    },
+    }
   ],
 };

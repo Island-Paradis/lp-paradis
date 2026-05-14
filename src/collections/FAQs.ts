@@ -32,6 +32,7 @@ export const FAQs: CollectionConfig = {
     {
       name: "category",
       type: "select",
+      required: true,
       label: "Category",
       options: [
         { label: "General", value: "general" },
@@ -45,6 +46,7 @@ export const FAQs: CollectionConfig = {
     {
       name: "order",
       type: "number",
+      required: true,
       label: "Order",
       admin: {
         description: "Display order (lower numbers appear first)",

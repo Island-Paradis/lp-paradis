@@ -2,8 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import Button from "../Button";
+import { PopulatedFooter } from "@/service/types";
 
-export default function Footer() {
+export default function Footer(args: PopulatedFooter) {
   const quickLinks = [
     { name: "Home", href: "/" },
     { name: "Products", href: "/products" },
@@ -44,70 +45,42 @@ export default function Footer() {
       <div className="container py-16 flex flex-col gap-10">
         <div className="flex flex-col gap-2">
           <Image
-            src="/logo-white.svg"
-            alt="Paradis Logo"
+            src={args.logo?.url ?? "/logo-white.svg"}
+            alt={args.logo?.alt ?? "Paradis Logo"}
             width={163}
             height={31}
           />
           <span className="block text-xs font-normal text-white/80">
-            Because we were born into this world
+            {args.tagline ?? "Because we were born into this world"}
           </span>
         </div>
         <div className="w-full flex flex-row gap-10">
           <div className="w-full grid grid-cols-8 gap-6">
-            <div className="col-span-2 flex flex-col gap-3">
-              <span className="text-white/70 font-medium text-sm">
-                Quick Links
-              </span>
-              <ul className="flex flex-col gap-2">
-                {quickLinks.map((link) => (
-                  <li key={link.name}>
-                    <Link
-                      href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center text-sm font-normal text-white"
-                    >
-                      {link.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="col-span-2 flex flex-col gap-3">
-              <span className="text-white/70 font-medium text-sm">Company</span>
-              <ul className="flex flex-col gap-2">
-                {companyLinks.map((link) => (
-                  <li key={link.name}>
-                    <Link
-                      href={link.href}
-                      className="flex items-center text-sm font-normal text-white"
-                    >
-                      {link.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="col-span-2 flex flex-col gap-3">
-              <span className="text-white/70 font-medium text-sm">
-                Products
-              </span>
-              <ul className="flex flex-col gap-2">
-                {productLinks.map((link) => (
-                  <li key={link.name}>
-                    <Link
-                      href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center text-sm font-normal text-white"
-                    >
-                      {link.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {args.linkGroups &&
+              args.linkGroups.length > 0 &&
+              args.linkGroups.map((group, index) => (
+                <div className="col-span-2 flex flex-col gap-3" key={index}>
+                  <span className="text-white/70 font-medium text-sm">
+                    {group.title}
+                  </span>
+                  <ul className="flex flex-col gap-2">
+                    {group.links &&
+                      group.links.length > 0 &&
+                      group.links.map((link) => (
+                        <li key={link.name}>
+                          <Link
+                            href={link.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center text-sm font-normal text-white"
+                          >
+                            {link.name}
+                          </Link>
+                        </li>
+                      ))}
+                  </ul>
+                </div>
+              ))}
           </div>
           <div className="flex flex-col gap-4">
             <span className="text-white font-medium text-lg">

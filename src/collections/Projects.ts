@@ -61,7 +61,7 @@ export const Projects: CollectionConfig = {
       name: "coverImage",
       type: "upload",
       relationTo: "media",
-      required: false,
+      required: true,
       label: "Cover Image",
     },
     {
@@ -81,6 +81,7 @@ export const Projects: CollectionConfig = {
     {
       name: "url",
       type: "text",
+      required: true,
       label: "Project URL",
       admin: {
         description: "External link to the live project",
@@ -98,14 +99,6 @@ export const Projects: CollectionConfig = {
       defaultValue: false,
       admin: {
         description: "Show this project in the featured section",
-      },
-    },
-    {
-      name: "order",
-      type: "number",
-      label: "Order",
-      admin: {
-        description: "Display order (lower numbers appear first)",
       },
     },
   ],

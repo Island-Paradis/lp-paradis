@@ -16,28 +16,33 @@ export const Contact: CollectionConfig = {
     {
       name: "sectionTitle",
       type: "text",
+      required: true,
       localized: true,
       label: "Section Title",
     },
     {
       name: "sectionSubtitle",
       type: "textarea",
+      required: true,
       localized: true,
       label: "Section Subtitle",
     },
     {
       name: "email",
       type: "email",
+      required: true,
       label: "Email Address",
     },
     {
       name: "phone",
       type: "text",
+      required: true,
       label: "Phone Number",
     },
     {
       name: "address",
       type: "textarea",
+      required: true,
       localized: true,
       label: "Address",
     },
@@ -72,6 +77,7 @@ export const Contact: CollectionConfig = {
         {
           name: "label",
           type: "text",
+          required: true,
           localized: true,
           label: "Display Label",
         },
@@ -86,6 +92,7 @@ export const Contact: CollectionConfig = {
     {
       name: "formRecipientEmail",
       type: "email",
+      required: true,
       label: "Form Recipient Email",
       admin: {
         description: "Email address that receives form submissions",

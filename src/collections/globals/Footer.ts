@@ -21,6 +21,7 @@ export const Footer: GlobalConfig = {
       type: "text",
       localized: true,
       label: "Tagline",
+      defaultValue: "",
       admin: {
         description: "Short phrase shown below the logo",
       },
@@ -81,6 +82,7 @@ export const Footer: GlobalConfig = {
           type: "text",
           localized: true,
           label: "Heading",
+          defaultValue: "",
         },
         {
           name: "primaryButton",
@@ -93,6 +95,7 @@ export const Footer: GlobalConfig = {
               required: true,
               localized: true,
               label: "Label",
+              defaultValue: "Contact Us",
             },
             {
               name: "href",
@@ -129,6 +132,7 @@ export const Footer: GlobalConfig = {
       type: "text",
       localized: true,
       label: "Copyright Text",
+      defaultValue: "Paradis.Labs - All rights reserved.",
       admin: {
         description: "Text shown in the bottom bar (e.g. 'Paradis.Labs - All rights reserved.')",
       },
