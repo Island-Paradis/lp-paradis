@@ -76,6 +76,7 @@ export default buildConfig({
         endpoint: process.env.S3_ENDPOINT || "",
         forcePathStyle: true,
         maxAttempts: 3,
+        retryMode: "adaptive",
       },
     }),
   ],
