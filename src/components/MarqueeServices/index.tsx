@@ -5,7 +5,7 @@ import { LightbulbMinimalistic } from "@solar-icons/react";
 
 export default function MarqueeServices(args: { services: Service[] }) {
   return (
-    <div className="relative flex w-full flex-col items-center justify-center overflow-hidden py-7">
+    <div className="relative flex w-full flex-col items-center justify-center overflow-hidden py-7 border-b">
       <Marquee pauseOnHover className="[--duration:20s]">
         {args.services.map((service) => (
           <div

@@ -16,7 +16,7 @@ export default async function Home() {
         <MarqueeServices services={services.items} />
       )}
       <div className="w-full h-full flex flex-col items-center justify-center">
-        <section className="container lg:mx-auto px-4 xl:px-0 py-12 flex flex-col gap-5">
+        <section className="container lg:mx-auto px-4 xl:px-0 py-12 flex flex-col gap-5 leading-8">
           <div className="flex flex-col">
             <div className="w-full max-w-xl flex flex-col items-center justify-center gap-6">
               <span>
