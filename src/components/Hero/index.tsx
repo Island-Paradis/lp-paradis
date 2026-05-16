@@ -22,7 +22,7 @@ export default function Hero(args: HeroProps) {
       />
       <div className="relative z-10 text-center bg-background/90 p-10 rounded-xl">
         <div className="mx-auto max-w-4xl py-20 flex flex-col items-center gap-8">
-          <h1 className="font-gilroy text-6xl font-bold tracking-tight bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent leading-20">
+          <h1 className="font-gilroy text-6xl font-bold tracking-tight bg-linear-to-r from-[#151718] to-[#6E797E] bg-clip-text text-transparent leading-20">
             {args.headline}
           </h1>
           <span className="max-w-lg">
