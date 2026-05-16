@@ -1,0 +1,23 @@
+# Dependencies – installed fresh inside the container
+node_modules
+
+# Next.js build output
+.next
+
+# Git metadata
+.git
+.gitignore
+
+# Local env files – pass secrets via Coolify environment variables
+.env
+.env.*
+!.env.example
+
+# Development / editor files
+.vscode
+.idea
+*.log
+npm-debug.log*
+
+# macOS
+.DS_Store
