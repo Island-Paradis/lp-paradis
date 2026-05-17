@@ -35,7 +35,7 @@ export default buildConfig({
       { label: "Português", code: "pt" },
       { label: "English", code: "en" },
     ],
-    defaultLocale: "pt",
+    defaultLocale: "en",
     fallback: true,
   },
 

@@ -2,6 +2,7 @@
 import React from "react";
 import { twMerge } from "tailwind-merge";
 import * as Icons from "@solar-icons/react";
+import { IconProps } from "@solar-icons/react";
 
 type IconName = keyof typeof Icons;
 
@@ -9,6 +10,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "outline";
   children: React.ReactNode;
   trailingIcon?: IconName;
+  iconProps?: IconProps;
 }
 
 export default function Button(props: ButtonProps) {
@@ -32,7 +34,7 @@ export default function Button(props: ButtonProps) {
       {props.children}
       {IconComponent && (
         <div className="icon">
-          <IconComponent />
+          <IconComponent {...props.iconProps} />
         </div>
       )}
     </button>

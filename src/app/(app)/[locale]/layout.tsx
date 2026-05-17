@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import {
@@ -20,14 +20,18 @@ const inter = Inter({
 
 export default async function RootLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<{ locale: string }>;
 }>) {
-  const headerData = await getNavBarPayload("en");
-  const footerData = await getFooterPayload("en");
+  const { locale } = (await params) as { locale: "en" | "pt" };
+
+  const headerData = await getNavBarPayload(locale);
+  const footerData = await getFooterPayload(locale);
 
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body className={`antialiased ${inter.className}`}>
         <Header {...headerData} />
         {children}
