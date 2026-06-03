@@ -42,7 +42,7 @@ export default function Footer(args: PopulatedFooter) {
 
   return (
     <footer className="w-full flex flex-col justify-center items-center bg-primary text-white">
-      <div className="container py-16 flex flex-col gap-10">
+      <div className="container py-16 flex flex-col gap-10 px-4 xl:px-0">
         <div className="flex flex-col gap-2">
           <Image
             src={args.logo?.url ?? "/logo-white.svg"}
@@ -55,7 +55,7 @@ export default function Footer(args: PopulatedFooter) {
           </span>
         </div>
         <div className="w-full flex flex-row gap-10">
-          <div className="w-full grid grid-cols-8 gap-6">
+          <div className="w-full sm:grid sm:grid-cols-8 gap-6 flex flex-col">
             {args.linkGroups &&
               args.linkGroups.length > 0 &&
               args.linkGroups.map((group, index) => (
@@ -104,7 +104,7 @@ export default function Footer(args: PopulatedFooter) {
         </div>
       </div>
       <div className="w-full flex justify-center items-center border-t border-white/20">
-        <div className="container py-8 text-sm font-normal">
+        <div className="container py-8 text-sm font-normal px-4 xl:px-0">
           &copy; {new Date().getFullYear()} Paradis.Labs - All rights reserved.
         </div>
       </div>

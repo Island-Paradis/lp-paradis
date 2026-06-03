@@ -162,6 +162,12 @@ export const HomePage: GlobalConfig = {
               label: "Description",
               defaultValue: "",
             },
+            {
+              name: "backgroundVideo",
+              type: "upload",
+              relationTo: "media",
+              label: "Background Video",
+            },
           ],
         },
         {

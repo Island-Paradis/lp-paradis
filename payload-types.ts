@@ -751,6 +751,7 @@ export interface Homepage {
     ourServicesCT?: {
       title?: string | null;
       description?: string | null;
+      backgroundVideo?: (number | null) | Media;
     };
     primaryCta: {
       label: string;
@@ -914,6 +915,7 @@ export interface HomepageSelect<T extends boolean = true> {
           | {
               title?: T;
               description?: T;
+              backgroundVideo?: T;
             };
         primaryCta?:
           | T
