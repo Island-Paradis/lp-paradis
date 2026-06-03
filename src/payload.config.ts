@@ -2,6 +2,7 @@ import sharp from "sharp";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { postgresAdapter } from "@payloadcms/db-postgres";
 import { s3Storage } from "@payloadcms/storage-s3";
+import { ConfiguredRetryStrategy } from "@smithy/util-retry";
 import { buildConfig } from "payload";
 import { en } from "@payloadcms/translations/languages/en";
 import { pt } from "@payloadcms/translations/languages/pt";
@@ -68,15 +69,17 @@ export default buildConfig({
       },
       bucket: process.env.S3_BUCKET || "",
       config: {
-        credentials: {
-          accessKeyId: process.env.S3_ACCESS_KEY_ID || "",
-          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || "",
-        },
+        credentials: async () => ({
+          accessKeyId: process.env.S3_ACCESS_KEY_ID ?? "",
+          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY ?? "",
+        }),
         region: process.env.S3_REGION || "",
         endpoint: process.env.S3_ENDPOINT || "",
         forcePathStyle: true,
-        maxAttempts: 3,
-        retryMode: "adaptive",
+        retryStrategy: new ConfiguredRetryStrategy(
+          5,
+          (attempt: number) => 200 + attempt * 300,
+        ),
       },
     }),
   ],
