@@ -1,16 +1,9 @@
-import { getPayload } from "payload";
-import config from "@payload-config";
-import type { Media } from "../../../payload-types";
+import type { PopulatedNavBar } from "@/service/types";
 import Button from "../Button";
 import { NavBar } from "../NavBar";
-import { getNavBarPayload } from "@/service/payload-functions";
-import { PopulatedNavBar } from "@/service/types";
 
-export default async function Header(args:PopulatedNavBar) {
-  
-
-  const logoImage = args.logo?.image as Media | null | undefined;
-  const logoSrc = logoImage?.url ?? "/logo.svg";
+export default async function Header(args: PopulatedNavBar) {
+  const logoSrc = args.logo?.image?.url ?? "/logo.svg";
   const logoHref = args.logo?.url ?? "/";
   const logoWidth = args.logo?.width ?? 134;
   const logoHeight = args.logo?.height ?? 25;
@@ -25,22 +18,26 @@ export default async function Header(args:PopulatedNavBar) {
       />
       <NavBar.MobileMenu>
         <NavBar.ItemList>
-          {args.links && args.links.length > 0 && args.links.map((link, index) => (
-            <NavBar.Item key={index} href={link.url}>
-              {link.label}
-            </NavBar.Item>
-          ))}
+          {args.links &&
+            args.links.length > 0 &&
+            args.links.map((link) => (
+              <NavBar.Item key={link.id ?? link.url} href={link.url}>
+                {link.label}
+              </NavBar.Item>
+            ))}
         </NavBar.ItemList>
         <NavBar.ButtonWrap>
-          {args.buttons && args.buttons.length > 0 && args.buttons.map((btn, index) => (
-            <Button
-              key={index}
-              size="sm"
-              variant={btn.variant ?? "primary"}
-            >
-              {btn.label}
-            </Button>
-          ))}
+          {args.buttons &&
+            args.buttons.length > 0 &&
+            args.buttons.map((btn) => (
+              <Button
+                key={btn.id ?? btn.label}
+                size="sm"
+                variant={btn.variant ?? "primary"}
+              >
+                {btn.label}
+              </Button>
+            ))}
         </NavBar.ButtonWrap>
       </NavBar.MobileMenu>
     </NavBar.Root>

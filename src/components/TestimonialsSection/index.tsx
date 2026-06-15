@@ -1,7 +1,8 @@
 import { Marquee } from "@/components/ui/marquee";
-import { cn } from "@/lib/utils";
+import type { Locale } from "@/i18n/routing";
+import { cn, isPopulated } from "@/lib/utils";
 import type { Homepage, Testimonial } from "../../../payload-types";
-import Badge from "../Badge";
+import SectionHeading from "../SectionHeading";
 import TestimonialCard from "../TestimonialCard";
 
 const columns = [
@@ -15,34 +16,17 @@ export default function TestimonialsSection({
   locale,
 }: {
   testimonials: Homepage["testimonials"];
-  locale: "en" | "pt";
+  locale: Locale;
 }) {
-  const items = (testimonials?.items ?? []).filter(
-    (p): p is Testimonial => typeof p === "object",
-  );
+  const items = (testimonials?.items ?? []).filter(isPopulated<Testimonial>);
 
   return (
     <div className="w-full h-full flex flex-col justify-start gap-14 px-14">
-      <div className="w-full h-full flex flex-col justify-start gap-6">
-        <Badge
-          className="text-secondary max-w-40"
-          icon="Widget6"
-          iconProps={{
-            weight: "Bold",
-          }}
-        >
-          Testimonials
-        </Badge>
-
-        <div className="w-full h-full flex text-white gap-4 flex-col">
-          <span>
-            <h2 className="text-3xl font-medium">{testimonials?.title}</h2>
-          </span>
-          <span className="max-w-3xl">
-            <p className="text-lg text-white/60">{testimonials?.subtitle}</p>
-          </span>
-        </div>
-      </div>
+      <SectionHeading
+        badge="Testimonials"
+        title={testimonials?.title}
+        subtitle={testimonials?.subtitle}
+      />
       {items.length > 0 ? (
         <div className="relative flex h-130 md:h-150 lg:h-170 flex-row gap-2 overflow-hidden mask-[linear-gradient(to_bottom,transparent,black_10%,black_90%,transparent)]">
           {columns.map((col) => (

@@ -2,7 +2,7 @@
 import { ArrowRight } from "@solar-icons/react";
 import Image from "next/image";
 import Link from "next/link";
-import { twJoin } from "tailwind-merge";
+import { cn } from "@/lib/utils";
 import Button from "../Button";
 
 export interface CardProps {
@@ -29,7 +29,7 @@ export default function Card({
   anchor,
 }: CardProps) {
   return (
-    <div className={twJoin("w-full flex flex-col gap-5", className)}>
+    <div className={cn("w-full flex flex-col gap-5", className)}>
       <div className="w-full h-64.5  ">
         <Image
           src={image.src}

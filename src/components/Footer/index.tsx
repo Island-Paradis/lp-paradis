@@ -1,45 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import type { PopulatedFooter } from "@/service/types";
 import Button from "../Button";
-import { PopulatedFooter } from "@/service/types";
 
 export default function Footer(args: PopulatedFooter) {
-  const quickLinks = [
-    { name: "Home", href: "/" },
-    { name: "Products", href: "/products" },
-    { name: "Services", href: "/services" },
-    {
-      name: "Kitenda",
-      href: "https://kitenda.paradis.host",
-      icon: "external-link",
-    },
-    {
-      name: "Ficha Segura",
-      href: "https://ficha-segura.paradis.host",
-      icon: "external-link",
-    },
-  ];
-
-  const companyLinks = [
-    { name: "About Us", href: "/about" },
-    { name: "Members", href: "/members" },
-    { name: "Contacts", href: "/contacts" },
-  ];
-
-  const productLinks = [
-    {
-      name: "Kitenda",
-      href: "https://kitenda.paradis.host",
-      icon: "external-link",
-    },
-    {
-      name: "Ficha Segura",
-      href: "https://ficha-segura.paradis.host",
-      icon: "external-link",
-    },
-  ];
-
   return (
     <footer className="w-full flex flex-col justify-center items-center bg-primary text-white">
       <div className="container py-16 flex flex-col gap-10 px-4 xl:px-0">
@@ -58,8 +22,11 @@ export default function Footer(args: PopulatedFooter) {
           <div className="w-full sm:grid sm:grid-cols-8 gap-6 flex flex-col">
             {args.linkGroups &&
               args.linkGroups.length > 0 &&
-              args.linkGroups.map((group, index) => (
-                <div className="col-span-2 flex flex-col gap-3" key={index}>
+              args.linkGroups.map((group) => (
+                <div
+                  className="col-span-2 flex flex-col gap-3"
+                  key={group.id ?? group.title}
+                >
                   <span className="text-white/70 font-medium text-sm">
                     {group.title}
                   </span>

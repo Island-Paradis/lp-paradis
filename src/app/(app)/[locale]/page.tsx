@@ -1,16 +1,15 @@
-import Badge from "@/components/Badge";
 import Button from "@/components/Button";
-import Card from "@/components/Card";
 import FAQSection from "@/components/FAQSection";
 import Hero from "@/components/Hero";
 import MarqueeServices from "@/components/MarqueeServices";
 import ProductsSection from "@/components/ProductsSection";
 import ServicesSection from "@/components/ServicesSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
+import type { Locale } from "@/i18n/routing";
 import { getHomepagePayload } from "@/service/payload-functions";
 
 export default async function Home(props: {
-  params: Promise<{ locale: "en" | "pt" }>;
+  params: Promise<{ locale: Locale }>;
 }) {
   const params = await props.params;
 

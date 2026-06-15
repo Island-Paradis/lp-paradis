@@ -1,5 +1,6 @@
 import { RichText } from "@payloadcms/richtext-lexical/react";
-import { Homepage } from "../../../payload-types";
+import { isPopulated } from "@/lib/utils";
+import type { Faq, Homepage } from "../../../payload-types";
 import {
   Accordion,
   AccordionContent,
@@ -8,11 +9,7 @@ import {
 } from "../ui/accordion";
 
 export default function FAQSection(props: Homepage["faqs"]) {
-  const items =
-    props?.items?.filter(
-      (item): item is Exclude<typeof item, number> =>
-        typeof item !== "number" && !!item,
-    ) ?? [];
+  const items = props?.items?.filter(isPopulated<Faq>) ?? [];
 
   return (
     <div className="w-full h-full flex flex-col justify-center items-center gap-8">
@@ -26,10 +23,10 @@ export default function FAQSection(props: Homepage["faqs"]) {
           className="w-full flex flex-col gap-5"
           collapsible
         >
-          {items.map((faq, index) => (
+          {items.map((faq) => (
             <AccordionItem
-              key={index}
-              value={`faq-${index}`}
+              key={faq.id}
+              value={`faq-${faq.id}`}
               className="w-full border-x-2 border-y-2 rounded-2xl py-5 px-7 last:border-b-2"
             >
               <AccordionTrigger className="text-lg font-medium w-full">

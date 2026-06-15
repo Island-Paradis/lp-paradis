@@ -10,6 +10,7 @@ import {
 import { Globe } from "lucide-react";
 import Image from "next/image";
 import type { ComponentType, SVGProps } from "react";
+import type { Locale } from "@/i18n/routing";
 import type { Testimonial } from "../../../payload-types";
 
 type IconComponent = ComponentType<{ className?: string }>;
@@ -61,7 +62,7 @@ export default function TestimonialCard({
   locale,
 }: {
   testimonial: Testimonial;
-  locale: "en" | "pt";
+  locale: Locale;
 }) {
   const SocialIcon = SOCIAL_ICONS[testimonial.social] ?? Globe;
 

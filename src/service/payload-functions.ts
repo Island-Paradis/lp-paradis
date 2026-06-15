@@ -1,34 +1,32 @@
+import type { Locale } from "@/i18n/routing";
 import { getPayloadInstance } from ".";
-import { PopulatedFooter, PopulatedHomepage, PopulatedNavBar } from "./types";
+import { GLOBAL_SLUGS, type GlobalSlug } from "./constants";
+import type {
+  PopulatedFooter,
+  PopulatedHomepage,
+  PopulatedNavBar,
+} from "./types";
 
-
-
-
-async function getNavBarPayload(
-  locale: "en" | "pt",
-): Promise<PopulatedNavBar> {
+// All globals are fetched the same way (depth: 2 to populate relationships).
+// `findGlobal` returns the generated `number | object` unions, so callers pick
+// the fully-populated `Populated*` shape via the type argument.
+async function getGlobal<T>(slug: GlobalSlug, locale: Locale): Promise<T> {
   const payload = await getPayloadInstance();
-  const data = await payload.findGlobal({ slug: "menu", depth: 2, locale });
+  const data = await payload.findGlobal({ slug, depth: 2, locale });
 
-  return data as PopulatedNavBar;
+  return data as T;
 }
 
-async function getFooterPayload(
-  locale: "en" | "pt",
-): Promise<PopulatedFooter> {
-  const payload = await getPayloadInstance();
-  const data = await payload.findGlobal({ slug: "footer", depth: 2, locale });
-
-  return data as PopulatedFooter;
+function getNavBarPayload(locale: Locale): Promise<PopulatedNavBar> {
+  return getGlobal<PopulatedNavBar>(GLOBAL_SLUGS.navBar, locale);
 }
 
-async function getHomepagePayload(
-  locale: "en" | "pt",
-): Promise<PopulatedHomepage> {
-  const payload = await getPayloadInstance();
-  const data = await payload.findGlobal({ slug: "homepage", depth: 2, locale });
+function getFooterPayload(locale: Locale): Promise<PopulatedFooter> {
+  return getGlobal<PopulatedFooter>(GLOBAL_SLUGS.footer, locale);
+}
 
-  return data as PopulatedHomepage;
+function getHomepagePayload(locale: Locale): Promise<PopulatedHomepage> {
+  return getGlobal<PopulatedHomepage>(GLOBAL_SLUGS.homepage, locale);
 }
 
 export { getHomepagePayload, getNavBarPayload, getFooterPayload };

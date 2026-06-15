@@ -4,6 +4,7 @@ import "../globals.css";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { gilroy } from "@/fonts/gilroy";
+import type { Locale } from "@/i18n/routing";
 import {
   getFooterPayload,
   getNavBarPayload,
@@ -26,7 +27,7 @@ export default async function RootLayout({
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
 }>) {
-  const { locale } = (await params) as { locale: "en" | "pt" };
+  const { locale } = (await params) as { locale: Locale };
 
   const headerData = await getNavBarPayload(locale);
   const footerData = await getFooterPayload(locale);
