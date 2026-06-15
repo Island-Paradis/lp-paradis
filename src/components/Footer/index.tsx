@@ -87,16 +87,10 @@ export default function Footer(args: PopulatedFooter) {
               Ready to build?
             </span>
             <div className="flex flex-col gap-3 w-full">
-              <Button
-                className="w-full bg-white text-primary"
-                variant="primary"
-              >
+              <Button className="w-full" variant="inverted">
                 Get Quote - For Free
               </Button>
-              <Button
-                className="w-full text-white border border-white"
-                variant="outline"
-              >
+              <Button className="w-full" variant="outline-inverted">
                 Schedule a Call
               </Button>
             </div>

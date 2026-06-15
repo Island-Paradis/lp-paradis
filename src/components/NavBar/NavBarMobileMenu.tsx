@@ -1,7 +1,9 @@
 "use client";
 
 import { Menu, X } from "lucide-react";
-import React, { useState } from "react";
+import type React from "react";
+import { useState } from "react";
+import Button from "../Button";
 
 interface NavBarMobileMenuProps {
   children: React.ReactNode;
@@ -16,15 +18,17 @@ export default function NavBarMobileMenu({ children }: NavBarMobileMenuProps) {
       <div className="hidden lg:flex flex-1 items-center">{children}</div>
 
       {/* Mobile: hamburger button */}
-      <button
+      <Button
         type="button"
-        className="ml-auto flex lg:hidden rounded-md text-neutral-600 hover:text-primary transition-colors p-2"
+        variant="icon"
+        size="icon"
+        className="ml-auto flex lg:hidden"
         onClick={() => setIsOpen(!isOpen)}
         aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
         aria-expanded={isOpen}
       >
         {isOpen ? <X size={24} /> : <Menu size={24} />}
-      </button>
+      </Button>
 
       {/* Mobile: dropdown menu */}
       {isOpen && (

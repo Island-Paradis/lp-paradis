@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
-import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import { gilroy } from "@/fonts/gilroy";
 import {
   getFooterPayload,
   getNavBarPayload,
@@ -32,7 +33,7 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
-      <body className={`antialiased ${inter.className}`}>
+      <body className={`antialiased ${inter.className} ${gilroy.variable}`}>
         <Header {...headerData} />
         {children}
         <Footer {...footerData} />

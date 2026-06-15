@@ -35,7 +35,7 @@ export default async function Header(args:PopulatedNavBar) {
           {args.buttons && args.buttons.length > 0 && args.buttons.map((btn, index) => (
             <Button
               key={index}
-              className="px-5 py-2"
+              size="sm"
               variant={btn.variant ?? "primary"}
             >
               {btn.label}

@@ -324,11 +324,10 @@ export interface Service {
 export interface Testimonial {
   id: number;
   authorName: string;
-  role: string;
-  company: string;
+  tag: string;
+  social: 'instagram' | 'linkedin' | 'twitter' | 'facebook' | 'youtube' | 'github' | 'whatsapp' | 'discord' | 'other';
   avatar: number | Media;
   quote: string;
-  rating: '1' | '2' | '3' | '4' | '5';
   featured?: boolean | null;
   updatedAt: string;
   createdAt: string;
@@ -632,11 +631,10 @@ export interface ServicesSelect<T extends boolean = true> {
  */
 export interface TestimonialsSelect<T extends boolean = true> {
   authorName?: T;
-  role?: T;
-  company?: T;
+  tag?: T;
+  social?: T;
   avatar?: T;
   quote?: T;
-  rating?: T;
   featured?: T;
   updatedAt?: T;
   createdAt?: T;

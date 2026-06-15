@@ -6,6 +6,7 @@ import Hero from "@/components/Hero";
 import MarqueeServices from "@/components/MarqueeServices";
 import ProductsSection from "@/components/ProductsSection";
 import ServicesSection from "@/components/ServicesSection";
+import TestimonialsSection from "@/components/TestimonialsSection";
 import { getHomepagePayload } from "@/service/payload-functions";
 
 export default async function Home(props: {
@@ -14,10 +15,14 @@ export default async function Home(props: {
   const params = await props.params;
 
   const { locale } = params;
-  const { hero, services, projects, faqs } = await getHomepagePayload(locale);
+  const { hero, services, projects, faqs, testimonials } =
+    await getHomepagePayload(locale);
 
   const bgVideo = services?.ourServicesCT?.backgroundVideo;
-  const videoUrl = bgVideo && typeof bgVideo === "object" ? bgVideo.url ?? undefined : undefined;
+  const videoUrl =
+    bgVideo && typeof bgVideo === "object"
+      ? (bgVideo.url ?? undefined)
+      : undefined;
 
   return (
     <main>
@@ -27,20 +32,22 @@ export default async function Home(props: {
       )}
       <div className="w-full h-full flex flex-col items-center justify-center pb-11">
         <section className="container lg:mx-auto px-4 xl:px-0 py-12 flex flex-col gap-5 leading-8">
-          <div className="w-full xl:w-149.5 h-full flex flex-col gap-6 py-10">
+          <div className="w-full xl:w-149.5 h-full flex flex-col gap-6 py-10 z-10">
             <div className="w-full flex flex-col items-center justify-center gap-6 ">
               <span>
-                <h2 className="text-4xl font-medium">{services?.title}</h2>
+                <h2 className="font-gilroy text-4xl font-medium">
+                  {services?.title}
+                </h2>
               </span>
               <span>
-                <p className="text-lg text-primary">{services?.subtitle}</p>
+                <p className="text-xl text-primary">{services?.subtitle}</p>
               </span>
             </div>
             <div className="w-full flex justify-start">
               <Button
-                className="px-6 py-3 [&_.icon]:rounded-full [&_.icon]:bg-primary [&_.icon]:p-1 [&_.icon]:text-white"
                 variant="outline"
                 trailingIcon="ArrowRightDown"
+                circleIcon
               >
                 <span>{services?.primaryCta?.label}</span>
               </Button>
@@ -61,6 +68,12 @@ export default async function Home(props: {
             <div className="bg-primary flex flex-col rounded-l-2xl rounded-br-2xl pb-12 pt-12 sm:pt-34 gap-32 services_shape rounded-2xl">
               {services && <ServicesSection services={services} />}
               {projects && <ProductsSection projects={projects} />}
+              {testimonials && (
+                <TestimonialsSection
+                  testimonials={testimonials}
+                  locale={locale}
+                />
+              )}
             </div>
           </div>
         </section>

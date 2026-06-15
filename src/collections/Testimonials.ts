@@ -9,7 +9,7 @@ export const Testimonials: CollectionConfig = {
   admin: {
     group: "Content",
     useAsTitle: "authorName",
-    defaultColumns: ["authorName", "company", "rating", "updatedAt"],
+    defaultColumns: ["authorName", "company", "updatedAt"],
   },
   access: {
     read: () => true,
@@ -22,17 +22,28 @@ export const Testimonials: CollectionConfig = {
       label: "Author Name",
     },
     {
-      name: "role",
+      name: "tag",
       type: "text",
       required: true,
       localized: true,
-      label: "Role / Position",
+      label: "Social tag",
     },
     {
-      name: "company",
-      type: "text",
+      name: "social",
+      type: "select",
       required: true,
-      label: "Company",
+      label: "Social",
+      options: [
+        { label: "Instagram", value: "instagram" },
+        { label: "LinkedIn", value: "linkedin" },
+        { label: "Twitter / X", value: "twitter" },
+        { label: "Facebook", value: "facebook" },
+        { label: "YouTube", value: "youtube" },
+        { label: "GitHub", value: "github" },
+        { label: "WhatsApp", value: "whatsapp" },
+        { label: "Discord", value: "discord" },
+        { label: "Other", value: "other" },
+      ],
     },
     {
       name: "avatar",
@@ -49,24 +60,10 @@ export const Testimonials: CollectionConfig = {
       label: "Quote",
     },
     {
-      name: "rating",
-      type: "select",
-      required: true,
-      label: "Rating",
-      defaultValue: "5",
-      options: [
-        { label: "1 Star", value: "1" },
-        { label: "2 Stars", value: "2" },
-        { label: "3 Stars", value: "3" },
-        { label: "4 Stars", value: "4" },
-        { label: "5 Stars", value: "5" },
-      ],
-    },
-    {
       name: "featured",
       type: "checkbox",
       label: "Featured",
       defaultValue: false,
-    }
+    },
   ],
 };

@@ -1,8 +1,9 @@
 "use client";
+import { ArrowRight } from "@solar-icons/react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "@solar-icons/react";
 import { twJoin } from "tailwind-merge";
+import Button from "../Button";
 
 export interface CardProps {
   className?: string;
@@ -44,10 +45,12 @@ export default function Card({
           <p className="text-2xl font-medium">{description}</p>
         </div>
 
-        <Link className="flex items-center gap-2.5" href={anchor.href}>
-          {anchor.label}
-          <ArrowRight width={16} />
-        </Link>
+        <Button asChild variant="link" size="none">
+          <Link href={anchor.href}>
+            {anchor.label}
+            <ArrowRight width={16} />
+          </Link>
+        </Button>
       </div>
     </div>
   );

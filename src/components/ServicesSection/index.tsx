@@ -1,7 +1,6 @@
 "use client";
 import Badge from "../Badge";
 import { Homepage } from "../../../payload-types";
-import { BentoGrid } from "../ui/bento-grid";
 import {
   ServerPath,
   Palette2,

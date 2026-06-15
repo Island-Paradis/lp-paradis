@@ -32,11 +32,11 @@ export default function ProductsSection({
         </div>
         <div>
           <Button
-            className="px-14 py-2.5 text-primary font-semibold bg-white gap-3.5"
-            variant="primary"
+            variant="inverted"
+            size="lg"
             trailingIcon="ArrowRight"
             iconProps={{
-              width: 16,
+              size:24
             }}
           >
             <span>{projects?.primaryCta?.label}</span>
