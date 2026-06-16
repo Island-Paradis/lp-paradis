@@ -27,7 +27,7 @@ export default function Hero(args: HeroProps) {
   };
 
   return (
-    <div className="bg-background relative flex size-full cursor-none items-center justify-center overflow-hidden rounded-lg border p-20">
+    <div className="bg-background relative flex size-full items-center justify-center overflow-hidden rounded-lg border p-20">
       <GridPattern
         width={90}
         height={30}
@@ -47,9 +47,10 @@ export default function Hero(args: HeroProps) {
         >
           <motion.h1
             variants={item}
-            className="font-gilroy text-6xl font-bold tracking-tight bg-linear-to-r from-[#151718] to-[#6E797E] bg-clip-text text-transparent leading-20"
+            className="relative cursor-none font-gilroy text-6xl font-bold tracking-tight bg-linear-to-r from-[#151718] to-[#6E797E] bg-clip-text text-transparent leading-20"
           >
             {args.headline}
+            <CursorGlow className="z-20" />
           </motion.h1>
           <motion.span variants={item} className="max-w-lg">
             <p className="text-lg text-primary leading-8">{args.description}</p>
@@ -71,7 +72,6 @@ export default function Hero(args: HeroProps) {
           </motion.span>
         </motion.div>
       </div>
-      <CursorGlow className="z-20" />
     </div>
   );
 }

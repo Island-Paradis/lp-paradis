@@ -22,8 +22,9 @@ interface RevealProps {
   delay?: number;
 }
 
-// Reusable scroll-reveal primitive: fades + slides content in once it enters the
-// viewport. Being a client component that renders `children`, it can wrap both
+// Reusable scroll-reveal primitive: fades + slides content in when it enters the
+// viewport, and reverses back out when it leaves (replays on every scroll up /
+// down). Being a client component that renders `children`, it can wrap both
 // client and server sections without turning them into client components.
 // Respects `prefers-reduced-motion` (mirrors `scroll-based-velocity.tsx`).
 export function Reveal({
@@ -41,9 +42,10 @@ export function Reveal({
   return (
     <motion.div
       className={className}
-      initial={initial}
-      whileInView={{ opacity: 1, x: 0, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
+      variants={{ hidden: initial, show: { opacity: 1, x: 0, y: 0 } }}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ margin: "-80px" }}
       transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}

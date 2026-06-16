@@ -82,7 +82,12 @@ export function CursorGlow({
       x.set(event.clientX - rect.left - size);
       y.set(event.clientY - rect.top - size);
     };
-    const handleEnter = () => fade.set(opacity);
+    const handleEnter = () => {
+      // Re-measure on enter: the target (hero h1) animates in, so the rect
+      // captured at mount can be stale until the next scroll/resize.
+      measure();
+      fade.set(opacity);
+    };
     const handleLeave = () => fade.set(0);
 
     parent.addEventListener("mousemove", handleMove);

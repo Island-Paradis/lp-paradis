@@ -19,6 +19,8 @@ interface ScrollVelocityRowProps extends React.HTMLAttributes<HTMLDivElement> {
   baseVelocity?: number
   direction?: 1 | -1
   scrollReactivity?: boolean
+  vertical?: boolean
+  pauseOnHover?: boolean
 }
 
 export const wrap = (min: number, max: number, v: number) => {
@@ -77,6 +79,8 @@ function ScrollVelocityRowImpl({
   className,
   velocityFactor,
   scrollReactivity = true,
+  vertical = false,
+  pauseOnHover = false,
   ...props
 }: ScrollVelocityRowImplProps) {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -86,10 +90,11 @@ function ScrollVelocityRowImpl({
   const baseX = useMotionValue(0)
   const baseDirectionRef = useRef<number>(direction >= 0 ? 1 : -1)
   const currentDirectionRef = useRef<number>(direction >= 0 ? 1 : -1)
-  const unitWidth = useMotionValue(0)
+  const unitSize = useMotionValue(0)
 
   const isInViewRef = useRef(true)
   const isPageVisibleRef = useRef(true)
+  const isHoveredRef = useRef(false)
   const prefersReducedMotionRef = useRef(false)
 
   useEffect(() => {
@@ -109,10 +114,12 @@ function ScrollVelocityRowImpl({
 
     if (container && block) {
       const updateSizes = () => {
-        const cw = container.offsetWidth || 0
-        const bw = block.scrollWidth || 0
-        unitWidth.set(bw)
-        const nextCopies = bw > 0 ? Math.max(3, Math.ceil(cw / bw) + 2) : 1
+        const cs = vertical
+          ? container.offsetHeight || 0
+          : container.offsetWidth || 0
+        const bs = vertical ? block.scrollHeight || 0 : block.scrollWidth || 0
+        unitSize.set(bs)
+        const nextCopies = bs > 0 ? Math.max(3, Math.ceil(cs / bs) + 2) : 1
         setNumCopies((prev) => (prev === nextCopies ? prev : nextCopies))
       }
 
@@ -149,16 +156,17 @@ function ScrollVelocityRowImpl({
         mq.removeEventListener("change", handlePRM)
       }
     }
-  }, [children, unitWidth])
+  }, [children, unitSize, vertical])
 
-  const x = useTransform([baseX, unitWidth], ([v, bw]) => {
-    const width = Number(bw) || 1
+  const translate = useTransform([baseX, unitSize], ([v, size]) => {
+    const unit = Number(size) || 1
     const offset = Number(v) || 0
-    return `${-wrap(0, width, offset)}px`
+    return `${-wrap(0, unit, offset)}px`
   })
 
   useAnimationFrame((_, delta) => {
     if (!isInViewRef.current || !isPageVisibleRef.current) return
+    if (pauseOnHover && isHoveredRef.current) return
     const dt = delta / 1000
     const vf = scrollReactivity ? velocityFactor.get() : 0
     const absVf = Math.min(5, Math.abs(vf))
@@ -169,9 +177,9 @@ function ScrollVelocityRowImpl({
       currentDirectionRef.current = baseDirectionRef.current * scrollDirection
     }
 
-    const bw = unitWidth.get() || 0
-    if (bw <= 0) return
-    const pixelsPerSecond = (bw * baseVelocity) / 100
+    const size = unitSize.get() || 0
+    if (size <= 0) return
+    const pixelsPerSecond = (size * baseVelocity) / 100
     const moveBy =
       currentDirectionRef.current * pixelsPerSecond * speedMultiplier * dt
     baseX.set(baseX.get() + moveBy)
@@ -180,19 +188,43 @@ function ScrollVelocityRowImpl({
   return (
     <div
       ref={containerRef}
-      className={cn("w-full overflow-hidden whitespace-nowrap", className)}
+      className={cn(
+        "overflow-hidden",
+        vertical ? "h-full" : "w-full whitespace-nowrap",
+        className
+      )}
+      onMouseEnter={
+        pauseOnHover
+          ? () => {
+              isHoveredRef.current = true
+            }
+          : undefined
+      }
+      onMouseLeave={
+        pauseOnHover
+          ? () => {
+              isHoveredRef.current = false
+            }
+          : undefined
+      }
       {...props}
     >
       <motion.div
-        className="inline-flex transform-gpu items-center will-change-transform select-none"
-        style={{ x }}
+        className={cn(
+          "transform-gpu will-change-transform select-none",
+          vertical ? "flex flex-col" : "inline-flex items-center"
+        )}
+        style={vertical ? { y: translate } : { x: translate }}
       >
         {Array.from({ length: numCopies }).map((_, i) => (
           <div
             key={i}
             ref={i === 0 ? blockRef : null}
             aria-hidden={i !== 0}
-            className="inline-flex shrink-0 items-center"
+            className={cn(
+              "shrink-0",
+              vertical ? "flex flex-col" : "inline-flex items-center"
+            )}
           >
             {children}
           </div>

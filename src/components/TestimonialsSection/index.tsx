@@ -1,4 +1,7 @@
-import { Marquee } from "@/components/ui/marquee";
+import {
+  ScrollVelocityContainer,
+  ScrollVelocityRow,
+} from "@/components/ui/scroll-based-velocity";
 import type { Locale } from "@/i18n/routing";
 import { cn, isPopulated } from "@/lib/utils";
 import type { Homepage, Testimonial } from "../../../payload-types";
@@ -32,24 +35,31 @@ export default function TestimonialsSection({
       </Reveal>
       {items.length > 0 ? (
         <Reveal className="relative flex h-130 md:h-150 lg:h-170 flex-row gap-2 overflow-hidden mask-[linear-gradient(to_bottom,transparent,black_10%,black_90%,transparent)]">
-          {columns.map((col) => (
-            <div key={col.id} className={cn("h-full flex-1", col.className)}>
-              <Marquee
-                vertical
-                reverse={col.reverse}
-                pauseOnHover
-                className="h-full w-full [--duration:40s]"
-              >
-                {items.map((testimonial, index) => (
-                  <TestimonialCard
-                    key={`${col.id}-${testimonial.id ?? index}`}
-                    testimonial={testimonial}
-                    locale={locale}
-                  />
-                ))}
-              </Marquee>
-            </div>
-          ))}
+          <ScrollVelocityContainer className="flex h-full w-full flex-row gap-2">
+            {columns.map((col) => (
+              <div key={col.id} className={cn("h-full flex-1", col.className)}>
+                <ScrollVelocityRow
+                  vertical
+                  pauseOnHover
+                  baseVelocity={2.5}
+                  direction={col.reverse ? -1 : 1}
+                  className="h-full"
+                >
+                  {items.map((testimonial, index) => (
+                    <div
+                      key={`${col.id}-${testimonial.id ?? index}`}
+                      className="w-full pb-4"
+                    >
+                      <TestimonialCard
+                        testimonial={testimonial}
+                        locale={locale}
+                      />
+                    </div>
+                  ))}
+                </ScrollVelocityRow>
+              </div>
+            ))}
+          </ScrollVelocityContainer>
         </Reveal>
       ) : null}
     </div>

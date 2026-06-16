@@ -44,13 +44,13 @@ export default function Card({
           <h3 className="text-sm">{title}</h3>
           <p className="text-2xl font-medium">{description}</p>
         </div>
-
-        <Button asChild variant="link" size="none">
-          <Link href={anchor.href}>
-            {anchor.label}
-            <ArrowRight width={16} />
-          </Link>
-        </Button>
+        <Link
+          href={anchor.href}
+          className="flex items-center gap-4 hover:underline underline-offset-8"
+        >
+          {anchor.label}
+          <ArrowRight width={24} />
+        </Link>
       </div>
     </div>
   );
