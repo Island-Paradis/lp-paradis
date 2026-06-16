@@ -1,4 +1,4 @@
-import React from "react";
+import type React from "react";
 import { twJoin } from "tailwind-merge";
 
 interface NavBarItemsListProps {
@@ -12,7 +12,10 @@ export default function NavBarItemsList({
 }: NavBarItemsListProps) {
   return (
     <ul
-      className={twJoin("w-full flex flex-col lg:flex-row items-center justify-center gap-2", className)}
+      className={twJoin(
+        "w-full flex flex-col lg:flex-row justify-center gap-6 lg:gap-2",
+        className,
+      )}
     >
       {children}
     </ul>

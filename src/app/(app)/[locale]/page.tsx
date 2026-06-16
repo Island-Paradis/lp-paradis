@@ -39,7 +39,9 @@ export default async function Home(props: {
                 </h2>
               </span>
               <span>
-                <p className="text-xl text-primary">{services?.subtitle}</p>
+                <p className="text-xl text-muted-foreground">
+                  {services?.subtitle}
+                </p>
               </span>
             </div>
             <div className="w-full flex justify-start">
@@ -65,18 +67,31 @@ export default async function Home(props: {
               </video>
             </div>
             <div className="bg-primary flex flex-col rounded-l-2xl rounded-br-2xl pb-12 pt-12 sm:pt-34 gap-32 services_shape rounded-2xl">
-              {services && <ServicesSection services={services} />}
-              {projects && <ProductsSection projects={projects} />}
+              {services && (
+                <div id="services" className="scroll-mt-24">
+                  <ServicesSection services={services} />
+                </div>
+              )}
+              {projects && (
+                <div id="projects" className="scroll-mt-24">
+                  <ProductsSection projects={projects} />
+                </div>
+              )}
               {testimonials && (
-                <TestimonialsSection
-                  testimonials={testimonials}
-                  locale={locale}
-                />
+                <div id="testimonials" className="scroll-mt-24">
+                  <TestimonialsSection
+                    testimonials={testimonials}
+                    locale={locale}
+                  />
+                </div>
               )}
             </div>
           </div>
         </section>
-        <section className="container lg:mx-auto px-4 xl:px-0 py-12 flex flex-col gap-5 leading-8">
+        <section
+          id="faqs"
+          className="container lg:mx-auto px-4 xl:px-0 py-12 flex flex-col gap-5 leading-8 scroll-mt-24"
+        >
           {faqs && <FAQSection {...faqs} />}
         </section>
       </div>

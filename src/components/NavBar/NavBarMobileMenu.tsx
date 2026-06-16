@@ -2,15 +2,34 @@
 
 import { Menu, X } from "lucide-react";
 import type React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../Button";
+import NavBarLogo from "./NavBarLogo";
 
 interface NavBarMobileMenuProps {
   children: React.ReactNode;
+  logoSrc: string;
+  logoHref?: string;
+  logoWidth?: number;
+  logoHeight?: number;
 }
 
-export default function NavBarMobileMenu({ children }: NavBarMobileMenuProps) {
+export default function NavBarMobileMenu({
+  children,
+  logoSrc,
+  logoHref = "/",
+  logoWidth = 134,
+  logoHeight = 25,
+}: NavBarMobileMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
+
+  // Trava o scroll do fundo enquanto o menu full-screen está aberto.
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
 
   return (
     <>
@@ -23,17 +42,36 @@ export default function NavBarMobileMenu({ children }: NavBarMobileMenuProps) {
         variant="icon"
         size="icon"
         className="ml-auto flex lg:hidden"
-        onClick={() => setIsOpen(!isOpen)}
-        aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
+        onClick={() => setIsOpen(true)}
+        aria-label="Abrir menu"
         aria-expanded={isOpen}
       >
-        {isOpen ? <X size={24} /> : <Menu size={24} />}
+        <Menu size={24} />
       </Button>
 
-      {/* Mobile: dropdown menu */}
+      {/* Mobile: full-screen menu */}
       {isOpen && (
-        <div className="lg:hidden absolute top-full left-0 w-full bg-white shadow-md z-50 flex flex-col items-center py-4 px-4">
-          {children}
+        <div className="lg:hidden fixed inset-0 z-50 bg-surface-dark-2 flex flex-col px-4 py-7">
+          <div className="flex items-center justify-between">
+            <NavBarLogo
+              imgSrc={logoSrc}
+              href={logoHref}
+              width={logoWidth}
+              height={logoHeight}
+            />
+            <Button
+              type="button"
+              variant="icon"
+              size="icon"
+              className="text-white hover:text-white"
+              onClick={() => setIsOpen(false)}
+              aria-label="Fechar menu"
+            >
+              <X size={24} />
+            </Button>
+          </div>
+
+          <div className="mt-8 h-full flex flex-col items-start justify-center">{children}</div>
         </div>
       )}
     </>

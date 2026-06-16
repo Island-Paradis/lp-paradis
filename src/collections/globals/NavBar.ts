@@ -23,6 +23,13 @@ export const Menu: GlobalConfig = {
           label: "Logo Image",
         },
         {
+          name: "imageLight",
+          type: "upload",
+          required: true,
+          relationTo: "media",
+          label: "Logo Image Light",
+        },
+        {
           name: "url",
           type: "text",
           required: true,

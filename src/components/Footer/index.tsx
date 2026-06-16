@@ -53,7 +53,7 @@ export default function Footer(args: PopulatedFooter) {
             <span className="text-white font-medium text-lg">
               Ready to build?
             </span>
-            <div className="flex flex-col gap-3 w-full">
+            <div className="flex flex-col gap-3 w-full xl:min-w-74">
               <Button className="w-full" variant="inverted">
                 Get Quote - For Free
               </Button>

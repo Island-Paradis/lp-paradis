@@ -28,12 +28,12 @@ export default function Hero(args: HeroProps) {
           <span className="max-w-lg">
             <p className="text-lg text-primary leading-8">{args.description}</p>
           </span>
-          <span className="w-full max-w-lg flex items-center justify-center gap-4">
+          <span className="w-full max-w-106.5 flex items-center justify-center gap-4">
             {args.primaryCta && (
-              <Button variant="primary">{args.primaryCta.label}</Button>
+              <Button className="w-full" variant="primary">{args.primaryCta.label}</Button>
             )}
             {args.secondaryCta && (
-              <Button variant="outline">{args.secondaryCta.label}</Button>
+              <Button className="w-full" variant="outline">{args.secondaryCta.label}</Button>
             )}
           </span>
         </div>

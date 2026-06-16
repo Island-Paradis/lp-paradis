@@ -1,4 +1,4 @@
-import React from "react";
+import type React from "react";
 import { twJoin } from "tailwind-merge";
 export interface NavBarButtonWrapProps {
   children: React.ReactNode;
@@ -10,6 +10,8 @@ export default function NavBarButtonWrap({
   className,
 }: NavBarButtonWrapProps) {
   return (
-    <div className={twJoin("flex flex-col gap-3 lg:flex-row", className)}>{children}</div>
+    <div className={twJoin("hidden gap-3 lg:flex lg:flex-row", className)}>
+      {children}
+    </div>
   );
 }

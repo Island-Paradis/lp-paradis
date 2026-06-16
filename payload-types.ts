@@ -784,6 +784,7 @@ export interface Menu {
   id: number;
   logo: {
     image: number | Media;
+    imageLight: number | Media;
     /**
      * Where the logo links to
      */
@@ -958,6 +959,7 @@ export interface MenuSelect<T extends boolean = true> {
     | T
     | {
         image?: T;
+        imageLight?: T;
         url?: T;
         width?: T;
         height?: T;

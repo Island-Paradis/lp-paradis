@@ -37,6 +37,7 @@ type PopulatedHomepage = Omit<
 type PopulatedNavBar = Omit<Menu, "logo"> & {
   logo?: {
     image?: Media | null;
+    imageLight?: Media | null;
     url?: string | null;
     width?: number | null;
     height?: number | null;
