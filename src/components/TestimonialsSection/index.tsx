@@ -4,6 +4,7 @@ import { cn, isPopulated } from "@/lib/utils";
 import type { Homepage, Testimonial } from "../../../payload-types";
 import SectionHeading from "../SectionHeading";
 import TestimonialCard from "../TestimonialCard";
+import { Reveal } from "../ui/reveal";
 
 const columns = [
   { id: "col-1", reverse: true, className: "" }, // desce — sempre visível
@@ -22,13 +23,15 @@ export default function TestimonialsSection({
 
   return (
     <div className="w-full h-full flex flex-col justify-start gap-14 px-14">
-      <SectionHeading
-        badge="Testimonials"
-        title={testimonials?.title}
-        subtitle={testimonials?.subtitle}
-      />
+      <Reveal>
+        <SectionHeading
+          badge="Testimonials"
+          title={testimonials?.title}
+          subtitle={testimonials?.subtitle}
+        />
+      </Reveal>
       {items.length > 0 ? (
-        <div className="relative flex h-130 md:h-150 lg:h-170 flex-row gap-2 overflow-hidden mask-[linear-gradient(to_bottom,transparent,black_10%,black_90%,transparent)]">
+        <Reveal className="relative flex h-130 md:h-150 lg:h-170 flex-row gap-2 overflow-hidden mask-[linear-gradient(to_bottom,transparent,black_10%,black_90%,transparent)]">
           {columns.map((col) => (
             <div key={col.id} className={cn("h-full flex-1", col.className)}>
               <Marquee
@@ -47,7 +50,7 @@ export default function TestimonialsSection({
               </Marquee>
             </div>
           ))}
-        </div>
+        </Reveal>
       ) : null}
     </div>
   );

@@ -5,6 +5,7 @@ import MarqueeServices from "@/components/MarqueeServices";
 import ProductsSection from "@/components/ProductsSection";
 import ServicesSection from "@/components/ServicesSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
+import { Reveal } from "@/components/ui/reveal";
 import type { Locale } from "@/i18n/routing";
 import { getHomepagePayload } from "@/service/payload-functions";
 
@@ -31,7 +32,7 @@ export default async function Home(props: {
       )}
       <div className="w-full h-full flex flex-col items-center justify-center pb-11">
         <section className="container lg:mx-auto px-4 xl:px-0 py-12 flex flex-col gap-5 leading-8">
-          <div className="w-full xl:w-149.5 h-full flex flex-col gap-6 py-10 z-10">
+          <Reveal className="w-full xl:w-149.5 h-full flex flex-col gap-6 py-10 z-10">
             <div className="w-full flex flex-col items-center justify-center gap-6 ">
               <span>
                 <h2 className="font-gilroy text-4xl font-medium">
@@ -53,7 +54,7 @@ export default async function Home(props: {
                 <span>{services?.primaryCta?.label}</span>
               </Button>
             </div>
-          </div>
+          </Reveal>
           <div className="w-full sm:relative xl:-mt-102 sm:pt-102 flex flex-col items-center justify-center gap-6">
             <div className="hidden sm:block w-full xl:w-149.5 h-117.5 bg-primary video_shape sm:absolute right-0 top-0 rounded-2xl relative overflow-hidden">
               <video

@@ -11,6 +11,7 @@ import {
 import type React from "react";
 import type { PopulatedHomepage } from "@/service/types";
 import Badge from "../Badge";
+import { Reveal } from "../ui/reveal";
 
 type ServiceLayoutSpacer = { transparent: true; className: string };
 
@@ -135,7 +136,7 @@ export default function ServicesSection({
 
   return (
     <div className="w-full h-full flex flex-col justify-start gap-6">
-      <div className="w-full h-full flex flex-col justify-start gap-6 px-14">
+      <Reveal className="w-full h-full flex flex-col justify-start gap-6 px-14">
         <Badge
           className="text-secondary max-w-40"
           icon="Widget6"
@@ -157,14 +158,17 @@ export default function ServicesSection({
             </p>
           </span>
         </div>
-      </div>
+      </Reveal>
       <div className="px-14 md:px-0 flex flex-col md:grid relative w-full  md:grid-cols-12 md:grid-rows-[repeat(20px)] md:auto-rows-[60px] gap-4 after:pointer-events-none after:absolute after:inset-0 after:z-10 after:bg-[linear-gradient(121.55deg,rgba(21,23,24,0.01)_39.57%,rgba(255,255,255,0.01)_83.97%)]">
         <div className="hidden md:block absolute inset-0 z-20 pointer-events-none [background:radial-gradient(ellipse_65%_55%_at_center,transparent_55%,var(--color-primary)_92%)]" />
-        {SERVICE_LAYOUT.map((cell) => {
+        {SERVICE_LAYOUT.map((cell, index) => {
+          const delay = Math.min(index * 0.05, 0.4);
           if ("transparent" in cell) {
             return (
-              <div
+              <Reveal
                 key={cell.className}
+                direction="none"
+                delay={delay}
                 className={`${cell.className} bg-white/5 border rounded-xl border-white/5 pointer-events-none`}
               />
             );
@@ -175,7 +179,8 @@ export default function ServicesSection({
             service?.shortDescription ?? cell.fallbackDescription;
           const ItemIcon = cell.Icon;
           return (
-            <div
+            <Reveal
+              delay={delay}
               className={`${cell.className} bg-linear-to-b from-white/10 to-white/0 border border-white/5 rounded-xl overflow-hidden flex flex-col justify-start p-4 gap-2 `}
               key={cell.slug}
             >
@@ -190,7 +195,7 @@ export default function ServicesSection({
                   {description}
                 </p>
               </span>
-            </div>
+            </Reveal>
           );
         })}
       </div>

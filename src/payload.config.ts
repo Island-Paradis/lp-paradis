@@ -65,12 +65,12 @@ export default buildConfig({
     s3Storage({
       collections: {
         media: {
-          // Serve images through the resilient `/cdn` proxy route (retry + cache).
-          // Non-images stay on Payload's own range-capable handler (video seeking).
-          generateFileURL: ({ collection, filename }) =>
-            /\.(jpe?g|png|webp|avif|gif|svg)$/i.test(filename)
-              ? `/cdn/${encodeURIComponent(filename)}`
-              : `/api/${collection.slug}/file/${encodeURIComponent(filename)}`,
+          // Serve all media through the resilient `/cdn` proxy route (retry + cache).
+          // Videos included: Payload's native handler issues a Range GetObject that
+          // garage rejects ("signed header `range` is not present"); `/cdn` fetches
+          // the whole object without a Range header and slices it locally.
+          generateFileURL: ({ filename }) =>
+            `/cdn/${encodeURIComponent(filename)}`,
         },
       },
       bucket: s3Bucket,
