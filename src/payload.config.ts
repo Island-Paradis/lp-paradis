@@ -1,23 +1,22 @@
-import sharp from "sharp";
-import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { postgresAdapter } from "@payloadcms/db-postgres";
+import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { s3Storage } from "@payloadcms/storage-s3";
-import { ConfiguredRetryStrategy } from "@smithy/util-retry";
-import { buildConfig } from "payload";
 import { en } from "@payloadcms/translations/languages/en";
 import { pt } from "@payloadcms/translations/languages/pt";
-
+import { buildConfig } from "payload";
+import sharp from "sharp";
+import { Contact } from "./collections/Contact";
+import { FAQs } from "./collections/FAQs";
+import { Footer } from "./collections/globals/Footer";
+import { Menu } from "./collections/globals/NavBar";
+import { Hero } from "./collections/Hero";
 // Collections
 import { Media } from "./collections/Media";
-import { Hero } from "./collections/Hero";
-import { Menu } from "./collections/globals/NavBar";
 import { Projects } from "./collections/Projects";
+import { HomePage } from "./collections/pages/HomePage";
 import { Services } from "./collections/Services";
 import { Testimonials } from "./collections/Testimonials";
-import { FAQs } from "./collections/FAQs";
-import { Contact } from "./collections/Contact";
-import { HomePage } from "./collections/pages/HomePage";
-import { Footer } from "./collections/globals/Footer";
+import { s3Bucket, s3ClientConfig } from "./service/s3";
 
 // Pages
 
@@ -65,22 +64,17 @@ export default buildConfig({
   plugins: [
     s3Storage({
       collections: {
-        media: true,
+        media: {
+          // Serve images through the resilient `/cdn` proxy route (retry + cache).
+          // Non-images stay on Payload's own range-capable handler (video seeking).
+          generateFileURL: ({ collection, filename }) =>
+            /\.(jpe?g|png|webp|avif|gif|svg)$/i.test(filename)
+              ? `/cdn/${encodeURIComponent(filename)}`
+              : `/api/${collection.slug}/file/${encodeURIComponent(filename)}`,
+        },
       },
-      bucket: process.env.S3_BUCKET || "",
-      config: {
-        credentials: async () => ({
-          accessKeyId: process.env.S3_ACCESS_KEY_ID ?? "",
-          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY ?? "",
-        }),
-        region: process.env.S3_REGION || "",
-        endpoint: process.env.S3_ENDPOINT || "",
-        forcePathStyle: true,
-        retryStrategy: new ConfiguredRetryStrategy(
-          5,
-          (attempt: number) => 200 + attempt * 300,
-        ),
-      },
+      bucket: s3Bucket,
+      config: s3ClientConfig,
     }),
   ],
 });
