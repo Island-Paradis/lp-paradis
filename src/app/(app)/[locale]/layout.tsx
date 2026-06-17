@@ -33,7 +33,7 @@ export default async function RootLayout({
   const footerData = await getFooterPayload(locale);
 
   return (
-    <html lang={locale}>
+    <html lang={locale} data-scroll-behavior="smooth">
       <body className={`antialiased ${inter.className} ${gilroy.variable}`}>
         <Header {...headerData} />
         {children}

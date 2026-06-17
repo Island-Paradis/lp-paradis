@@ -261,6 +261,18 @@
     @apply bg-background text-foreground;
     letter-spacing: var(--tracking-normal);
   }
+
+  /* Rolagem suave nativa para links âncora (respeita reduced-motion). */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  /* Alvos de âncora param 120px abaixo do topo (livre da navbar fixa). */
+  [id] {
+    scroll-margin-top: 120px;
+  }
 }
 
 .video_shape {

@@ -35,7 +35,7 @@ export default function TestimonialsSection({
       </Reveal>
       {items.length > 0 ? (
         <Reveal className="relative flex h-130 md:h-150 lg:h-170 flex-row gap-2 overflow-hidden mask-[linear-gradient(to_bottom,transparent,black_10%,black_90%,transparent)]">
-          <ScrollVelocityContainer className="flex h-full w-full flex-row gap-2">
+          <ScrollVelocityContainer className="flex h-full w-full flex-row gap-4">
             {columns.map((col) => (
               <div key={col.id} className={cn("h-full flex-1", col.className)}>
                 <ScrollVelocityRow

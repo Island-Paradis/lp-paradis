@@ -33,7 +33,7 @@ export default async function Home(props: {
       <div className="w-full h-full flex flex-col items-center justify-center pb-11">
         <section className="container lg:mx-auto px-4 xl:px-0 py-12 flex flex-col gap-5 leading-8">
           <Reveal className="w-full xl:w-149.5 h-full flex flex-col gap-6 py-10 z-10">
-            <div className="w-full flex flex-col items-center justify-center gap-6 ">
+            <div className="w-full flex flex-col items-center justify-center gap-6 " id="about-us">
               <span>
                 <h2 className="font-gilroy text-4xl font-medium">
                   {services?.title}
@@ -69,17 +69,17 @@ export default async function Home(props: {
             </div>
             <div className="bg-primary flex flex-col rounded-l-2xl rounded-br-2xl pb-12 pt-12 sm:pt-34 gap-32 services_shape rounded-2xl">
               {services && (
-                <div id="services" className="scroll-mt-24">
+                <div id="services">
                   <ServicesSection services={services} />
                 </div>
               )}
               {projects && (
-                <div id="projects" className="scroll-mt-24">
+                <div id="products">
                   <ProductsSection projects={projects} />
                 </div>
               )}
               {testimonials && (
-                <div id="testimonials" className="scroll-mt-24">
+                <div id="testimonials">
                   <TestimonialsSection
                     testimonials={testimonials}
                     locale={locale}
@@ -91,7 +91,7 @@ export default async function Home(props: {
         </section>
         <section
           id="faqs"
-          className="container lg:mx-auto px-4 xl:px-0 py-12 flex flex-col gap-5 leading-8 scroll-mt-24"
+          className="container lg:mx-auto px-4 xl:px-0 py-12 flex flex-col gap-5 leading-8"
         >
           {faqs && <FAQSection {...faqs} />}
         </section>

@@ -46,6 +46,7 @@ export default async function Header(args: PopulatedNavBar) {
                 <Button
                   key={btn.id ?? btn.label}
                   size="sm"
+                  className={btn.variant === "outline" ? "bg-white" : ""}
                   variant={btn.variant ?? "primary"}
                 >
                   {btn.label}

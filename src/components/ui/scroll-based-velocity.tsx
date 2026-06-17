@@ -28,6 +28,44 @@ export const wrap = (min: number, max: number, v: number) => {
   return ((((v - min) % rangeSize) + rangeSize) % rangeSize) + min
 }
 
+// Below this scroll speed (px/s) the marquee ignores scroll entirely, so slow
+// scrolling keeps a steady base speed instead of wobbling on every micro-scroll.
+const VELOCITY_DEADZONE = 120
+// Velocity range above the deadzone over which the factor ramps from 0 to its cap.
+const VELOCITY_RANGE = 1000
+const MAX_VELOCITY_FACTOR = 5
+// Direction only flips once the (smoothed) factor is clearly directional, so slow
+// scroll never flickers the rows back and forth around zero.
+const DIRECTION_FLIP_THRESHOLD = 0.6
+// Time constant (s) for the per-frame follow of the applied velocity factor. Every
+// frame the factor eases toward its target over ~this long, so even if the source
+// velocity spikes between frames the marquee speed only ever changes smoothly.
+const FACTOR_SMOOTHING_TAU = 0.18
+
+function mapVelocityToFactor(v: number) {
+  const abs = Math.abs(v)
+  if (abs < VELOCITY_DEADZONE) return 0
+  const sign = v < 0 ? -1 : 1
+  const t = Math.min(1, (abs - VELOCITY_DEADZONE) / VELOCITY_RANGE)
+  const eased = t * t * (3 - 2 * t) // smoothstep → gentle onset, no sudden jump
+  return sign * eased * MAX_VELOCITY_FACTOR
+}
+
+// Shared scroll-velocity pipeline: native scroll position → velocity → softened
+// spring → deadzoned factor. The spring is the first-stage low-pass that filters
+// the high-frequency jitter discrete scroll events produce at slow speeds; each
+// row then applies a second-stage per-frame follow (see FACTOR_SMOOTHING_TAU).
+function useScrollVelocityFactor() {
+  const { scrollY } = useScroll()
+  const scrollVelocity = useVelocity(scrollY)
+  const smoothVelocity = useSpring(scrollVelocity, {
+    damping: 60,
+    stiffness: 200,
+    restDelta: 0.5,
+  })
+  return useTransform(smoothVelocity, mapVelocityToFactor)
+}
+
 const ScrollVelocityContext = React.createContext<MotionValue<number> | null>(
   null
 )
@@ -37,17 +75,7 @@ export function ScrollVelocityContainer({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
-  const { scrollY } = useScroll()
-  const scrollVelocity = useVelocity(scrollY)
-  const smoothVelocity = useSpring(scrollVelocity, {
-    damping: 50,
-    stiffness: 400,
-  })
-  const velocityFactor = useTransform(smoothVelocity, (v) => {
-    const sign = v < 0 ? -1 : 1
-    const magnitude = Math.min(5, (Math.abs(v) / 1000) * 5)
-    return sign * magnitude
-  })
+  const velocityFactor = useScrollVelocityFactor()
 
   return (
     <ScrollVelocityContext.Provider value={velocityFactor}>
@@ -90,6 +118,7 @@ function ScrollVelocityRowImpl({
   const baseX = useMotionValue(0)
   const baseDirectionRef = useRef<number>(direction >= 0 ? 1 : -1)
   const currentDirectionRef = useRef<number>(direction >= 0 ? 1 : -1)
+  const smoothedFactorRef = useRef(0)
   const unitSize = useMotionValue(0)
 
   const isInViewRef = useRef(true)
@@ -168,11 +197,17 @@ function ScrollVelocityRowImpl({
     if (!isInViewRef.current || !isPageVisibleRef.current) return
     if (pauseOnHover && isHoveredRef.current) return
     const dt = delta / 1000
-    const vf = scrollReactivity ? velocityFactor.get() : 0
-    const absVf = Math.min(5, Math.abs(vf))
+    // Ease the applied factor toward its target every frame (frame-rate independent),
+    // so spikes in the source velocity become a smooth ramp instead of frame-to-frame
+    // wobble on slow scroll.
+    const target = scrollReactivity ? velocityFactor.get() : 0
+    const alpha = 1 - Math.exp(-dt / FACTOR_SMOOTHING_TAU)
+    smoothedFactorRef.current += (target - smoothedFactorRef.current) * alpha
+    const vf = smoothedFactorRef.current
+    const absVf = Math.min(MAX_VELOCITY_FACTOR, Math.abs(vf))
     const speedMultiplier = prefersReducedMotionRef.current ? 1 : 1 + absVf
 
-    if (absVf > 0.1) {
+    if (absVf > DIRECTION_FLIP_THRESHOLD) {
       const scrollDirection = vf >= 0 ? 1 : -1
       currentDirectionRef.current = baseDirectionRef.current * scrollDirection
     }
@@ -235,17 +270,7 @@ function ScrollVelocityRowImpl({
 }
 
 function ScrollVelocityRowLocal(props: ScrollVelocityRowProps) {
-  const { scrollY } = useScroll()
-  const localVelocity = useVelocity(scrollY)
-  const localSmoothVelocity = useSpring(localVelocity, {
-    damping: 50,
-    stiffness: 400,
-  })
-  const localVelocityFactor = useTransform(localSmoothVelocity, (v) => {
-    const sign = v < 0 ? -1 : 1
-    const magnitude = Math.min(5, (Math.abs(v) / 1000) * 5)
-    return sign * magnitude
-  })
+  const localVelocityFactor = useScrollVelocityFactor()
   return (
     <ScrollVelocityRowImpl {...props} velocityFactor={localVelocityFactor} />
   )

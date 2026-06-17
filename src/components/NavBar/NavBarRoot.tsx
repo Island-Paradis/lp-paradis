@@ -26,7 +26,7 @@ export default function NavBarRoot({ children, className }: NavBarRootProps) {
       className={twJoin(
         "sticky top-0 z-40 w-full flex items-center justify-center py-7 border-b backdrop-blur-2xl transition-[background-color,box-shadow,border-color] duration-300 ease-out",
         scrolled
-          ? "bg-background/50 shadow-xs border-border/30"
+          ? "bg-background/50 shadow-xs border-border/90 "
           : "bg-background border-transparent",
       )}
     >
