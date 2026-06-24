@@ -4,6 +4,7 @@ import Link from "next/link";
 import type React from "react";
 import { twJoin } from "tailwind-merge";
 import { useNavActive } from "./NavActiveContext";
+import { useNavMobileMenu } from "./NavMobileMenuContext";
 
 interface NavBarItemProps {
   href?: string;
@@ -17,6 +18,7 @@ export default function NavBarItem({
   className,
 }: NavBarItemProps) {
   const { activeHash } = useNavActive();
+  const { close } = useNavMobileMenu();
   const hash = href?.includes("#") ? href.split("#")[1] : undefined;
   const isActive = !!hash && hash === activeHash;
 
@@ -29,6 +31,7 @@ export default function NavBarItem({
     >
       <Link
         href={href || "#"}
+        onClick={close}
         className={twJoin(
           "font-normal text-[26px] lg:text-base transition-colors duration-200 lg:hover:text-primary",
           isActive

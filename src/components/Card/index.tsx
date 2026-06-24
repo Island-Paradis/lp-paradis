@@ -15,6 +15,9 @@ export interface CardProps {
     width?: number;
     height?: number;
   };
+  // Matches the rendered width of the card so next/image serves a large enough
+  // variant instead of upscaling a tiny one. Default mirrors the products grid.
+  sizes?: string;
   anchor: {
     label: string;
     href: string;
@@ -26,6 +29,7 @@ export default function Card({
   title,
   description,
   image,
+  sizes = "(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw",
   anchor,
 }: CardProps) {
   return (
@@ -36,6 +40,7 @@ export default function Card({
           alt={image.alt}
           height={image.height || 374}
           width={image.width || 254}
+          sizes={sizes}
           className="object-cover w-full h-full rounded-lg"
         />
       </div>
