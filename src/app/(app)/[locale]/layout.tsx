@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
+import CursorFollower from "@/components/CursorFollower";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import SmoothScroll from "@/components/SmoothScroll";
 import { gilroy } from "@/fonts/gilroy";
 import type { Locale } from "@/i18n/routing";
 import {
@@ -35,9 +37,12 @@ export default async function RootLayout({
   return (
     <html lang={locale} data-scroll-behavior="smooth">
       <body className={`antialiased ${inter.className} ${gilroy.variable}`}>
-        <Header {...headerData} />
-        {children}
-        <Footer {...footerData} />
+        <CursorFollower />
+        <SmoothScroll>
+          <Header {...headerData} />
+          {children}
+          <Footer {...footerData} />
+        </SmoothScroll>
       </body>
     </html>
   );

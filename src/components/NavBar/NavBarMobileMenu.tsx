@@ -60,7 +60,10 @@ export default function NavBarMobileMenu({
       {isOpen &&
         typeof document !== "undefined" &&
         createPortal(
-          <div className="lg:hidden fixed inset-0 z-50 bg-surface-dark-2 flex flex-col px-4 py-7">
+          <div
+            data-lenis-prevent
+            className="lg:hidden fixed inset-0 z-50 bg-surface-dark-2 flex flex-col px-4 py-7"
+          >
             <div className="flex items-center justify-between">
               <NavBarLogo
                 imgSrc={logoSrc}

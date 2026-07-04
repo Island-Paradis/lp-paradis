@@ -12,6 +12,7 @@ import type React from "react";
 import type { PopulatedHomepage } from "@/service/types";
 import Badge from "../Badge";
 import { Reveal } from "../ui/reveal";
+import { TextReveal } from "../ui/text-reveal";
 
 type ServiceLayoutSpacer = { transparent: true; className: string };
 
@@ -148,9 +149,11 @@ export default function ServicesSection({
         </Badge>
         <div className="w-full h-full flex text-white gap-4 flex-col">
           <span>
-            <h2 className="text-3xl font-medium">
-              {services?.ourServicesCT?.title}
-            </h2>
+            {services?.ourServicesCT?.title ? (
+              <TextReveal as="h2" className="text-3xl font-medium">
+                {services.ourServicesCT.title}
+              </TextReveal>
+            ) : null}
           </span>
           <span className="max-w-3xl">
             <p className="text-lg text-white/60">

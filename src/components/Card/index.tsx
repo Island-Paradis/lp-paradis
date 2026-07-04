@@ -3,7 +3,6 @@ import { ArrowRight } from "@solar-icons/react";
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import Button from "../Button";
 
 export interface CardProps {
   className?: string;
@@ -33,16 +32,21 @@ export default function Card({
   anchor,
 }: CardProps) {
   return (
-    <div className={cn("w-full flex flex-col gap-5", className)}>
-      <div className="w-full h-64.5  ">
+    <div className={cn("group w-full flex flex-col gap-5", className)}>
+      <div
+        data-cursor="view"
+        className="relative w-full h-64.5 overflow-hidden rounded-lg"
+      >
         <Image
           src={image.src}
           alt={image.alt}
           height={image.height || 374}
           width={image.width || 254}
           sizes={sizes}
-          className="object-cover w-full h-full rounded-lg"
+          className="object-cover w-full h-full transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform group-hover:scale-[1.06]"
         />
+        {/* Subtle overlay that deepens on hover. */}
+        <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/40 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
       </div>
       <div className="w-full flex flex-col gap-4 px-3">
         <div className="flex flex-col gap-3">

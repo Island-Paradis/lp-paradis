@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import Badge from "../Badge";
+import { TextReveal } from "../ui/text-reveal";
 
 interface SectionHeadingProps {
   badge: ReactNode;
@@ -30,7 +31,11 @@ export default function SectionHeading({
       </Badge>
 
       <div className="w-full h-full flex text-white gap-4 flex-col">
-        <h2 className="text-3xl font-medium">{title}</h2>
+        {title ? (
+          <TextReveal as="h2" className="text-3xl font-medium">
+            {title}
+          </TextReveal>
+        ) : null}
         <div className="max-w-3xl">
           <p className="text-lg text-white/60">{subtitle}</p>
         </div>

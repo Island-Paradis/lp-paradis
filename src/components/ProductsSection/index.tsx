@@ -27,6 +27,8 @@ export default function ProductsSection({
             iconProps={{
               size: 24,
             }}
+            magnetic
+            textSwap
           >
             <span>{projects?.primaryCta?.label}</span>
           </Button>

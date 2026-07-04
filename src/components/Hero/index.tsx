@@ -60,12 +60,12 @@ export default function Hero(args: HeroProps) {
             className="w-full max-w-106.5 flex items-center justify-center gap-4"
           >
             {args.primaryCta && (
-              <Button className="w-full" variant="primary">
+              <Button className="w-full" variant="primary" magnetic textSwap>
                 {args.primaryCta.label}
               </Button>
             )}
             {args.secondaryCta && (
-              <Button className="w-full" variant="outline">
+              <Button className="w-full" variant="outline" magnetic textSwap>
                 {args.secondaryCta.label}
               </Button>
             )}
