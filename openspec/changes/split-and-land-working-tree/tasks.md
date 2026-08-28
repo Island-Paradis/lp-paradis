@@ -38,7 +38,7 @@
 ## 6. Artefatos
 
 - [x] 6.1 Commitar `openspec/` — as quatro changes, o `archive/`, `openspec/specs/`, mais `baseline.md`, `pre-state.md` e `scripts/bundle-attribution.py`
-- [x] 6.2 Decidir sobre `pnpm-lock.yaml` e `pnpm-workspace.yaml` — **ficam fora**. Versioná-los agora consagraria no histórico a dualidade que o `proposal.md` declarou fora de escopo: `node_modules` tem os layouts de npm **e** de pnpm ao mesmo tempo, e o repo já atravessou pnpm → yarn → npm (commits `d7566f9`, `56178d2`, `c67e726`). Escolher gerenciador é decisão da change de higiene, não desta; commitar o lockfile de um deles seria decidir por omissão
+- [x] 6.2 Decidir sobre `pnpm-lock.yaml` e `pnpm-workspace.yaml` — ~~ficam fora~~ → **entram** (commit `14a9ee8`). A decisão original era não versioná-los, para não consagrar no histórico a dualidade npm/pnpm que o `proposal.md` declarou fora de escopo. Revertida por um argumento que a própria change produziu: `baseline.md` registra que **os caminhos resolvidos no build são os do pnpm**, ou seja, todas as medidas de `optimize-landing-performance` foram tiradas nesse ambiente. Sem o lockfile versionado, o ambiente de medição não é reproduzível fora desta máquina — e a change inteira se apoia em números medidos. Verificado que não há efeito colateral no deploy: as duas etapas do `Dockerfile` (linhas 22 e 60) testam `package-lock.json` primeiro, então a imagem continua instalando por npm. O commit registra o estado; **não** escolhe gerenciador, que segue sendo decisão da change de higiene
 
 ## 7. Fecho da árvore
 
@@ -49,8 +49,8 @@
 ## 8. PR #2 — o trabalho novo
 
 - [x] 8.1 Fazer push do branch novo
-- [ ] 8.2 Aguardar o merge do PR #1 — **não abrir o #2 antes**, já que sua base ainda não estaria em `main`
-- [ ] 8.3 Abrir o PR #2 com a tabela de ganhos medidos: LCP 22,3 s → 4,5 s, TBT 2.030 → 230 ms, peso 11.988 → 497 KiB, first-load JS −93,8%
-- [ ] 8.4 Incluir, na mesma altura visual da tabela, a lista do que **não** foi verificado: conferência visual do topo da nav, encaixe dos shapes em `md`/`lg`/`xl`, nitidez da borda do cursor em retina, alinhamento do halo, e o trace de scroll do qual dependem 4.4, 6.4 e 7.6
-- [ ] 8.5 Declarar no corpo que a camada 2 está implementada e não verificada, e que o Lighthouse mede carregamento e não scroll sustentado
-- [ ] 8.6 Informar o progresso das duas changes incompletas e o que falta para fechá-las
+- [x] 8.2 Aguardar o merge do PR #1 — **PR #9, mergeado em 2026-08-28**. Desvio do plano registrado: o #9 foi para `develop`, não para `main`. Como `main` segue em `ae8f186` (2026-02-08), mirar o #2 em `main` recarregaria os 41 commits do #9 e re-litigaria aquela revisão dentro de um diff muito maior. **Base do #2 mudada para `develop`**, que é onde a base real do trabalho passou a existir. Levar `develop` a `main` vira decisão de release à parte, fora desta change
+- [x] 8.3 Abrir o PR #2 com a tabela de ganhos medidos: LCP 22,3 s → 4,5 s, TBT 2.030 → 230 ms, peso 11.988 → 497 KiB, first-load JS −93,8% — **PR #10**, tabela completa de 10 métricas mais a atribuição por pacote (93,2% ícones × 1,2% animação)
+- [x] 8.4 Incluir, na mesma altura visual da tabela, a lista do que **não** foi verificado: conferência visual do topo da nav, encaixe dos shapes em `md`/`lg`/`xl`, nitidez da borda do cursor em retina, alinhamento do halo, e o trace de scroll do qual dependem 4.4, 6.4 e 7.6 — seção própria com 13 itens, separados entre os que dependem de DevTools e os que dependem de conferência visual, incluindo os pendentes de `fix-responsive` (8.1, 8.5) e de `prevent-invisible-text` (7.8)
+- [x] 8.5 Declarar no corpo que a camada 2 está implementada e não verificada, e que o Lighthouse mede carregamento e não scroll sustentado — seção "Ressalva de atribuição", que também registra a leitura contraintuitiva do vídeo: −69,4% de peso sem mover o LCP
+- [x] 8.6 Informar o progresso das duas changes incompletas e o que falta para fechá-las — tabela com as três (31/51, 58/60, 34/49) e o que falta em cada uma
