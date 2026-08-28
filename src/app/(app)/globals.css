@@ -283,10 +283,22 @@
   }
 }
 
+/*
+ * Sem `will-change: transform`.
+ *
+ * Nenhum destes dois elementos anima o próprio transform — quem anima é o
+ * `div` interno do Parallax. `will-change` num elemento cujo transform nunca
+ * muda é uma promessa que nunca se cumpre: o browser reserva e mantém uma
+ * camada de composição pela vida inteira da página, em dois elementos de
+ * largura total, no aparelho onde essa memória é mais escassa.
+ *
+ * O `translateZ(0)` fica. É provavelmente o que de fato estabiliza o
+ * rasterizado do `clip-path`, e é a mais barata das duas promoções.
+ */
+
 .video_shape {
   clip-path: inset(0 round var(--radius-2xl));
   transform: translateZ(0);
-  will-change: transform;
 }
 
 @media (min-width: 768px) {
@@ -313,9 +325,9 @@
   }
 }
 
+/* Sem `will-change` — ver a nota em `.video_shape`. */
 .services_shape {
   transform: translateZ(0);
-  will-change: transform;
 }
 
 @media (min-width: 768px) {
