@@ -42,13 +42,13 @@
 
 ## 7. Fecho da árvore
 
-- [ ] 7.1 Confirmar que `git status` não reporta nenhuma modificação pendente em `src/` e que o índice está vazio
+- [x] 7.1 Confirmar que `git status` não reporta nenhuma modificação pendente em `src/` e que o índice está vazio
 - [x] 7.2 Comparar a árvore final com a cópia de segurança de 1.3, arquivo a arquivo, e confirmar que **nenhum conteúdo de `src/` mudou** durante a operação
 - [x] 7.3 Rodar `npm run lint` e confirmar que a contagem de erros é a mesma da linha de base pré-existente (42 erros / 13 avisos), sem regressão introduzida pela sequência
 
 ## 8. PR #2 — o trabalho novo
 
-- [ ] 8.1 Fazer push do branch novo
+- [x] 8.1 Fazer push do branch novo
 - [ ] 8.2 Aguardar o merge do PR #1 — **não abrir o #2 antes**, já que sua base ainda não estaria em `main`
 - [ ] 8.3 Abrir o PR #2 com a tabela de ganhos medidos: LCP 22,3 s → 4,5 s, TBT 2.030 → 230 ms, peso 11.988 → 497 KiB, first-load JS −93,8%
 - [ ] 8.4 Incluir, na mesma altura visual da tabela, a lista do que **não** foi verificado: conferência visual do topo da nav, encaixe dos shapes em `md`/`lg`/`xl`, nitidez da borda do cursor em retina, alinhamento do halo, e o trace de scroll do qual dependem 4.4, 6.4 e 7.6
