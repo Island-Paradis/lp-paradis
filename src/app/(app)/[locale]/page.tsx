@@ -34,27 +34,27 @@ export default async function Home(props: {
         <MarqueeServices services={services.items} />
       )}
       <div className="w-full h-full flex flex-col items-center justify-center pb-11">
-        <section className="container lg:mx-auto px-4 xl:px-0 py-12 flex flex-col gap-5 leading-8">
+        <section className="container w-full mx-auto px-4 xl:px-0 py-12 flex flex-col gap-5 leading-8">
           <Reveal className="w-full xl:w-149.5 h-full flex flex-col gap-6 py-10 z-10">
             <div
               className="w-full flex flex-col items-center justify-center gap-6 "
               id="about-us"
             >
-              <span>
-                {services?.title ? (
+              <div>
+                {services?.title && (
                   <TextReveal
                     as="h2"
-                    className="font-gilroy text-4xl font-medium"
+                    className="font-gilroy text-4xl font-medium text-neutral-900"
                   >
                     {services.title}
                   </TextReveal>
-                ) : null}
-              </span>
-              <span>
+                )}
+              </div>
+              <div>
                 <p className="text-xl text-muted-foreground">
                   {services?.subtitle}
                 </p>
-              </span>
+              </div>
             </div>
             <div className="w-full flex justify-start">
               <Button
@@ -68,8 +68,8 @@ export default async function Home(props: {
               </Button>
             </div>
           </Reveal>
-          <div className="w-full sm:relative xl:-mt-102 sm:pt-102 flex flex-col items-center justify-center gap-6">
-            <div className="hidden sm:block w-full xl:w-149.5 h-117.5 bg-primary video_shape sm:absolute right-0 top-0 rounded-2xl relative overflow-hidden">
+          <div className="w-full md:relative xl:-mt-102 md:pt-102 flex flex-col items-center justify-center gap-6 services_notch_corner">
+            <div className="hidden md:block w-full xl:w-149.5 h-117.5 bg-primary video_shape md:absolute right-0 top-0 rounded-2xl relative overflow-hidden">
               <Parallax className="absolute inset-0" amount={6}>
                 {/* Oversized so the parallax travel never reveals empty edges. */}
                 <video
@@ -105,7 +105,8 @@ export default async function Home(props: {
                 </video>
               </Parallax>
             </div>
-            <div className="bg-primary flex flex-col rounded-l-2xl rounded-br-2xl pb-12 pt-12 sm:pt-34 gap-32 services_shape rounded-2xl">
+            {/* rounded-2xl arredonda os cantos inferiores; o clip-path não os descreve. */}
+            <div className="w-full bg-primary flex flex-col rounded-2xl pb-12 pt-12 md:pt-34 gap-32 services_shape">
               {services && (
                 <div id="services">
                   <ServicesSection services={services} />
@@ -129,7 +130,7 @@ export default async function Home(props: {
         </section>
         <section
           id="faqs"
-          className="container lg:mx-auto px-4 xl:px-0 py-12 flex flex-col gap-5 leading-8"
+          className="container w-full mx-auto px-4 xl:px-0 py-12 flex flex-col gap-5 leading-8"
         >
           {faqs && <FAQSection {...faqs} />}
         </section>

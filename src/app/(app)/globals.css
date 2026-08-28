@@ -284,6 +284,43 @@
 }
 
 /*
+ * Encaixe entre o bloco de vídeo e o bloco escuro de serviços.
+ *
+ * Os dois recortes formam uma faixa branca em L entre eles. Todos os números
+ * abaixo derivam de três constantes — não ajuste nenhum no olho:
+ *
+ *   G = 18   respiro entre os dois shapes.
+ *            Vem de `md:pt-102` (408) menos a base do corpo do vídeo (390).
+ *   R = 16   raio dos cantos convexos (= --radius-2xl).
+ *   R+G = 34 raio dos cantos côncavos. Para a faixa manter 18px também na
+ *            curva, o arco côncavo e o convexo correspondente têm que ser
+ *            CONCÊNTRICOS — o que só acontece se o côncavo for R + G.
+ *
+ * Consequência: o degrau do services fica sempre em y=80, porque
+ * 408 + 80 − 470 (base da aba do vídeo) = 18 = G.
+ *
+ * A LARGURA NÃO É UMA CONSTANTE. Ela vale `min(1280, vw) − 32` abaixo de `xl`
+ * e 1280 a partir dele, então varia DENTRO de cada breakpoint. Paths que
+ * terminavam na largura do início do breakpoint (736 / 992 / 1280) só
+ * coincidiam com o elemento no primeiro pixel da faixa; em qualquer largura
+ * maior o browser descartava a parte excedente e amputava até 255px de
+ * conteúdo, que continuava sendo layoutado na largura cheia.
+ *
+ * Por isso a borda direita vai a 99999 e quem arredonda os cantos daquele lado
+ * é o `rounded-2xl` do próprio elemento — mesmo recurso já usado no eixo Y
+ * para a altura vinda do Payload (ver nota do .services_shape abaixo).
+ *
+ * Isso cobre cinco dos seis cantos direitos, os que coincidem com um canto do
+ * box: o vídeo em (W,0) e (W,470) — sua altura é exatamente `h-117.5` — e o
+ * services nos dois cantos inferiores e no superior esquerdo. O sexto, o canto
+ * superior direito do painel direito do services, fica em y=80, DENTRO do box,
+ * fora do alcance do `border-radius`; ele é restaurado pelo `::after` do
+ * wrapper (ver `.services_notch_corner` no fim do arquivo).
+ *
+ * O que sobra variando por breakpoint são só as três coordenadas do entalhe.
+ */
+
+/*
  * Sem `will-change: transform`.
  *
  * Nenhum destes dois elementos anima o próprio transform — quem anima é o
@@ -304,7 +341,7 @@
 @media (min-width: 768px) {
   .video_shape {
     clip-path: path(
-      "M 0,16 A 16,16 0,0,1 16,0 L 752,0 A 16,16 0,0,1 768,16 L 768,454 A 16,16 0,0,1 752,470 L 521,470 A 16,16 0,0,1 505,454 L 505,405 A 16,16 0,0,0 491,390 L 16,390 A 16,16 0,0,1 0,374 L 0,16 Z"
+      "M 0,16 A 16,16 0,0,1 16,0 L 99999,0 L 99999,470 L 523,470 A 16,16 0,0,1 507,454 L 507,424 A 34,34 0,0,0 473,390 L 16,390 A 16,16 0,0,1 0,374 L 0,16 Z"
     );
   }
 }
@@ -312,7 +349,7 @@
 @media (min-width: 1024px) {
   .video_shape {
     clip-path: path(
-      "M 0,16 A 16,16 0,0,1 16,0 L 1008,0 A 16,16 0,0,1 1024,16 L 1024,454 A 16,16 0,0,1 1008,470 L 691,470 A 16,16 0,0,1 675,454 L 675,405 A 16,16 0,0,0 661,390 L 16,390 A 16,16 0,0,1 0,374 L 0,16 Z"
+      "M 0,16 A 16,16 0,0,1 16,0 L 99999,0 L 99999,470 L 693,470 A 16,16 0,0,1 677,454 L 677,424 A 34,34 0,0,0 643,390 L 16,390 A 16,16 0,0,1 0,374 L 0,16 Z"
     );
   }
 }
@@ -320,7 +357,7 @@
 @media (min-width: 1280px) {
   .video_shape {
     clip-path: path(
-      "M 0,16 A 16,16 0,0,1 16,0 L 582,0 A 16,16 0,0,1 598,16 L 598,454 A 16,16 0,0,1 582,470 L 200,470 A 16,16 0,0,1 184,454 L 184,405 A 16,16 0,0,0 170,390 L 16,390 A 16,16 0,0,1 0,374 L 0,16 Z"
+      "M 0,16 A 16,16 0,0,1 16,0 L 99999,0 L 99999,470 L 202,470 A 16,16 0,0,1 186,454 L 186,424 A 34,34 0,0,0 152,390 L 16,390 A 16,16 0,0,1 0,374 L 0,16 Z"
     );
   }
 }
@@ -330,10 +367,18 @@
   transform: translateZ(0);
 }
 
+/*
+ * O 99999 no rodapé é deliberado: a altura do bloco vem do Payload e não é
+ * conhecida em build time. O path desce além de qualquer altura plausível e
+ * quem arredonda os cantos inferiores é o `rounded-2xl` do próprio elemento,
+ * que recorta o background independentemente do clip-path. Números fixos aqui
+ * já cortaram 352px do fundo escuro em `lg`.
+ */
+
 @media (min-width: 768px) {
   .services_shape {
     clip-path: path(
-      "M 0,16 A 16,16 0,0,1 16,0 L 473,0 A 16,16 0,0,1 489,16 L 489,70 A 16,16 0,0,0 499,80 L 494,80 L 720,80 A 16,16 0,0,1 736,96 L 736,2984 A 16,16 0,0,1 720,3000 L 16,3000 A 16,16 0,0,1 0,2984 L 0,16 Z"
+      "M 0,16 A 16,16 0,0,1 16,0 L 473,0 A 16,16 0,0,1 489,16 L 489,46 A 34,34 0,0,0 523,80 L 99999,80 L 99999,99999 L 0,99999 L 0,16 Z"
     );
   }
 }
@@ -341,7 +386,7 @@
 @media (min-width: 1024px) {
   .services_shape {
     clip-path: path(
-      "M 0,16 A 16,16 0,0,1 16,0 L 643,0 A 16,16 0,0,1 659,16 L 659,70 A 16,16 0,0,0 669,80 L 664,80 L 976,80 A 16,16 0,0,1 992,96 L 992,2584 A 16,16 0,0,1 976,2600 L 16,2600 A 16,16 0,0,1 0,2584 L 0,16 Z"
+      "M 0,16 A 16,16 0,0,1 16,0 L 643,0 A 16,16 0,0,1 659,16 L 659,46 A 34,34 0,0,0 693,80 L 99999,80 L 99999,99999 L 0,99999 L 0,16 Z"
     );
   }
 }
@@ -349,7 +394,130 @@
 @media (min-width: 1280px) {
   .services_shape {
     clip-path: path(
-      "M 0,16 A 16,16 0,0,1 16,0 L 834,0 A 16,16 0,0,1 850,16 L 850,68 A 16,16 0,0,0 860,86 L 855,86 L 1264,86 A 16,16 0,0,1 1280,96 L 1280,2294 A 16,16 0,0,1 1264,2920 L 16,2920 A 16,16 0,0,1 0,2294 L 0,16 Z"
+      "M 0,16 A 16,16 0,0,1 16,0 L 834,0 A 16,16 0,0,1 850,16 L 850,46 A 34,34 0,0,0 884,80 L 99999,80 L 99999,99999 L 0,99999 L 0,16 Z"
     );
+  }
+}
+
+/*
+ * O sexto canto: o superior direito do painel direito do services.
+ *
+ * Os outros cinco cantos direitos coincidem com um canto do box e o
+ * `rounded-2xl` do elemento dá conta deles. Este fica em y=80, DENTRO do box,
+ * onde o `border-radius` não chega — é o preço de levar a borda direita a
+ * 99999. Ele é redesenhado aqui.
+ *
+ * O `top` é derivado, não medido: 408 é o `md:pt-102` deste wrapper e 80 é o y
+ * do degrau nos paths acima. Mantidos como soma de propósito — se um dos dois
+ * mudar, o outro fica visível na conta.
+ *
+ * O quadrado tem o tamanho do raio e o gradiente tem centro em `0 100%`, o
+ * mesmo ponto que o `border-radius` usaria: dentro do raio fica transparente
+ * (o fundo escuro aparece), fora recebe a cor da página e recorta o canto.
+ *
+ * Tem que ser IRMÃO do .services_shape, não descendente — clip-path recorta
+ * descendentes, e o canto seria removido junto com o resto.
+ */
+
+@media (min-width: 768px) {
+  .services_notch_corner::after {
+    content: "";
+    position: absolute;
+    top: calc(408px + 80px);
+    right: 0;
+    width: 16px;
+    height: 16px;
+    background: radial-gradient(
+      circle 16px at 0 100%,
+      transparent 0 16px,
+      var(--background) 16px
+    );
+    pointer-events: none;
+  }
+}
+
+/*
+ * Rede de segurança de visibilidade.
+ *
+ * O `motion` serializa a prop `initial` como `style` inline durante o SSR
+ * (`makeLatestValues` → `useInitialMotionValues` → `buildHTMLStyles`). O HTML
+ * que sai do servidor já contém `opacity:0` em todo bloco `<Reveal>` e
+ * `translateY(110%)` em cada palavra de `<TextReveal>`, dentro de uma máscara
+ * `overflow-hidden`. Quem desfaz isso é o JavaScript. Quando ele não roda, o
+ * texto está no DOM e não chega à tela.
+ *
+ * O `!important` é o mecanismo: em folha de estilo ele vence um `style` inline
+ * sem `!important`, que é exatamente o que o `motion` produz. É deliberado, e
+ * só existe por isso.
+ *
+ * As duas condições que acionam a regra são disjuntas e nenhuma delas ocorre
+ * no caminho feliz — ver o script inline em `[locale]/layout.tsx`, que é quem
+ * escreve as duas classes:
+ *
+ *   html:not(.js)         o script nunca rodou. Sem JavaScript, bundle
+ *                         bloqueado, ou crawler. A classe é aplicada antes da
+ *                         primeira pintura, então no caminho feliz esta regra
+ *                         nunca chega a casar com conteúdo já pintado — não há
+ *                         flash.
+ *
+ *   html.reveal-failsafe  o script rodou, mas o React não sinalizou vivacidade
+ *                         dentro do prazo. Bundle carregou e a hidratação
+ *                         falhou. O timer testa se o React respondeu, não o
+ *                         estado de revelação de cada elemento — por isso é
+ *                         no-op sempre que o React está vivo, independentemente
+ *                         de quantos elementos já foram revelados.
+ *
+ * A degradação é reversível: se o React hidratar depois do prazo, o efeito de
+ * `HydrationSignal` remove `.reveal-failsafe` e as animações voltam. Custa um
+ * flash de re-ocultar naquele instante. A alternativa — manter aplicada — foi
+ * tentada e descartada: deixava todas as animações mortas até o próximo
+ * reload sempre que a hidratação passasse do prazo, que é justamente o
+ * sintoma que esta regra existe para eliminar.
+ *
+ * O seletor é estreito de propósito: só alcança `[data-reveal]`, que as
+ * primitivas aplicam exclusivamente a elementos cujo estado inicial é
+ * invisível.
+ */
+
+html:not(.js) [data-reveal],
+html.reveal-failsafe [data-reveal] {
+  /* biome-ignore lint/complexity/noImportantStyles: vencer o `style` inline do motion é o mecanismo, não um acidente */
+  opacity: 1 !important;
+  /* biome-ignore lint/complexity/noImportantStyles: idem */
+  transform: none !important;
+}
+
+/*
+ * Texto em gradiente que não some quando o gradiente não pinta.
+ *
+ * `bg-clip-text` + `text-transparent` torna o texto literalmente transparente:
+ * o que se vê é o background recortado no formato das letras. Se o recorte não
+ * for suportado ou não for aplicado, sobra texto transparente sobre fundo
+ * claro — presente no DOM e ilegível.
+ *
+ * Por isso a cor sólida é a declaração BASE e o gradiente só assume dentro do
+ * `@supports`. A ordem é o mecanismo: qualquer falha para na cor sólida.
+ *
+ * Não dá para expressar isso em classes utilitárias inline do Tailwind, porque
+ * `@supports` não existe naquele nível — daí a classe nomeada.
+ *
+ * O `color` nos filhos diretos é reposto porque `color` é herdado: sem isso, o
+ * `<CursorGlow>` que vive dentro do `<h1>` do Hero herdaria a transparência.
+ */
+
+.gradient-text {
+  color: var(--foreground);
+}
+
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  .gradient-text {
+    background-image: linear-gradient(to right, #151718, #6e797e);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .gradient-text > * {
+    color: var(--foreground);
   }
 }
