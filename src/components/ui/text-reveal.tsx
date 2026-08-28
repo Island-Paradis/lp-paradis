@@ -30,9 +30,10 @@ export function TextReveal({
   if (shouldReduceMotion) {
     return (
       <motion.div
+        data-reveal
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
-        viewport={{ margin: "-80px", once: true }}
+        viewport={{ amount: 0, once: true }}
         transition={{ duration: 0.5, delay }}
       >
         <Wrapper className={className}>{children}</Wrapper>
@@ -46,12 +47,38 @@ export function TextReveal({
         // Words are a fixed ordered list; index keys are stable here.
         // biome-ignore lint/suspicious/noArrayIndexKey: static word list
         <span key={`${word}-${i}`}>
-          <span className="inline-block overflow-hidden align-bottom">
+          {/*
+            Quem é observado é a MÁSCARA, não a palavra.
+
+            O `IntersectionObserver` recorta a interseção pelo `overflow` dos
+            ancestrais. A palavra está a `translateY(110%)`, inteiramente fora
+            desta máscara, então observá-la devolve `isIntersecting: false` com
+            `intersectionRect` 0×0 mesmo com ela parada no meio da viewport —
+            medido. Com `once: true`, isso trava a palavra fora da máscara para
+            sempre: ela só seria revelada se já estivesse visível.
+
+            A máscara não recorta a si mesma, então observá-la funciona. O
+            estado viaja daqui para a palavra por propagação de variants.
+          */}
+          {/*
+            Escolha oposta à de `reveal.tsx`, e pelo motivo oposto: aqui o
+            `once: true` sempre existiu, e com ele a zona morta que uma margem
+            negativa cria nas bordas da tela seria PERMANENTE. Por isso o
+            gatilho é sem margem e com limiar zero — qualquer pixel revela.
+          */}
+          <motion.span
+            className="inline-block overflow-hidden align-bottom"
+            initial="hidden"
+            whileInView="show"
+            viewport={{ amount: 0, once: true }}
+          >
             <motion.span
+              // Marcado palavra a palavra, e não só no wrapper: é aqui que o
+              // deslocamento inicial vive, e é ele que a rede de segurança em
+              // `globals.css` precisa zerar.
+              data-reveal
               className="inline-block"
-              initial={{ y: "110%" }}
-              whileInView={{ y: 0 }}
-              viewport={{ margin: "-80px", once: true }}
+              variants={{ hidden: { y: "110%" }, show: { y: 0 } }}
               transition={{
                 duration: 0.6,
                 delay: delay + i * 0.06,
@@ -60,7 +87,7 @@ export function TextReveal({
             >
               {word}
             </motion.span>
-          </span>
+          </motion.span>
           {i < words.length - 1 ? " " : null}
         </span>
       ))}

@@ -128,6 +128,10 @@ export default function CursorFollower() {
       <AnimatePresence>
         {isView && (
           <motion.span
+            // Sem `data-reveal` de propósito: só existe atrás de estado de
+            // cliente (`isView`), nunca é renderizado no servidor, e portanto
+            // não participa do problema de texto invisível sem JavaScript.
+            // Forçá-lo visível deixaria um resíduo do cursor parado na tela.
             className="text-xs font-medium tracking-wide text-black"
             initial={{ opacity: 0, scale: 0.6 }}
             animate={{ opacity: 1, scale: 1 }}

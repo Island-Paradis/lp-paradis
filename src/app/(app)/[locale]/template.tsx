@@ -11,6 +11,11 @@ export default function Template({ children }: { children: ReactNode }) {
 
   return (
     <motion.div
+      // Este wrapper envolve a página inteira, então seu `opacity: 0` inicial
+      // chega ao HTML do servidor cobrindo todo o conteúdo — é a maior
+      // instância isolada do problema que a rede de segurança em `globals.css`
+      // existe para cobrir, e sozinha tornaria inútil marcar os demais.
+      data-reveal
       initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
