@@ -1,3 +1,4 @@
+import { ArrowRightDown } from "@solar-icons/react";
 import Button from "@/components/Button";
 import FAQSection from "@/components/FAQSection";
 import Hero from "@/components/Hero";
@@ -58,7 +59,7 @@ export default async function Home(props: {
             <div className="w-full flex justify-start">
               <Button
                 variant="outline"
-                trailingIcon="ArrowRightDown"
+                trailingIcon={ArrowRightDown}
                 circleIcon
                 magnetic
                 textSwap

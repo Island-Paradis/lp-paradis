@@ -1,14 +1,11 @@
 "use client";
-import type { IconProps } from "@solar-icons/react";
-import * as Icons from "@solar-icons/react";
+import type { IconProps } from "@solar-icons/react/lib/types";
 import { cva, type VariantProps } from "class-variance-authority";
 import { motion } from "motion/react";
 import { Slot } from "radix-ui";
 import type React from "react";
 import { useMagnetic } from "@/lib/use-magnetic";
 import { cn } from "@/lib/utils";
-
-type IconName = keyof typeof Icons;
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center flex-row gap-3 rounded-full text-nowrap cursor-pointer transition-colors duration-300 outline-none focus-visible:ring-2 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50",
@@ -43,7 +40,14 @@ const buttonVariants = cva(
 interface ButtonProps
   extends React.ComponentProps<"button">,
     VariantProps<typeof buttonVariants> {
-  trailingIcon?: IconName;
+  // O componente do ícone, já importado pelo call site — não o seu nome.
+  //
+  // A API anterior recebia uma string e resolvia com `Icons[nome]` sobre um
+  // `import * as`. As duas coisas juntas tornam o tree-shaking impossível: o
+  // bundler não consegue provar quais exports são usados e retém o namespace
+  // inteiro. Medido: 12,7 MB, 93% dos bytes de cliente da rota, para servir
+  // dois call sites. Ver a capability `client-bundle-budget`.
+  trailingIcon?: React.ComponentType<IconProps>;
   iconProps?: IconProps;
   circleIcon?: boolean;
   asChild?: boolean;
@@ -101,9 +105,7 @@ export default function Button(props: ButtonProps) {
       ? motion.button
       : "button";
 
-  const IconComponent = trailingIcon
-    ? (Icons[trailingIcon] as React.ComponentType<IconProps>)
-    : null;
+  const IconComponent = trailingIcon ?? null;
 
   const {
     ref: magneticRef,

@@ -7,6 +7,7 @@ import {
   Palette2,
   ServerPath,
   Smartphone,
+  Widget6,
 } from "@solar-icons/react";
 import type React from "react";
 import type { PopulatedHomepage } from "@/service/types";
@@ -140,7 +141,7 @@ export default function ServicesSection({
       <Reveal className="w-full h-full flex flex-col justify-start gap-6 px-14">
         <Badge
           className="text-secondary max-w-40"
-          icon="Widget6"
+          icon={Widget6}
           iconProps={{
             weight: "Bold",
           }}

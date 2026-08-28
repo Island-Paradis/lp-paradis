@@ -1,13 +1,13 @@
 "use client";
-import * as Icons from "@solar-icons/react";
 import type { IconProps } from "@solar-icons/react/lib/types";
 import type React from "react";
 import { cn } from "@/lib/utils";
 
-type IconName = keyof typeof Icons;
-
 interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
-  icon?: IconName;
+  // O componente do ícone, já importado pelo call site — não o seu nome.
+  // Mesmo motivo documentado em `Button`: `import * as` mais indexação
+  // dinâmica retêm a biblioteca inteira no bundle.
+  icon?: React.ComponentType<IconProps>;
   iconProps?: IconProps;
   children: React.ReactNode;
 }
@@ -18,9 +18,7 @@ export default function Badge({
   children,
   ...props
 }: BadgeProps) {
-  const IconComponent = icon
-    ? (Icons[icon] as React.ComponentType<IconProps>)
-    : null;
+  const IconComponent = icon ?? null;
 
   return (
     <div

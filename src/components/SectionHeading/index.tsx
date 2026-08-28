@@ -1,3 +1,4 @@
+import { Widget6 } from "@solar-icons/react";
 import type { ReactNode } from "react";
 import Badge from "../Badge";
 import { TextReveal } from "../ui/text-reveal";
@@ -22,7 +23,7 @@ export default function SectionHeading({
     <div className="w-full h-full flex flex-col justify-start gap-6">
       <Badge
         className="text-secondary max-w-40"
-        icon="Widget6"
+        icon={Widget6}
         iconProps={{
           weight: "Bold",
         }}
