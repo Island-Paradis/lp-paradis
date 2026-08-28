@@ -79,7 +79,29 @@ export default async function Home(props: {
                   loop
                   playsInline
                 >
-                  <source src={videoUrl} type="video/mp4" />
+                  {/*
+                    `media` no `<source>`, e não um gate em JavaScript.
+
+                    O wrapper é `hidden md:block`, mas `display: none` não
+                    impede o browser de buscar um `<video autoplay>` — medido:
+                    8,5 MB baixados a 375px de largura, 69% do peso da página.
+
+                    Quando nenhum `<source>` casa com o `media`, nada é
+                    buscado. A alternativa seria um client component com
+                    `matchMedia`, e este projeto já tem cicatriz exatamente aí
+                    (ver o comentário em `HydrationSignal` sobre o React #418
+                    causado por estado que diverge entre servidor e cliente).
+
+                    Custo aceito: `media` é avaliado na seleção do source e não
+                    é reavaliado em resize. Redimensionar de mobile para
+                    desktop na mesma sessão deixa a área sem vídeo até um
+                    reload.
+                  */}
+                  <source
+                    src={videoUrl}
+                    type="video/mp4"
+                    media="(min-width: 768px)"
+                  />
                 </video>
               </Parallax>
             </div>
