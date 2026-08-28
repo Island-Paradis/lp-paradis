@@ -217,15 +217,7 @@ export interface Contact {
   socialLinks?:
     | {
         platform:
-          | 'github'
-          | 'linkedin'
-          | 'twitter'
-          | 'instagram'
-          | 'facebook'
-          | 'youtube'
-          | 'discord'
-          | 'whatsapp'
-          | 'other';
+          'github' | 'linkedin' | 'twitter' | 'instagram' | 'facebook' | 'youtube' | 'discord' | 'whatsapp' | 'other';
         url: string;
         label: string;
         id?: string | null;
