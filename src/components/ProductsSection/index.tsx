@@ -1,3 +1,4 @@
+import { ArrowRight } from "@solar-icons/react";
 import { isPopulated } from "@/lib/utils";
 import type { Homepage, Project } from "../../../payload-types";
 import Button from "../Button";
@@ -23,7 +24,7 @@ export default function ProductsSection({
           <Button
             variant="inverted"
             size="lg"
-            trailingIcon="ArrowRight"
+            trailingIcon={ArrowRight}
             iconProps={{
               size: 24,
             }}

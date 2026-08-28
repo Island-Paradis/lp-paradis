@@ -7,6 +7,7 @@ import {
   Palette2,
   ServerPath,
   Smartphone,
+  Widget6,
 } from "@solar-icons/react";
 import type React from "react";
 import type { PopulatedHomepage } from "@/service/types";
@@ -140,7 +141,7 @@ export default function ServicesSection({
       <Reveal className="w-full h-full flex flex-col justify-start gap-6 px-14">
         <Badge
           className="text-secondary max-w-40"
-          icon="Widget6"
+          icon={Widget6}
           iconProps={{
             weight: "Bold",
           }}
@@ -148,21 +149,27 @@ export default function ServicesSection({
           Our Services
         </Badge>
         <div className="w-full h-full flex text-white gap-4 flex-col">
-          <span>
+          <div>
             {services?.ourServicesCT?.title ? (
               <TextReveal as="h2" className="text-3xl font-medium">
                 {services.ourServicesCT.title}
               </TextReveal>
             ) : null}
-          </span>
-          <span className="max-w-3xl">
+          </div>
+          <div className="max-w-3xl">
             <p className="text-lg text-white/60">
               {services?.ourServicesCT?.description}
             </p>
-          </span>
+          </div>
         </div>
       </Reveal>
-      <div className="px-14 md:px-0 flex flex-col md:grid relative w-full  md:grid-cols-12 md:grid-rows-[repeat(20px)] md:auto-rows-[60px] gap-4 after:pointer-events-none after:absolute after:inset-0 after:z-10 after:bg-[linear-gradient(121.55deg,rgba(21,23,24,0.01)_39.57%,rgba(255,255,255,0.01)_83.97%)]">
+      {/*
+        Sem `grid-rows`: as linhas são todas implícitas, dimensionadas por
+        `auto-rows`. Havia aqui um `md:grid-rows-[repeat(20px)]` que não é CSS
+        válido — `repeat()` exige contagem e trilha — e portanto não produzia
+        efeito nenhum, apesar de parecer intencional.
+      */}
+      <div className="px-14 md:px-0 flex flex-col md:grid relative w-full md:grid-cols-12 md:auto-rows-[60px] gap-4 after:pointer-events-none after:absolute after:inset-0 after:z-10 after:bg-[linear-gradient(121.55deg,rgba(21,23,24,0.01)_39.57%,rgba(255,255,255,0.01)_83.97%)]">
         <div className="hidden md:block absolute inset-0 z-20 pointer-events-none [background:radial-gradient(ellipse_65%_55%_at_center,transparent_55%,var(--color-primary)_92%)]" />
         {SERVICE_LAYOUT.map((cell, index) => {
           const delay = Math.min(index * 0.05, 0.4);
@@ -187,17 +194,24 @@ export default function ServicesSection({
               className={`${cell.className} bg-linear-to-b from-white/10 to-white/0 border border-white/5 rounded-xl overflow-hidden flex flex-col justify-start p-4 gap-2 `}
               key={cell.slug}
             >
-              <span className="w-full h-full flex flex-row justify-start items-center gap-2 text-white">
-                {ItemIcon && <ItemIcon weight="Bold" color="#fff" />}
-                <h3 className="text-base md:text-sm font-medium text-nowrap">
-                  {name}
-                </h3>
-              </span>
-              <span>
+              {/*
+                Sem `h-full`: a célula tem altura definida pelo grid e recorta
+                o transbordo, então um irmão que reivindique 100% da altura faz
+                os dois encolherem e espreme a descrição contra o recorte.
+                O header ocupa a altura do próprio conteúdo; o resto é da
+                descrição.
+              */}
+              <div className="w-full flex flex-row justify-start items-start gap-2 text-white">
+                {ItemIcon && (
+                  <ItemIcon weight="Bold" color="#fff" className="shrink-0" />
+                )}
+                <h3 className="text-base md:text-sm font-medium">{name}</h3>
+              </div>
+              <div>
                 <p className="text-base md:text-sm font-normal text-white/60">
                   {description}
                 </p>
-              </span>
+              </div>
             </Reveal>
           );
         })}

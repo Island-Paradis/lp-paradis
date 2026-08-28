@@ -27,7 +27,7 @@ export default function Hero(args: HeroProps) {
   };
 
   return (
-    <div className="bg-background relative flex size-full items-center justify-center overflow-hidden rounded-lg border p-20">
+    <div className="bg-background relative flex size-full items-center justify-center overflow-hidden rounded-lg border p-4 sm:p-10 lg:p-20">
       <GridPattern
         width={90}
         height={30}
@@ -38,26 +38,31 @@ export default function Hero(args: HeroProps) {
           "[-webkit-mask-image:radial-gradient(ellipse_80%_80%_at_center,transparent,white)]",
         )}
       />
-      <div className="relative z-10 text-center bg-background/90 p-10 rounded-xl">
+      <div className="relative z-10 text-center bg-background/90 p-4 sm:p-8 lg:p-10 rounded-xl">
         <motion.div
-          className="mx-auto max-w-4xl py-20 flex flex-col items-center gap-8"
+          className="mx-auto max-w-4xl py-10 lg:py-20 flex flex-col items-center gap-8"
           variants={container}
           initial="hidden"
           animate="show"
         >
           <motion.h1
+            // O Hero anima no mount, sem observer, mas o estado inicial é o
+            // mesmo `opacity: 0` das primitivas e chega assim no HTML do
+            // servidor — logo, precisa da mesma rede de segurança.
+            data-reveal
             variants={item}
-            className="relative cursor-none font-gilroy text-6xl font-bold tracking-tight bg-linear-to-r from-[#151718] to-[#6E797E] bg-clip-text text-transparent leading-20"
+            className="relative cursor-none font-gilroy text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight gradient-text leading-tight lg:leading-20"
           >
             {args.headline}
             <CursorGlow className="z-20" />
           </motion.h1>
-          <motion.span variants={item} className="max-w-lg">
+          <motion.div data-reveal variants={item} className="max-w-lg">
             <p className="text-lg text-primary leading-8">{args.description}</p>
-          </motion.span>
-          <motion.span
+          </motion.div>
+          <motion.div
+            data-reveal
             variants={item}
-            className="w-full max-w-106.5 flex items-center justify-center gap-4"
+            className="w-full max-w-106.5 flex flex-col sm:flex-row items-center justify-center gap-4"
           >
             {args.primaryCta && (
               <Button className="w-full" variant="primary" magnetic textSwap>
@@ -69,7 +74,7 @@ export default function Hero(args: HeroProps) {
                 {args.secondaryCta.label}
               </Button>
             )}
-          </motion.span>
+          </motion.div>
         </motion.div>
       </div>
     </div>

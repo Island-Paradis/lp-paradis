@@ -71,36 +71,57 @@ export function CursorGlow({
     const parent = ref.current?.parentElement;
     if (!parent) return;
 
+    // O scroll INVALIDA o rect; quem MEDE é o ponteiro.
+    //
+    // Antes, o listener de `scroll` chamava `getBoundingClientRect()`. Sob
+    // Lenis o scroll é conduzido por rAF e emite evento a cada frame durante
+    // todo o easing, então aquilo era um layout síncrono forçado por frame,
+    // dentro do próprio frame de animação. Envolver em rAF não resolveria:
+    // continuaria sendo um layout forçado por frame, só que ordenado.
+    //
+    // Aqui o scroll só escreve um booleano. A medida acontece sob demanda, no
+    // `mouseenter`/`mousemove` — isto é, apenas quando o ponteiro está de fato
+    // sobre o elemento e alguém vai usar o valor. Rolar sem hover custa uma
+    // atribuição.
+    let rectDirty = true;
     const measure = () => {
       rectRef.current = parent.getBoundingClientRect();
+      rectDirty = false;
     };
-    measure();
+    const invalidate = () => {
+      rectDirty = true;
+    };
 
     const handleMove = (event: MouseEvent) => {
+      if (rectDirty) measure();
       const rect = rectRef.current;
       if (!rect) return;
       x.set(event.clientX - rect.left - size);
       y.set(event.clientY - rect.top - size);
     };
     const handleEnter = () => {
-      // Re-measure on enter: the target (hero h1) animates in, so the rect
-      // captured at mount can be stale until the next scroll/resize.
+      // Mede na entrada porque o alvo (o h1 do hero) anima, então o rect pode
+      // estar obsoleto mesmo sem scroll.
       measure();
       fade.set(opacity);
     };
     const handleLeave = () => fade.set(0);
 
+    // `ResizeObserver` no lugar do listener de `resize`: pega também mudanças
+    // de tamanho que não vêm da janela (o hero anima na entrada).
+    const ro = new ResizeObserver(invalidate);
+    ro.observe(parent);
+
     parent.addEventListener("mousemove", handleMove);
     parent.addEventListener("mouseenter", handleEnter);
     parent.addEventListener("mouseleave", handleLeave);
-    window.addEventListener("resize", measure);
-    window.addEventListener("scroll", measure, { passive: true });
+    window.addEventListener("scroll", invalidate, { passive: true });
     return () => {
+      ro.disconnect();
       parent.removeEventListener("mousemove", handleMove);
       parent.removeEventListener("mouseenter", handleEnter);
       parent.removeEventListener("mouseleave", handleLeave);
-      window.removeEventListener("resize", measure);
-      window.removeEventListener("scroll", measure);
+      window.removeEventListener("scroll", invalidate);
     };
   }, [enabled, x, y, fade, opacity, size]);
 
