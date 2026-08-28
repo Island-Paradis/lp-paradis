@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# relatórios de scripts/measure-build.sh — específicos da máquina que mediu
+/.build-metrics/
