@@ -1,12 +1,19 @@
+import Link from "next/link";
+import type { Locale } from "@/i18n/routing";
+import { localizedHref } from "@/lib/locale-href";
 import type { PopulatedNavBar } from "@/service/types";
 import Button from "../Button";
 import { NavBar } from "../NavBar";
 import { NavActiveProvider } from "../NavBar/NavActiveContext";
 
-export default async function Header(args: PopulatedNavBar) {
+interface HeaderProps extends PopulatedNavBar {
+  locale: Locale;
+}
+
+export default async function Header({ locale, ...args }: HeaderProps) {
   const logoSrc = args.logo?.image?.url ?? "/logo.svg";
   const logoLightSrc = args.logo?.imageLight?.url ?? logoSrc;
-  const logoHref = args.logo?.url ?? "/";
+  const logoHref = localizedHref(args.logo?.url ?? "/", locale);
   const logoWidth = args.logo?.width ?? 134;
   const logoHeight = args.logo?.height ?? 25;
 
@@ -34,24 +41,51 @@ export default async function Header(args: PopulatedNavBar) {
             {args.links &&
               args.links.length > 0 &&
               args.links.map((link) => (
-                <NavBar.Item key={link.id ?? link.url} href={link.url}>
+                <NavBar.Item
+                  key={link.id ?? link.url}
+                  href={link.url}
+                  locale={locale}
+                  openInNewTab={link.openInNewTab ?? false}
+                >
                   {link.label}
                 </NavBar.Item>
               ))}
           </NavBar.ItemList>
           <NavBar.ButtonWrap>
-            {args.buttons &&
-              args.buttons.length > 0 &&
-              args.buttons.map((btn) => (
+            <NavBar.LocaleSwitch className="px-2 py-2" />
+            {args.buttons?.map((btn) => {
+              if (!btn.url?.trim()) {
+                return (
+                  <Button
+                    key={btn.id ?? btn.label}
+                    size="sm"
+                    className={btn.variant === "outline" ? "bg-white" : ""}
+                    variant={btn.variant ?? "primary"}
+                  >
+                    {btn.label}
+                  </Button>
+                );
+              }
+
+              return (
                 <Button
                   key={btn.id ?? btn.label}
+                  asChild
                   size="sm"
                   className={btn.variant === "outline" ? "bg-white" : ""}
                   variant={btn.variant ?? "primary"}
                 >
-                  {btn.label}
+                  {/* UM único filho: restrição do `Slot` usado pelo `asChild`. */}
+                  <Link
+                    href={localizedHref(btn.url, locale)}
+                    target={btn.openInNewTab ? "_blank" : undefined}
+                    rel={btn.openInNewTab ? "noopener noreferrer" : undefined}
+                  >
+                    {btn.label}
+                  </Link>
                 </Button>
-              ))}
+              );
+            })}
           </NavBar.ButtonWrap>
         </NavBar.MobileMenu>
       </NavBar.Root>

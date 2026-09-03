@@ -4,6 +4,7 @@ export const GLOBAL_SLUGS = {
   navBar: "menu",
   footer: "footer",
   homepage: "homepage",
+  getQuote: "get-quote-page",
 } as const;
 
 export type GlobalSlug = (typeof GLOBAL_SLUGS)[keyof typeof GLOBAL_SLUGS];
