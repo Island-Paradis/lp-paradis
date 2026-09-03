@@ -11,7 +11,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npm run format` — Biome format with `--write`
 - `npx payload generate:types` — regenerate `payload-types.ts` after any change to a collection/global schema
 
-No test runner is configured.
+No test runner is configured. The only verification surface is a **dev-only fixture route** at `/[locale]/fixtures/footer` (`src/app/(app)/[locale]/fixtures/footer/page.tsx`): it renders `Footer` with hand-made props to exercise degraded content states, and calls `notFound()` unless `NODE_ENV === "development"`. Add fixtures there rather than reaching for a test framework, and keep the production guard first in the component body.
 
 ## Architecture
 
@@ -51,3 +51,13 @@ Next.js 16 App Router site whose content is fully driven by **Payload CMS 3** (P
 
 ## Deployment
 Multi-stage `Dockerfile` (Node 24 alpine, lockfile-agnostic) builds the Next.js standalone output and runs `node server.js` as a non-root user.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->
