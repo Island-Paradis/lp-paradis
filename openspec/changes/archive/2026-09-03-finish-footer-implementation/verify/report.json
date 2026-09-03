@@ -1,0 +1,645 @@
+{
+  "base": "http://localhost:3000",
+  "at": "2026-09-03T00:48:02.551Z",
+  "runs": [
+    {
+      "viewport": "desktop",
+      "locale": "en",
+      "url": "http://localhost:3000/en",
+      "shot": {
+        "file": "openspec/changes/finish-footer-implementation/verify/footer-en-desktop.png",
+        "images": {
+          "total": 1,
+          "pending": 0,
+          "waitedMs": 757
+        },
+        "x": 0,
+        "y": 5136,
+        "width": 1425,
+        "height": 492
+      },
+      "bottomBar": {
+        "found": true,
+        "childCount": 2,
+        "kids": [
+          {
+            "tag": "span",
+            "x": 80,
+            "y": 848,
+            "w": 272
+          },
+          {
+            "tag": "ul",
+            "x": 1304,
+            "y": 848,
+            "w": 56
+          }
+        ],
+        "stacked": false
+      },
+      "links": [
+        {
+          "href": "/en",
+          "role": "link",
+          "name": "Home",
+          "ignored": false
+        },
+        {
+          "href": "/en#products",
+          "role": "link",
+          "name": "Products",
+          "ignored": false
+        },
+        {
+          "href": "/en#services",
+          "role": "link",
+          "name": "Services",
+          "ignored": false
+        },
+        {
+          "href": "https://kitenda.paradis.host/",
+          "role": "link",
+          "name": "Kitenda",
+          "ignored": false
+        },
+        {
+          "href": "https://ficha-segura.paradis.host/",
+          "role": "link",
+          "name": "Ficha Segura",
+          "ignored": false
+        },
+        {
+          "href": "#",
+          "role": "link",
+          "name": "Company",
+          "ignored": false
+        },
+        {
+          "href": "#",
+          "role": "link",
+          "name": "Members",
+          "ignored": false
+        },
+        {
+          "href": "#",
+          "role": "link",
+          "name": "Contacts",
+          "ignored": false
+        },
+        {
+          "href": "https://kitenda.paradis.host/",
+          "role": "link",
+          "name": "Kitenda",
+          "ignored": false
+        },
+        {
+          "href": "https://ficha-segura.paradis.host/",
+          "role": "link",
+          "name": "Ficha Segura",
+          "ignored": false
+        },
+        {
+          "href": "#",
+          "role": "link",
+          "name": "Get Quote - For Free",
+          "ignored": false
+        },
+        {
+          "href": "#",
+          "role": "link",
+          "name": "Schedule a Call",
+          "ignored": false
+        },
+        {
+          "href": "https://www.linkedin.com/company/paradis-labs",
+          "role": "link",
+          "name": "Paradis Labs LK",
+          "ignored": false
+        },
+        {
+          "href": "https://www.instagram.com/paradis.labs_/",
+          "role": "link",
+          "name": "Paradis Labs Instagram",
+          "ignored": false
+        }
+      ],
+      "focusOrder": [
+        {
+          "tag": "a",
+          "href": "/en",
+          "label": "Home",
+          "focusVisible": true
+        },
+        {
+          "tag": "a",
+          "href": "/en#products",
+          "label": "Products",
+          "focusVisible": true
+        },
+        {
+          "tag": "a",
+          "href": "/en#services",
+          "label": "Services",
+          "focusVisible": true
+        },
+        {
+          "tag": "a",
+          "href": "https://kitenda.paradis.host/",
+          "label": "Kitenda",
+          "focusVisible": true
+        },
+        {
+          "tag": "a",
+          "href": "https://ficha-segura.paradis.host/",
+          "label": "Ficha Segura",
+          "focusVisible": true
+        },
+        {
+          "tag": "a",
+          "href": "#",
+          "label": "Company",
+          "focusVisible": true
+        },
+        {
+          "tag": "a",
+          "href": "#",
+          "label": "Members",
+          "focusVisible": true
+        },
+        {
+          "tag": "a",
+          "href": "#",
+          "label": "Contacts",
+          "focusVisible": true
+        },
+        {
+          "tag": "a",
+          "href": "#",
+          "label": "Get Quote  - For Free",
+          "focusVisible": true
+        },
+        {
+          "tag": "a",
+          "href": "#",
+          "label": "Schedule a Call",
+          "focusVisible": true
+        },
+        {
+          "tag": "a",
+          "href": "https://www.linkedin.com/company/paradis-labs",
+          "label": "Paradis Labs LK",
+          "focusVisible": true
+        },
+        {
+          "tag": "a",
+          "href": "https://www.instagram.com/paradis.labs_/",
+          "label": "Paradis Labs Instagram",
+          "focusVisible": true
+        }
+      ]
+    },
+    {
+      "viewport": "desktop",
+      "locale": "pt",
+      "url": "http://localhost:3000/pt",
+      "shot": {
+        "file": "openspec/changes/finish-footer-implementation/verify/footer-pt-desktop.png",
+        "images": {
+          "total": 1,
+          "pending": 1,
+          "waitedMs": 15149,
+          "timedOut": true
+        },
+        "x": 0,
+        "y": 5136,
+        "width": 1425,
+        "height": 492
+      },
+      "bottomBar": {
+        "found": true,
+        "childCount": 2,
+        "kids": [
+          {
+            "tag": "span",
+            "x": 80,
+            "y": 848,
+            "w": 272
+          },
+          {
+            "tag": "ul",
+            "x": 1304,
+            "y": 848,
+            "w": 56
+          }
+        ],
+        "stacked": false
+      },
+      "links": [
+        {
+          "href": "/pt",
+          "role": "link",
+          "name": "Home",
+          "ignored": false
+        },
+        {
+          "href": "/pt#products",
+          "role": "link",
+          "name": "Products",
+          "ignored": false
+        },
+        {
+          "href": "/pt#services",
+          "role": "link",
+          "name": "Services",
+          "ignored": false
+        },
+        {
+          "href": "https://kitenda.paradis.host/",
+          "role": "link",
+          "name": "Kitenda",
+          "ignored": false
+        },
+        {
+          "href": "https://ficha-segura.paradis.host/",
+          "role": "link",
+          "name": "Ficha Segura",
+          "ignored": false
+        },
+        {
+          "href": "#",
+          "role": "link",
+          "name": "Company",
+          "ignored": false
+        },
+        {
+          "href": "#",
+          "role": "link",
+          "name": "Members",
+          "ignored": false
+        },
+        {
+          "href": "#",
+          "role": "link",
+          "name": "Contacts",
+          "ignored": false
+        },
+        {
+          "href": "https://kitenda.paradis.host/",
+          "role": "link",
+          "name": "Kitenda",
+          "ignored": false
+        },
+        {
+          "href": "https://ficha-segura.paradis.host/",
+          "role": "link",
+          "name": "Ficha Segura",
+          "ignored": false
+        },
+        {
+          "href": "#",
+          "role": "link",
+          "name": "Get Quote - For Free",
+          "ignored": false
+        },
+        {
+          "href": "#",
+          "role": "link",
+          "name": "Schedule a Call",
+          "ignored": false
+        },
+        {
+          "href": "https://www.linkedin.com/company/paradis-labs",
+          "role": "link",
+          "name": "Paradis Labs LK",
+          "ignored": false
+        },
+        {
+          "href": "https://www.instagram.com/paradis.labs_/",
+          "role": "link",
+          "name": "Paradis Labs Instagram",
+          "ignored": false
+        }
+      ],
+      "focusOrder": [
+        {
+          "tag": "a",
+          "href": "/pt",
+          "label": "Home",
+          "focusVisible": true
+        },
+        {
+          "tag": "a",
+          "href": "/pt#products",
+          "label": "Products",
+          "focusVisible": true
+        },
+        {
+          "tag": "a",
+          "href": "/pt#services",
+          "label": "Services",
+          "focusVisible": true
+        },
+        {
+          "tag": "a",
+          "href": "https://kitenda.paradis.host/",
+          "label": "Kitenda",
+          "focusVisible": true
+        },
+        {
+          "tag": "a",
+          "href": "https://ficha-segura.paradis.host/",
+          "label": "Ficha Segura",
+          "focusVisible": true
+        },
+        {
+          "tag": "a",
+          "href": "#",
+          "label": "Company",
+          "focusVisible": true
+        },
+        {
+          "tag": "a",
+          "href": "#",
+          "label": "Members",
+          "focusVisible": true
+        },
+        {
+          "tag": "a",
+          "href": "#",
+          "label": "Contacts",
+          "focusVisible": true
+        },
+        {
+          "tag": "a",
+          "href": "#",
+          "label": "Get Quote  - For Free",
+          "focusVisible": true
+        },
+        {
+          "tag": "a",
+          "href": "#",
+          "label": "Schedule a Call",
+          "focusVisible": true
+        },
+        {
+          "tag": "a",
+          "href": "https://www.linkedin.com/company/paradis-labs",
+          "label": "Paradis Labs LK",
+          "focusVisible": true
+        },
+        {
+          "tag": "a",
+          "href": "https://www.instagram.com/paradis.labs_/",
+          "label": "Paradis Labs Instagram",
+          "focusVisible": true
+        }
+      ]
+    },
+    {
+      "viewport": "narrow",
+      "locale": "en",
+      "url": "http://localhost:3000/en",
+      "shot": {
+        "file": "openspec/changes/finish-footer-implementation/verify/footer-en-narrow.png",
+        "images": {
+          "total": 1,
+          "pending": 1,
+          "waitedMs": 15158,
+          "timedOut": true
+        },
+        "x": 0,
+        "y": 6515,
+        "width": 390,
+        "height": 784
+      },
+      "bottomBar": {
+        "found": true,
+        "childCount": 2,
+        "kids": [
+          {
+            "tag": "span",
+            "x": 16,
+            "y": 909,
+            "w": 358
+          },
+          {
+            "tag": "ul",
+            "x": 16,
+            "y": 945,
+            "w": 358
+          }
+        ],
+        "stacked": true
+      },
+      "links": [
+        {
+          "href": "/en",
+          "role": "link",
+          "name": "Home",
+          "ignored": false
+        },
+        {
+          "href": "/en#products",
+          "role": "link",
+          "name": "Products",
+          "ignored": false
+        },
+        {
+          "href": "/en#services",
+          "role": "link",
+          "name": "Services",
+          "ignored": false
+        },
+        {
+          "href": "https://kitenda.paradis.host/",
+          "role": "link",
+          "name": "Kitenda",
+          "ignored": false
+        },
+        {
+          "href": "https://ficha-segura.paradis.host/",
+          "role": "link",
+          "name": "Ficha Segura",
+          "ignored": false
+        },
+        {
+          "href": "#",
+          "role": "link",
+          "name": "Company",
+          "ignored": false
+        },
+        {
+          "href": "#",
+          "role": "link",
+          "name": "Members",
+          "ignored": false
+        },
+        {
+          "href": "#",
+          "role": "link",
+          "name": "Contacts",
+          "ignored": false
+        },
+        {
+          "href": "https://kitenda.paradis.host/",
+          "role": "link",
+          "name": "Kitenda",
+          "ignored": false
+        },
+        {
+          "href": "https://ficha-segura.paradis.host/",
+          "role": "link",
+          "name": "Ficha Segura",
+          "ignored": false
+        },
+        {
+          "href": "#",
+          "role": "link",
+          "name": "Get Quote - For Free",
+          "ignored": false
+        },
+        {
+          "href": "#",
+          "role": "link",
+          "name": "Schedule a Call",
+          "ignored": false
+        },
+        {
+          "href": "https://www.linkedin.com/company/paradis-labs",
+          "role": "link",
+          "name": "Paradis Labs LK",
+          "ignored": false
+        },
+        {
+          "href": "https://www.instagram.com/paradis.labs_/",
+          "role": "link",
+          "name": "Paradis Labs Instagram",
+          "ignored": false
+        }
+      ]
+    },
+    {
+      "viewport": "narrow",
+      "locale": "pt",
+      "url": "http://localhost:3000/pt",
+      "shot": {
+        "file": "openspec/changes/finish-footer-implementation/verify/footer-pt-narrow.png",
+        "images": {
+          "total": 1,
+          "pending": 1,
+          "waitedMs": 15155,
+          "timedOut": true
+        },
+        "x": 0,
+        "y": 6515,
+        "width": 390,
+        "height": 784
+      },
+      "bottomBar": {
+        "found": true,
+        "childCount": 2,
+        "kids": [
+          {
+            "tag": "span",
+            "x": 16,
+            "y": 909,
+            "w": 358
+          },
+          {
+            "tag": "ul",
+            "x": 16,
+            "y": 945,
+            "w": 358
+          }
+        ],
+        "stacked": true
+      },
+      "links": [
+        {
+          "href": "/pt",
+          "role": "link",
+          "name": "Home",
+          "ignored": false
+        },
+        {
+          "href": "/pt#products",
+          "role": "link",
+          "name": "Products",
+          "ignored": false
+        },
+        {
+          "href": "/pt#services",
+          "role": "link",
+          "name": "Services",
+          "ignored": false
+        },
+        {
+          "href": "https://kitenda.paradis.host/",
+          "role": "link",
+          "name": "Kitenda",
+          "ignored": false
+        },
+        {
+          "href": "https://ficha-segura.paradis.host/",
+          "role": "link",
+          "name": "Ficha Segura",
+          "ignored": false
+        },
+        {
+          "href": "#",
+          "role": "link",
+          "name": "Company",
+          "ignored": false
+        },
+        {
+          "href": "#",
+          "role": "link",
+          "name": "Members",
+          "ignored": false
+        },
+        {
+          "href": "#",
+          "role": "link",
+          "name": "Contacts",
+          "ignored": false
+        },
+        {
+          "href": "https://kitenda.paradis.host/",
+          "role": "link",
+          "name": "Kitenda",
+          "ignored": false
+        },
+        {
+          "href": "https://ficha-segura.paradis.host/",
+          "role": "link",
+          "name": "Ficha Segura",
+          "ignored": false
+        },
+        {
+          "href": "#",
+          "role": "link",
+          "name": "Get Quote - For Free",
+          "ignored": false
+        },
+        {
+          "href": "#",
+          "role": "link",
+          "name": "Schedule a Call",
+          "ignored": false
+        },
+        {
+          "href": "https://www.linkedin.com/company/paradis-labs",
+          "role": "link",
+          "name": "Paradis Labs LK",
+          "ignored": false
+        },
+        {
+          "href": "https://www.instagram.com/paradis.labs_/",
+          "role": "link",
+          "name": "Paradis Labs Instagram",
+          "ignored": false
+        }
+      ]
+    }
+  ]
+}
