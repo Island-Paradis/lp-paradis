@@ -105,7 +105,16 @@ export const HomePage: GlobalConfig = {
               name: "url",
               type: "text",
               label: "URL",
-              defaultValue: "/projects",
+              // Era `/projects`, uma rota que não existe. O valor nunca chegou
+              // à base de dados — `defaultValue` no Payload só se aplica na
+              // criação do documento, e este global já existia — portanto o
+              // conteúdo real era `#` e ninguém notou. `#` explícito alinha a
+              // schema com o que lá está e com a convenção do `Hero`.
+              defaultValue: "#",
+              admin: {
+                description:
+                  "Um destino em calendly.com (ou subdomínio) abre o calendário num popup por cima da página, em vez de navegar. A detecção é pelo endereço — não há campo que a ligue ou desligue. Deixar em '#' mantém o botão inerte, sem link.",
+              },
             },
           ],
         },
@@ -187,6 +196,10 @@ export const HomePage: GlobalConfig = {
               type: "text",
               required: true,
               label: "URL",
+              admin: {
+                description:
+                  "Um destino em `calendly.com` (ou subdomínio) abre o calendário num popup por cima da página, em vez de navegar — a detecção é pelo endereço, não há campo que a ligue. Deixar em `#` mantém o botão inerte, sem link.",
+              },
             },
           ],
         },
