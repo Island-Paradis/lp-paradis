@@ -4,6 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { motion } from "motion/react";
 import { Slot } from "radix-ui";
 import type React from "react";
+import { ShineBorder } from "@/components/ui/shine-border";
 import { useMagnetic } from "@/lib/use-magnetic";
 import { cn } from "@/lib/utils";
 
@@ -13,10 +14,17 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary: "bg-primary text-white hover:bg-primary/90",
-        outline: "border border-secondary text-primary hover:bg-secondary/10",
+        // 1,5px fixos nos dois estados: `border` conta para dentro do box, e
+        // engordá-lo só no hover encolheria a caixa de conteúdo meio pixel de
+        // cada lado a meio da animação — visível nos botões `magnetic`.
+        outline:
+          "border-[1.5px] border-secondary text-primary hover:bg-secondary/40",
         // p/ fundos escuros (Footer, ProductsSection):
-        inverted: "bg-white text-primary font-semibold hover:bg-white/90",
-        "outline-inverted": "border border-white text-white hover:bg-white/10",
+        // A borda transparente reserva a largura sem se ver: o `bg-white`
+        // pinta por baixo dela, portanto em repouso o bloco não mostra aro.
+        inverted:
+          "border-[1.5px] border-transparent bg-white text-primary font-semibold hover:bg-white/90",
+        "outline-inverted": "border border-white text-white hover:bg-white/40",
         // link-CTA (Card "Discover More"):
         link: "p-0 gap-2.5 rounded-none text-current hover:underline",
         // botão-ícone (hambúrguer):
@@ -37,26 +45,56 @@ const buttonVariants = cva(
   },
 );
 
-interface ButtonProps
-  extends React.ComponentProps<"button">,
-    VariantProps<typeof buttonVariants> {
-  // O componente do ícone, já importado pelo call site — não o seu nome.
-  //
-  // A API anterior recebia uma string e resolvia com `Icons[nome]` sobre um
-  // `import * as`. As duas coisas juntas tornam o tree-shaking impossível: o
-  // bundler não consegue provar quais exports são usados e retém o namespace
-  // inteiro. Medido: 12,7 MB, 93% dos bytes de cliente da rota, para servir
-  // dois call sites. Ver a capability `client-bundle-budget`.
+/**
+ * Como cada camada do botão inverte quando o painel de preenchimento sobe.
+ *
+ * Os cinco campos são obrigatórios de propósito. Uma variante nova que esqueça
+ * `icon`, `rim` ou `shine` passa a falhar a compilação, em vez de ficar com a
+ * cor fixa de repouso durante o hover — que é exactamente o bug que esta
+ * tabela existe para corrigir: uma camada esquecida acaba da cor daquilo que
+ * está atrás dela e desaparece.
+ */
+type SwapInvert = {
+  /** Cor do rótulo em hover. Vai para o `<button>`. */
+  text: string;
+  /** O painel que sobe por trás do conteúdo. */
+  fill: string;
+  /** Disco do `circleIcon` e o glifo lá dentro, em hover. */
+  icon: string;
+  /** Cor do contorno em hover. Vai para o `<button>`. */
+  rim: string;
+  /**
+   * Ajuste do anel de `shine` enquanto o painel sobe. String vazia é uma
+   * declaração válida — e a única forma de dizer "esta variante não precisa" —,
+   * mas tem de ser escrita.
+   */
+  shine: string;
+};
+
+const SHINE_PALETTE = ["#5B8DEF", "#9B5BEF", "#EF5B8D", "#5BD1EF", "#5B8DEF"];
+
+type ButtonOwnProps = VariantProps<typeof buttonVariants> & {
   trailingIcon?: React.ComponentType<IconProps>;
   iconProps?: IconProps;
   circleIcon?: boolean;
-  asChild?: boolean;
-  // Magnetic pull toward the cursor while hovered (dstudio-style CTAs).
   magnetic?: boolean;
-  // Vertical text-swap on hover: the label slides up while a copy slides in
-  // from below (dstudio-style). Ignored when `asChild` is set.
   textSwap?: boolean;
-}
+  shine?: boolean;
+};
+
+type ButtonElementProps =
+  | (React.ComponentProps<"button"> & {
+      asChild?: boolean;
+      href?: never;
+      openInNewTab?: never;
+    })
+  | (Omit<React.ComponentProps<"a">, "href"> & {
+      asChild?: never;
+      href: string;
+      openInNewTab?: boolean;
+    });
+
+type ButtonProps = ButtonOwnProps & ButtonElementProps;
 
 export default function Button(props: ButtonProps) {
   const {
@@ -69,41 +107,119 @@ export default function Button(props: ButtonProps) {
     asChild = false,
     magnetic = false,
     textSwap = false,
+    shine = false,
+    href,
+    openInNewTab = false,
     children,
     ...rest
   } = props;
 
+  // `href` sem `asChild` é o caminho de âncora COM camadas. A união em
+  // `ButtonElementProps` já impede os dois juntos; o `!asChild` aqui é o que
+  // faz o `Comp` abaixo ser exaustivo sem depender dessa garantia de tipos.
+  const isAnchor = !asChild && href !== undefined;
+
+  // `href` NÃO entra nesta conta, de propósito: o caminho de âncora mantém o
+  // deslize de rótulo. Só `asChild` o perde, e perde-o por o `Slot` aceitar um
+  // filho único — ver o comentário em `ButtonElementProps`.
   const swap = textSwap && !asChild;
 
-  // On hover, text-swap buttons invert their colours to match the source. The
-  // background swap is directional: a `fill` layer slides up from the bottom on
-  // hover and back down on leave (see the span below), while `text` inverts the
-  // label/border on the button itself. Plain `hover:` (not `group-hover:`,
-  // which only targets descendants of a hovered .group) with `!` to override
-  // each variant's own hover colours.
-  const swapInvert: Record<string, { text: string; fill: string }> = {
-    primary: { text: "hover:text-primary!", fill: "bg-white" },
-    outline: {
-      text: "hover:text-white! hover:border-primary!",
-      fill: "bg-primary",
-    },
-    inverted: { text: "hover:text-white!", fill: "bg-primary" },
-    "outline-inverted": {
-      text: "hover:text-primary! hover:border-white!",
+  // O anel é excluído do `asChild` pela MESMA razão mecânica, e não por
+  // estética: o `Slot` entrega `children` cru e não tem onde receber uma
+  // camada irmã. O caminho `href` fica dentro, como as camadas de inversão.
+  const hasShine = shine && !asChild;
+
+  // O disco só pode trocar de cor ao mesmo ritmo do painel: se saltasse para
+  // branco à entrada do cursor, ficava branco sobre um botão ainda claro
+  // durante os 500ms da subida — o mesmo defeito ao contrário.
+  const iconSwap =
+    "transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:bg-white group-hover:text-primary";
+
+  // Escurecimento do anel enquanto um painel CLARO sobe. Contra `#ffffff` só o
+  // ciano da paleta falha (1.78:1); isto leva-o a 3.33:1 sem apagar os outros.
+  //
+  // Duas razões para os valores serem estes e não outros:
+  //
+  //   • `brightness(.7)` é o mínimo que passa o pior matiz dos 3:1. Mais
+  //     escuro rouba contraste ao caso simétrico — o anel também tem de se ver
+  //     contra o preenchimento de repouso enquanto o painel ainda não cobriu.
+  //   • `saturate(1.4)` acompanha porque escurecer sozinho aproxima as quatro
+  //     matizes umas das outras, e o que se perde é a leitura de gradiente.
+  //
+  // A duração e a curva são as do painel, pela razão que o `iconSwap` acima já
+  // documenta: um ajuste mais rápido que a subida deixaria o anel escuro sobre
+  // um botão ainda escuro a meio caminho.
+  //
+  // E o repouso declara o filtro IDENTIDADE em vez de o omitir. Isto não é
+  // redundante: `filter: none → brightness(.7)` não interpola, salta — e o
+  // salto lê-se como um pisco no primeiro frame do hover.
+  const shineDim =
+    "brightness-100 saturate-100 transition-[filter] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:brightness-[0.7] group-hover:saturate-[1.4]";
+
+  const swapInvert: Record<string, SwapInvert> = {
+    primary: {
+      text: "hover:text-primary!",
       fill: "bg-white",
+      icon: "",
+      rim: "",
+      // Painel claro: o anel precisa de escurecer.
+      shine: shineDim,
+    },
+    outline: {
+      text: "hover:text-white!",
+      fill: "bg-primary",
+      icon: iconSwap,
+      // Igual ao `fill` de propósito: atrás do contorno está a página clara,
+      // não o preenchimento, e é a fronteira preenchimento/página que carrega
+      // a silhueta. Um aro mais claro aqui leria como halo.
+      rim: "hover:border-primary!",
+      // Painel escuro: as quatro matizes já passam 3,78:1 contra `#212528`.
+      // Vazio é a declaração de "não precisa", e está escrita de propósito —
+      // omiti-la faria a variante falhar a compilação, que é o ponto.
+      shine: "",
+    },
+    inverted: {
+      text: "hover:text-white!",
+      fill: "bg-primary",
+      icon: iconSwap,
+      // A `ProductsSection` corre dentro de `bg-primary`, ou seja o
+      // preenchimento de hover fica da cor da secção e o botão dissolve-se.
+      // Opaco, e não `white/40`: o `background` pinta por baixo da borda e o
+      // painel é `inset-0` (padding box), portanto o aro compõe-se sobre o
+      // `bg-white` do próprio botão e o alfa não faria nada.
+      rim: "hover:border-neutral-500!",
+      // Painel escuro, como `outline`.
+      shine: "",
+    },
+    "outline-inverted": {
+      text: "hover:text-primary!",
+      fill: "bg-white",
+      icon: "",
+      rim: "hover:border-white!",
+      // Painel claro, como `primary`.
+      shine: shineDim,
     },
   };
   const invert = swap ? swapInvert[variant ?? "primary"] : undefined;
-
-  // Apply the magnetic transform to the button element itself (no wrapper) so
-  // layout classes like `w-full` keep working. Only when `asChild` is set do we
-  // fall back to wrapping, since a Slot child can't take motion values.
-  // Typed as ElementType so the polymorphic element accepts motion style values.
   const Comp: React.ElementType = asChild
     ? Slot.Root
-    : magnetic
-      ? motion.button
-      : "button";
+    : isAnchor
+      ? "a"
+      : magnetic
+        ? motion.button
+        : "button";
+
+  // Âncora "nua" e não `motion.a`: o deslocamento magnético vem do
+  // `<motion.span>` no fim do ficheiro, o mesmo que o caminho `asChild` já
+  // usava. Animar a própria âncora daria dois mecanismos para o mesmo efeito.
+  const anchorProps: Record<string, unknown> = isAnchor
+    ? {
+        href,
+        target: openInNewTab ? "_blank" : undefined,
+        // `noopener` impede a página de destino de alcançar o nosso `window`.
+        rel: openInNewTab ? "noopener noreferrer" : undefined,
+      }
+    : {};
 
   const IconComponent = trailingIcon ?? null;
 
@@ -115,10 +231,11 @@ export default function Button(props: ButtonProps) {
     onMouseLeave,
   } = useMagnetic({ strength: 0.4 });
 
-  // Motion values on `style` aren't part of the plain <button> prop types, so
-  // this is spread through a loose record onto the polymorphic `Comp`.
+  // Os dois caminhos que delegam o magnetismo ao wrapper — `asChild` e `href` —
+  // ficam de fora: aplicar `style={{x, y}}` aqui E no wrapper somaria o
+  // deslocamento duas vezes.
   const magneticProps: Record<string, unknown> =
-    magnetic && !asChild
+    magnetic && !asChild && !isAnchor
       ? {
           ref: magneticRef,
           style: { x, y },
@@ -127,9 +244,6 @@ export default function Button(props: ButtonProps) {
         }
       : {};
 
-  // The label. When `swap` is on, two stacked copies share one grid cell inside
-  // an `overflow-hidden` mask: on hover the first slides up and the second rises
-  // in from below. The trailing icon stays outside the swap.
   const label = swap ? (
     <span className="relative inline-grid overflow-hidden">
       <span className="col-start-1 row-start-1 block transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-full">
@@ -154,6 +268,9 @@ export default function Button(props: ButtonProps) {
           className={cn(
             "icon inline-flex items-center justify-center",
             circleIcon && "rounded-full bg-primary p-1 text-white",
+            // Sem disco o glifo já inverte sozinho, por herdar `currentColor`
+            // do botão — não leva regra de cor própria.
+            circleIcon && invert?.icon,
           )}
         >
           <IconComponent {...iconProps} />
@@ -163,46 +280,76 @@ export default function Button(props: ButtonProps) {
   );
 
   const inner = (
-    // Slot requires a single React element child, so when `asChild` is set we
-    // forward the children untouched (no extra icon wrapper).
     <Comp
       data-cursor="hover"
       className={cn(
         buttonVariants({ variant, size }),
-        swap && "group relative overflow-hidden isolate duration-500",
+        // O painel de preenchimento e o anel são os dois `absolute inset-0`:
+        // ambos precisam que a caixa do botão seja o contexto de
+        // posicionamento, e nenhum deles o tem de graça.
+        (swap || hasShine) && "relative",
+        // O `overflow-hidden` é só do painel, e fica de propósito fora da
+        // conta do anel: o anel vive no limite exacto do clip, e recortá-lo
+        // afina-o nas curvas da pill. O caminho `shine` sem `swap` — que é o
+        // do submit de `/get-quote` — não paga esse recorte.
+        swap && "group overflow-hidden isolate duration-500",
         invert?.text,
+        invert?.rim,
         className,
       )}
-      {...rest}
+      {...(rest as Record<string, unknown>)}
+      {...anchorProps}
       {...magneticProps}
     >
-      {invert && (
-        // Directional colour swap: the inverted background slides up from the
-        // bottom on hover and back down on leave (transition reverses itself).
-        <span
-          aria-hidden
-          className={cn(
-            "pointer-events-none absolute inset-0 translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-y-0",
-            invert.fill,
-          )}
-        />
-      )}
       {asChild ? (
         children
-      ) : swap ? (
-        <span className="relative z-10 inline-flex items-center gap-3">
-          {content}
-        </span>
       ) : (
-        content
+        <>
+          {invert && (
+            <span
+              aria-hidden
+              className={cn(
+                "pointer-events-none absolute inset-0 translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-y-0",
+                invert.fill,
+              )}
+            />
+          )}
+          {/* A ORDEM destes três irmãos é o empilhamento, e é por isso que
+              nenhum deles leva `z-index` próprio:
+
+                painel  absolute, z auto  ─┐ mesmo nível, decide o DOM
+                anel    absolute, z auto  ─┘ → anel acima do painel
+                rótulo  relative, z-10      → acima dos dois
+
+              O painel é `inset-0` e, em `primary`, é branco: por baixo dele o
+              anel desaparecia no hover, exactamente quando o botão está a ser
+              olhado. Acima do rótulo pintaria gradiente sobre os glifos. */}
+          {/* `invert?.shine` é `undefined` fora do caminho `swap`, e isso é
+              correcto por construção: o ajuste existe por causa do painel, e
+              sem `swap` não há painel para ajustar contra. */}
+          {hasShine && (
+            <ShineBorder
+              borderWidth={2}
+              shineColor={SHINE_PALETTE}
+              className={invert?.shine}
+            />
+          )}
+          {swap || hasShine ? (
+            <span className="relative z-10 inline-flex items-center gap-3">
+              {content}
+            </span>
+          ) : (
+            content
+          )}
+        </>
       )}
     </Comp>
   );
 
-  if (!magnetic || !asChild) return inner;
-
-  // `asChild` renders a Slot child that can't receive motion values, so wrap it
-  // in a magnetic span (the non-asChild path applies the transform inline).
+  // O wrapper serve os dois caminhos que não podem receber o `style` animado
+  // directamente: `asChild`, porque o `style` iria para o filho e colidiria com
+  // o dele, e `href`, por decisão acima de manter um só mecanismo.
+  if (!magnetic || (!asChild && !isAnchor)) return inner;
   return (
     <motion.span
       ref={magneticRef as React.Ref<HTMLSpanElement>}
