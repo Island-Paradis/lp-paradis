@@ -13,7 +13,9 @@ import { Hero } from "./collections/Hero";
 // Collections
 import { Media } from "./collections/Media";
 import { Projects } from "./collections/Projects";
+import { GetQuotePage } from "./collections/pages/GetQuotePage";
 import { HomePage } from "./collections/pages/HomePage";
+import { QuoteRequests } from "./collections/QuoteRequests";
 import { Services } from "./collections/Services";
 import { Testimonials } from "./collections/Testimonials";
 import { s3Bucket, s3ClientConfig } from "./service/s3";
@@ -25,10 +27,19 @@ export default buildConfig({
   editor: lexicalEditor(),
 
   // Collections
-  collections: [Media, Hero, Contact, Projects, Services, Testimonials, FAQs],
+  collections: [
+    Media,
+    Hero,
+    Contact,
+    Projects,
+    Services,
+    Testimonials,
+    FAQs,
+    QuoteRequests,
+  ],
 
   // Globals (site-wide settings)
-  globals: [HomePage, Menu, Footer],
+  globals: [HomePage, GetQuotePage, Menu, Footer],
 
   localization: {
     locales: [

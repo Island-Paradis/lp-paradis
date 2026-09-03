@@ -1,3 +1,4 @@
+import LocaleSwitch from "./LocaleSwitch";
 import NavBarButtonWrap from "./NavBarButtonWrap";
 import NavBarItem from "./NavBarItem";
 import NavBarItemsList from "./NavBarItemsList";
@@ -12,4 +13,5 @@ export const NavBar = {
   ItemList: NavBarItemsList,
   ButtonWrap: NavBarButtonWrap,
   MobileMenu: NavBarMobileMenu,
+  LocaleSwitch,
 };

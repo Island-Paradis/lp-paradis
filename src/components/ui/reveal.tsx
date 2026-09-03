@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import type { ReactNode } from "react";
 
 type Direction = "up" | "down" | "left" | "right" | "none";
@@ -26,18 +26,18 @@ interface RevealProps {
 // viewport, and reverses back out when it leaves (replays on every scroll up /
 // down). Being a client component that renders `children`, it can wrap both
 // client and server sections without turning them into client components.
-// Respects `prefers-reduced-motion` (mirrors `scroll-based-velocity.tsx`).
+//
+// `prefers-reduced-motion` é atendido em CSS, não aqui: a primitiva emite
+// sempre o offset de direção e a regra no fim de `globals.css` neutraliza o
+// deslocamento. Consultar a preferência no corpo da renderização divergia a
+// hidratação em toda carga com ela ativa — ver `@/lib/use-reduced-motion`.
 export function Reveal({
   children,
   className,
   direction = "up",
   delay = 0,
 }: RevealProps) {
-  const shouldReduceMotion = useReducedMotion();
-
-  const initial = shouldReduceMotion
-    ? { opacity: 0 }
-    : { opacity: 0, ...OFFSET[direction] };
+  const initial = { opacity: 0, ...OFFSET[direction] };
 
   return (
     <motion.div

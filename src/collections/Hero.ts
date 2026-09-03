@@ -52,6 +52,10 @@ export const Hero: CollectionConfig = {
           type: "text",
           label: "URL",
           defaultValue: "#",
+          admin: {
+            description:
+              "Um destino em calendly.com (ou subdomínio) abre o calendário num popup por cima da página, em vez de navegar. A detecção é pelo endereço — não há campo que a ligue ou desligue. Deixar em '#' mantém o botão inerte, sem link.",
+          },
         },
       ],
     },
@@ -72,6 +76,10 @@ export const Hero: CollectionConfig = {
           type: "text",
           label: "URL",
           defaultValue: "#",
+          admin: {
+            description:
+              "Um destino em calendly.com (ou subdomínio) abre o calendário num popup por cima da página, em vez de navegar. A detecção é pelo endereço — não há campo que a ligue ou desligue. Deixar em '#' mantém o botão inerte, sem link.",
+          },
         },
       ],
     },

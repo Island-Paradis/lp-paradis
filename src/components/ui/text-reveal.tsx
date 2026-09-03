@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import type { ElementType } from "react";
 import { cn } from "@/lib/utils";
 
@@ -15,31 +15,31 @@ interface TextRevealProps {
 
 // Masked word reveal: splits text into words, each inside an `overflow-hidden`
 // wrapper, and slides the words up from below the mask when scrolled into view.
-// Complements `reveal.tsx` (which fades/slides whole blocks). Respects
-// `prefers-reduced-motion` by falling back to a plain fade.
+// Complements `reveal.tsx` (which fades/slides whole blocks).
+//
+// `prefers-reduced-motion` é atendido em CSS. Existia aqui um subtree
+// alternativo — um `<div>` único com fade de opacidade — escolhido por
+// `useReducedMotion()` no corpo da renderização. Era o pior dos casos de
+// divergência de hidratação do projeto: com a preferência ativa, o servidor
+// emitia N `<span>` mascarados e a primeira renderização do cliente pedia um
+// `<div>`, o que muda a FORMA do DOM e o React não consegue remendar — ele
+// descartava a hidratação e re-renderizava a raiz (#418).
+//
+// O caminho mascarado passa a ser o único, e a regra no fim de `globals.css`
+// zera o deslocamento sob a preferência. Consequência aceita e especificada em
+// `scroll-reveal-animations`: como aqui só `y` é animado, neutralizar o
+// deslocamento não deixa animação nenhuma — as palavras aparecem legíveis, em
+// deslocamento nulo dentro das suas máscaras, sem transição. O fade que o
+// subtree alternativo dava se perde. Para movimento reduzido, "aparece
+// imediatamente sem se mover" é a leitura mais fiel da preferência.
 export function TextReveal({
   children,
   className,
   as,
   delay = 0,
 }: TextRevealProps) {
-  const shouldReduceMotion = useReducedMotion();
   const Wrapper = (as ?? "div") as ElementType;
   const words = children.split(" ");
-
-  if (shouldReduceMotion) {
-    return (
-      <motion.div
-        data-reveal
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ amount: 0, once: true }}
-        transition={{ duration: 0.5, delay }}
-      >
-        <Wrapper className={className}>{children}</Wrapper>
-      </motion.div>
-    );
-  }
 
   return (
     <Wrapper className={cn("inline-block", className)}>
