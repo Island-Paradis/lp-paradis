@@ -477,6 +477,12 @@
  * O seletor é estreito de propósito: só alcança `[data-reveal]`, que as
  * primitivas aplicam exclusivamente a elementos cujo estado inicial é
  * invisível.
+ *
+ * A regra de movimento reduzido logo abaixo compartilha esse seletor e NÃO é
+ * a mesma coisa. As duas se distinguem por qual propriedade declaram, e a
+ * diferença é o ponto: esta força `opacity` porque o conteúdo estaria
+ * ilegível; a de baixo deixa `opacity` em paz porque o fade é justamente a
+ * animação que a preferência do usuário não pede para remover.
  */
 
 html:not(.js) [data-reveal],
@@ -485,6 +491,48 @@ html.reveal-failsafe [data-reveal] {
   opacity: 1 !important;
   /* biome-ignore lint/complexity/noImportantStyles: idem */
   transform: none !important;
+}
+
+/*
+ * Movimento reduzido, atendido em CSS e não em JavaScript.
+ *
+ * As primitivas de animação não consultam `prefers-reduced-motion` para
+ * decidir o que renderizar — ver `src/lib/use-reduced-motion.ts` e a regra em
+ * `biome.json`. Elas emitem sempre o caminho de movimento completo, e o
+ * deslocamento é neutralizado aqui. É o que mantém o HTML do servidor idêntico
+ * à primeira renderização do cliente sob qualquer preferência, que é a
+ * invariante que `hydration-integrity` estabelece.
+ *
+ * Antes disto, `useReducedMotion()` do `motion` era lido no corpo de
+ * renderização e a hidratação divergia em toda carga com a preferência ativa.
+ * Onde a árvore mudava de forma — `text-reveal` e `parallax` — o React
+ * descartava a hidratação e re-renderizava a raiz.
+ *
+ * `!important` pelo mesmo motivo da regra acima: vencer o `style` inline que o
+ * `motion` serializa. Mecanismo, não acidente.
+ *
+ * `opacity` está deliberadamente FORA. Sob movimento reduzido o fade é o que
+ * se quer preservar; o que a preferência pede para remover é deslocamento.
+ * Consequência aceita: `text-reveal` anima apenas `y`, então lá não sobra
+ * animação nenhuma — as palavras aparecem no estado final, legíveis, sem
+ * transição. Registrado no delta de `scroll-reveal-animations`.
+ *
+ * `[data-parallax]` é marcador próprio e não `[data-reveal]` de propósito: o
+ * parallax nunca é invisível, só deslocado, e marcá-lo com `data-reveal`
+ * mentiria sobre o atributo e o sujeitaria à rede de segurança acima sem
+ * necessidade. O nome é específico para recusar virar o balde onde todo
+ * `transform` decorativo cai — inclusive `transform` que sirva a layout, que
+ * esta regra quebraria. Um segundo caso legítimo ganha o seu próprio
+ * marcador.
+ */
+
+@media (prefers-reduced-motion: reduce) {
+  /* biome-ignore lint/style/noDescendingSpecificity: a especificidade menor que a da rede de segurança acima é inofensiva aqui — as duas declaram `transform: none !important` com o MESMO valor, então quando ambas casam a de cima vence sem alterar o resultado. Esta regra nunca precisa sobrepor aquela. */
+  [data-reveal],
+  [data-parallax] {
+    /* biome-ignore lint/complexity/noImportantStyles: vencer o `style` inline do motion é o mecanismo, não um acidente */
+    transform: none !important;
+  }
 }
 
 /*

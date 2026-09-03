@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  type MotionValue,
-  useMotionValue,
-  useReducedMotion,
-  useSpring,
-} from "motion/react";
+import { type MotionValue, useMotionValue, useSpring } from "motion/react";
 import {
   type RefObject,
   useCallback,
@@ -13,6 +8,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { useReducedMotion } from "@/lib/use-reduced-motion";
 
 interface UseMagneticOptions {
   // How far (px) outside the element the pull starts being tracked. The pointer
