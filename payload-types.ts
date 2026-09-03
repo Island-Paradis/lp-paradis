@@ -74,6 +74,7 @@ export interface Config {
     services: Service;
     testimonials: Testimonial;
     faqs: Faq;
+    'quote-requests': QuoteRequest;
     'payload-kv': PayloadKv;
     users: User;
     'payload-locked-documents': PayloadLockedDocument;
@@ -89,6 +90,7 @@ export interface Config {
     services: ServicesSelect<false> | ServicesSelect<true>;
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     faqs: FaqsSelect<false> | FaqsSelect<true>;
+    'quote-requests': QuoteRequestsSelect<false> | QuoteRequestsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -101,11 +103,13 @@ export interface Config {
   fallbackLocale: ('false' | 'none' | 'null') | false | null | ('pt' | 'en') | ('pt' | 'en')[];
   globals: {
     homepage: Homepage;
+    'get-quote-page': GetQuotePage;
     menu: Menu;
     footer: Footer;
   };
   globalsSelect: {
     homepage: HomepageSelect<false> | HomepageSelect<true>;
+    'get-quote-page': GetQuotePageSelect<false> | GetQuotePageSelect<true>;
     menu: MenuSelect<false> | MenuSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
   };
@@ -193,10 +197,16 @@ export interface Hero {
   description: string;
   primaryCta: {
     label: string;
+    /**
+     * Um destino em calendly.com (ou subdomínio) abre o calendário num popup por cima da página, em vez de navegar. A detecção é pelo endereço — não há campo que a ligue ou desligue. Deixar em '#' mantém o botão inerte, sem link.
+     */
     url?: string | null;
   };
   secondaryCta: {
     label: string;
+    /**
+     * Um destino em calendly.com (ou subdomínio) abre o calendário num popup por cima da página, em vez de navegar. A detecção é pelo endereço — não há campo que a ligue ou desligue. Deixar em '#' mantém o botão inerte, sem link.
+     */
     url?: string | null;
   };
   backgroundImage?: (number | null) | Media;
@@ -356,6 +366,27 @@ export interface Faq {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "quote-requests".
+ */
+export interface QuoteRequest {
+  id: number;
+  name: string;
+  email: string;
+  message: string;
+  services?: (number | Service)[] | null;
+  /**
+   * Slugs dos serviços no momento da submissão. Sobrevive a um serviço apagado ou renomeado.
+   */
+  serviceSlugs?: string[] | null;
+  /**
+   * Locale da página onde a submissão foi feita.
+   */
+  submittedLocale?: ('en' | 'pt') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -430,6 +461,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'faqs';
         value: number | Faq;
+      } | null)
+    | ({
+        relationTo: 'quote-requests';
+        value: number | QuoteRequest;
       } | null)
     | ({
         relationTo: 'users';
@@ -645,6 +680,20 @@ export interface FaqsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "quote-requests_select".
+ */
+export interface QuoteRequestsSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  message?: T;
+  services?: T;
+  serviceSlugs?: T;
+  submittedLocale?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
@@ -730,6 +779,9 @@ export interface Homepage {
     subtitle: string;
     primaryCta?: {
       label?: string | null;
+      /**
+       * Um destino em calendly.com (ou subdomínio) abre o calendário num popup por cima da página, em vez de navegar. A detecção é pelo endereço — não há campo que a ligue ou desligue. Deixar em '#' mantém o botão inerte, sem link.
+       */
       url?: string | null;
     };
     items?: (number | Project)[] | null;
@@ -745,6 +797,9 @@ export interface Homepage {
     };
     primaryCta: {
       label: string;
+      /**
+       * Um destino em `calendly.com` (ou subdomínio) abre o calendário num popup por cima da página, em vez de navegar — a detecção é pelo endereço, não há campo que a ligue. Deixar em `#` mantém o botão inerte, sem link.
+       */
       url: string;
     };
     items?: (number | Service)[] | null;
@@ -764,6 +819,75 @@ export interface Homepage {
   contact?: {
     enabled?: boolean | null;
     item?: (number | null) | Contact;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "get-quote-page".
+ */
+export interface GetQuotePage {
+  id: number;
+  seo?: {
+    metaTitle?: string | null;
+    metaDescription?: string | null;
+  };
+  hero?: {
+    /**
+     * Título grande no topo. Quebras de linha são respeitadas. Vazio usa o texto padrão do design.
+     */
+    headline?: string | null;
+    /**
+     * Parágrafo à direita, abaixo do headline. Vazio usa o texto padrão do design.
+     */
+    intro?: string | null;
+  };
+  /**
+   * A cápsula com o ponto verde (ex.: 'Available for new projects · Luanda, Angola').
+   */
+  availability?: {
+    enabled?: boolean | null;
+    label?: string | null;
+    /**
+     * Opcional. Vazio remove também o separador que a precede.
+     */
+    location?: string | null;
+  };
+  form?: {
+    /**
+     * Válvula de fecho da única escrita pública do site. Desligar esconde o formulário E faz a Server Action rejeitar submissões — sem deploy de código. Use se aparecer spam.
+     */
+    enabled?: boolean | null;
+    /**
+     * Rótulo pequeno acima do formulário (ex.: 'THE BRIEF').
+     */
+    eyebrow?: string | null;
+    nameLabel?: string | null;
+    emailLabel?: string | null;
+    interestsLabel?: string | null;
+    /**
+     * Os chips de 'I'm interested in…' são serviços desta lista. Um interesse que ainda não exista em Services (ex.: 'API & Integrations', 'AI Solutions') precisa primeiro de ser criado como serviço. Lista vazia esconde a secção de interesses inteira.
+     */
+    interests?: (number | Service)[] | null;
+    messageLabel?: string | null;
+    submitLabel?: string | null;
+    /**
+     * Texto ao lado do botão (ex.: 'Your details are safe — no ads, no spam.').
+     */
+    privacyNote?: string | null;
+    /**
+     * Textos de estado e de validação. Vazios usam o texto padrão em código.
+     */
+    messages?: {
+      success?: string | null;
+      error?: string | null;
+      nameRequired?: string | null;
+      emailRequired?: string | null;
+      emailInvalid?: string | null;
+      messageRequired?: string | null;
+      tooLong?: string | null;
+    };
   };
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -825,6 +949,23 @@ export interface Footer {
    */
   tagline?: string | null;
   /**
+   * Headings for the band shown at the top of the footer on the Get Quote page only. Other pages never show this band. The email address displayed next to these headings is NOT set here — it comes from the Contact collection, so that there is a single source of truth for it.
+   */
+  directContact?: {
+    /**
+     * Sits above the email address (e.g. 'Reach Us Directly'). The email itself comes from the Contact collection.
+     */
+    reachHeading?: string | null;
+    /**
+     * Sits above the email address (e.g. 'Email Us'). The email itself comes from the Contact collection.
+     */
+    emailHeading?: string | null;
+    /**
+     * Sits above the social pills (e.g. 'Elsewhere'). The pills themselves come from Social Links below.
+     */
+    socialHeading?: string | null;
+  };
+  /**
    * Columns of links displayed in the footer (e.g. Quick Links, Company, Products)
    */
   linkGroups?:
@@ -842,7 +983,7 @@ export interface Footer {
       }[]
     | null;
   /**
-   * CTA block shown on the right side of the footer
+   * CTA block shown on the right side of the footer. Um destino em calendly.com (ou subdomínio) em qualquer dos dois botões abre o calendário num popup por cima da página, em vez de navegar — a detecção é pelo endereço, não há campo que a ligue ou desligue. Deixar em '#' mantém o botão inerte, sem link.
    */
   cta: {
     heading?: string | null;
@@ -859,6 +1000,33 @@ export interface Footer {
    * Text shown in the bottom bar (e.g. 'Paradis.Labs - All rights reserved.')
    */
   copyrightText?: string | null;
+  /**
+   * Icons shown at the right of the bottom bar, in the order added here. Icons exist for Dribbble, LinkedIn and Instagram; any other platform falls back to showing its label as text.
+   */
+  socialLinks?:
+    | {
+        platform:
+          | 'dribbble'
+          | 'linkedin'
+          | 'instagram'
+          | 'github'
+          | 'twitter'
+          | 'facebook'
+          | 'youtube'
+          | 'discord'
+          | 'whatsapp'
+          | 'other';
+        /**
+         * Absolute URL. Opens in a new tab.
+         */
+        url: string;
+        /**
+         * Not shown on screen — it is the link's accessible name, read by screen readers (e.g. 'Paradis on LinkedIn').
+         */
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -944,6 +1112,58 @@ export interface HomepageSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "get-quote-page_select".
+ */
+export interface GetQuotePageSelect<T extends boolean = true> {
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+      };
+  hero?:
+    | T
+    | {
+        headline?: T;
+        intro?: T;
+      };
+  availability?:
+    | T
+    | {
+        enabled?: T;
+        label?: T;
+        location?: T;
+      };
+  form?:
+    | T
+    | {
+        enabled?: T;
+        eyebrow?: T;
+        nameLabel?: T;
+        emailLabel?: T;
+        interestsLabel?: T;
+        interests?: T;
+        messageLabel?: T;
+        submitLabel?: T;
+        privacyNote?: T;
+        messages?:
+          | T
+          | {
+              success?: T;
+              error?: T;
+              nameRequired?: T;
+              emailRequired?: T;
+              emailInvalid?: T;
+              messageRequired?: T;
+              tooLong?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "menu_select".
  */
 export interface MenuSelect<T extends boolean = true> {
@@ -984,6 +1204,13 @@ export interface MenuSelect<T extends boolean = true> {
 export interface FooterSelect<T extends boolean = true> {
   logo?: T;
   tagline?: T;
+  directContact?:
+    | T
+    | {
+        reachHeading?: T;
+        emailHeading?: T;
+        socialHeading?: T;
+      };
   linkGroups?:
     | T
     | {
@@ -1016,6 +1243,14 @@ export interface FooterSelect<T extends boolean = true> {
             };
       };
   copyrightText?: T;
+  socialLinks?:
+    | T
+    | {
+        platform?: T;
+        url?: T;
+        label?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

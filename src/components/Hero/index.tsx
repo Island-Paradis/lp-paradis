@@ -1,24 +1,42 @@
 "use client";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import type { Hero as Herotype } from "../../../payload-types";
-import Button from "../Button";
+import CalendlyCta from "../CalendlyCta";
 import { CursorGlow } from "../ui/cursor-glow";
 import { GridPattern } from "../ui/grid-pattern";
 
-interface HeroProps extends Herotype {}
+interface HeroProps extends Herotype {
+  // Os destinos dos dois CTAs, JÁ resolvidos pelo servidor: prefixo de locale
+  // aplicado ao que é interno, `undefined` quando não há destino authorado.
+  //
+  // Props separadas em vez de se usar `args.primaryCta.url` directamente porque
+  // este componente é cliente e não recebe o locale — e resolvê-lo aqui
+  // obrigaria a importar `@/i18n`, que é o custo que `lib/locale-href.ts`
+  // documenta ter medido em 33,6 KB.
+  primaryCtaHref?: string;
+  secondaryCtaHref?: string;
+}
 
 export default function Hero(args: HeroProps) {
-  const shouldReduceMotion = useReducedMotion();
-
+  // `prefers-reduced-motion` é atendido em CSS, não aqui — a regra no fim de
+  // `globals.css` neutraliza o deslocamento de todo `[data-reveal]`, e os itens
+  // deste container carregam o atributo. Consultar a preferência no corpo da
+  // renderização divergia a hidratação; ver `@/lib/use-reduced-motion`.
+  //
+  // O `staggerChildren` era zerado sob a preferência e agora é fixo. Duas
+  // razões: nunca foi fonte de divergência (o container tem `hidden: {}`, que
+  // não serializa `style` nenhum), e com o deslocamento neutralizado o que
+  // resta escalonado é opacidade — um fade escalonado por 0,1s é movimento
+  // reduzido por qualquer definição razoável.
   const container = {
     hidden: {},
     show: {
-      transition: { staggerChildren: shouldReduceMotion ? 0 : 0.1 },
+      transition: { staggerChildren: 0.1 },
     },
   };
   const item = {
-    hidden: shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 16 },
+    hidden: { opacity: 0, y: 16 },
     show: {
       opacity: 1,
       y: 0,
@@ -46,9 +64,6 @@ export default function Hero(args: HeroProps) {
           animate="show"
         >
           <motion.h1
-            // O Hero anima no mount, sem observer, mas o estado inicial é o
-            // mesmo `opacity: 0` das primitivas e chega assim no HTML do
-            // servidor — logo, precisa da mesma rede de segurança.
             data-reveal
             variants={item}
             className="relative cursor-none font-gilroy text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight gradient-text leading-tight lg:leading-20"
@@ -65,14 +80,26 @@ export default function Hero(args: HeroProps) {
             className="w-full max-w-106.5 flex flex-col sm:flex-row items-center justify-center gap-4"
           >
             {args.primaryCta && (
-              <Button className="w-full" variant="primary" magnetic textSwap>
+              <CalendlyCta
+                className="w-full"
+                variant="primary"
+                href={args.primaryCtaHref}
+                magnetic
+                textSwap
+              >
                 {args.primaryCta.label}
-              </Button>
+              </CalendlyCta>
             )}
             {args.secondaryCta && (
-              <Button className="w-full" variant="outline" magnetic textSwap>
+              <CalendlyCta
+                className="w-full"
+                variant="outline"
+                href={args.secondaryCtaHref}
+                magnetic
+                textSwap
+              >
                 {args.secondaryCta.label}
-              </Button>
+              </CalendlyCta>
             )}
           </motion.div>
         </motion.div>

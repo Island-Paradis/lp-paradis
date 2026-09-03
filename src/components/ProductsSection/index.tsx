@@ -1,15 +1,20 @@
 import { ArrowRight } from "@solar-icons/react";
 import { isPopulated } from "@/lib/utils";
 import type { Homepage, Project } from "../../../payload-types";
-import Button from "../Button";
+import CalendlyCta from "../CalendlyCta";
 import Card from "../Card";
 import SectionHeading from "../SectionHeading";
 import { Reveal } from "../ui/reveal";
 
 export default function ProductsSection({
   projects,
+  ctaHref,
 }: {
   projects: Homepage["projects"];
+  // Destino do CTA, já resolvido pelo servidor — prefixo de locale aplicado ao
+  // que é interno, `undefined` quando não há destino authorado. O componente
+  // não recebe o locale, à imagem do `Hero`.
+  ctaHref?: string;
 }) {
   const items = (projects?.items ?? []).filter(isPopulated<Project>);
 
@@ -21,9 +26,10 @@ export default function ProductsSection({
           title={projects?.title}
           subtitle={projects?.subtitle}
         >
-          <Button
+          <CalendlyCta
             variant="inverted"
             size="lg"
+            href={ctaHref}
             trailingIcon={ArrowRight}
             iconProps={{
               size: 24,
@@ -32,7 +38,7 @@ export default function ProductsSection({
             textSwap
           >
             <span>{projects?.primaryCta?.label}</span>
-          </Button>
+          </CalendlyCta>
         </SectionHeading>
       </Reveal>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8">
