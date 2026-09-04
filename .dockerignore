@@ -1,0 +1,36 @@
+# Dependencies – installed fresh inside the container
+node_modules
+
+# Next.js build output
+.next
+
+# Git metadata
+.git
+.gitignore
+
+# Local env files – pass secrets via Coolify environment variables
+.env
+.env.*
+!.env.example
+
+# Development / editor files
+.vscode
+.idea
+*.log
+npm-debug.log*
+
+# macOS
+.DS_Store
+
+# Artefatos de ferramenta local que não são entrada da build. O peso é
+# irrelevante; o efeito não é — enquanto estavam no contexto, editar uma spec
+# ou o cache incremental do tsc invalidava o `COPY . .` e forçava recompilação
+# sem que nenhuma entrada real tivesse mudado.
+tsconfig.tsbuildinfo
+openspec
+.claude
+
+# Harness de medição e seus relatórios. Ficam de fora pelo mesmo motivo: medir
+# o build não pode ser a coisa que invalida o build.
+scripts
+.build-metrics

@@ -7,7 +7,14 @@
   },
   "files": {
     "ignoreUnknown": true,
-    "includes": ["**", "!node_modules", "!.next", "!dist", "!build"]
+    "includes": [
+      "**",
+      "!node_modules",
+      "!.next",
+      "!dist",
+      "!build",
+      "!openspec"
+    ]
   },
   "formatter": {
     "enabled": true,
@@ -20,6 +27,19 @@
       "recommended": true,
       "suspicious": {
         "noUnknownAtRules": "off"
+      },
+      "style": {
+        "noRestrictedImports": {
+          "level": "error",
+          "options": {
+            "paths": {
+              "motion/react": {
+                "importNames": ["useReducedMotion"],
+                "message": "Use `useReducedMotion` de `@/lib/use-reduced-motion`. O hook do `motion` le a preferencia dentro de um inicializador de `useState`, e o valor difere entre servidor (`null`) e cliente sob `prefers-reduced-motion` (`true`) — divergencia de hidratacao em toda carga com a preferencia ativa. Ver a invariante em `openspec/specs/hydration-integrity`. Preferencia que so muda apresentacao vai para CSS; a que muda comportamento vai para o hook do projeto."
+              }
+            }
+          }
+        }
       }
     },
     "domains": {

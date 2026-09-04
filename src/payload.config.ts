@@ -1,15 +1,62 @@
-import sharp from "sharp";
-import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { postgresAdapter } from "@payloadcms/db-postgres";
+import { lexicalEditor } from "@payloadcms/richtext-lexical";
+import { s3Storage } from "@payloadcms/storage-s3";
+import { en } from "@payloadcms/translations/languages/en";
+import { pt } from "@payloadcms/translations/languages/pt";
 import { buildConfig } from "payload";
+import sharp from "sharp";
+import { Contact } from "./collections/Contact";
+import { FAQs } from "./collections/FAQs";
+import { Footer } from "./collections/globals/Footer";
+import { Menu } from "./collections/globals/NavBar";
+import { Hero } from "./collections/Hero";
+// Collections
+import { Media } from "./collections/Media";
+import { Projects } from "./collections/Projects";
+import { GetQuotePage } from "./collections/pages/GetQuotePage";
+import { HomePage } from "./collections/pages/HomePage";
+import { QuoteRequests } from "./collections/QuoteRequests";
+import { Services } from "./collections/Services";
+import { Testimonials } from "./collections/Testimonials";
+import { s3Bucket, s3ClientConfig } from "./service/s3";
+
+// Pages
 
 export default buildConfig({
   // If you'd like to use Rich Text, pass your editor here
   editor: lexicalEditor(),
 
-  // Define and configure your collections in this array
-  collections: [],
+  // Collections
+  collections: [
+    Media,
+    Hero,
+    Contact,
+    Projects,
+    Services,
+    Testimonials,
+    FAQs,
+    QuoteRequests,
+  ],
 
+  // Globals (site-wide settings)
+  globals: [HomePage, GetQuotePage, Menu, Footer],
+
+  localization: {
+    locales: [
+      { label: "Português", code: "pt" },
+      { label: "English", code: "en" },
+    ],
+    defaultLocale: "en",
+    fallback: true,
+  },
+
+  i18n: {
+    fallbackLanguage: "en", // default
+    supportedLanguages: {
+      en,
+      pt,
+    },
+  },
   // Your Payload secret - should be a complex and secure string, unguessable
   secret: process.env.PAYLOAD_SECRET || "",
   // Whichever Database Adapter you're using should go here
@@ -25,4 +72,20 @@ export default buildConfig({
   // This is optional - if you don't need to do these things,
   // you don't need it!
   sharp,
+  plugins: [
+    s3Storage({
+      collections: {
+        media: {
+          // Serve all media through the resilient `/cdn` proxy route (retry + cache).
+          // Videos included: Payload's native handler issues a Range GetObject that
+          // garage rejects ("signed header `range` is not present"); `/cdn` fetches
+          // the whole object without a Range header and slices it locally.
+          generateFileURL: ({ filename }) =>
+            `/cdn/${encodeURIComponent(filename)}`,
+        },
+      },
+      bucket: s3Bucket,
+      config: s3ClientConfig,
+    }),
+  ],
 });

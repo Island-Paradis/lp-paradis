@@ -1,0 +1,150 @@
+"use client";
+
+import { motion, useMotionValue, useSpring } from "motion/react";
+import { useEffect, useRef, useState } from "react";
+import { useReducedMotion } from "@/lib/use-reduced-motion";
+import { cn } from "@/lib/utils";
+
+interface CursorGlowProps {
+  className?: string;
+  // Radius of the glow in px.
+  size?: number;
+  // Inner color of the halo (defaults to white).
+  from?: string;
+  // Mid color of the halo (defaults to a softer white).
+  via?: string;
+  // Peak opacity of the halo while the pointer is over the area.
+  opacity?: number;
+}
+
+// Cursor-following "labareda" (flame/halo): a soft radial glow tinted with the
+// hero gradient that trails the pointer. It is fully self-contained — it
+// attaches the pointer listener to its own parent element, so the parent only
+// needs to be `relative`. Renders a `pointer-events-none` layer so it never
+// steals hover/clicks from the content above it.
+//
+// Performance: instead of animating the CSS `background` (a full-layer repaint
+// every frame), it moves a fixed-size element with a *static* radial gradient
+// using `transform: translate()` (GPU-composited). No infinite blur loop.
+// Disabled on touch / coarse-pointer devices and respects
+// `prefers-reduced-motion` (mirrors `reveal.tsx`).
+export function CursorGlow({
+  className,
+  size = 50,
+  from = "rgba(255, 255, 255, 0.85)",
+  via = "rgba(255, 255, 255, 0.4)",
+  opacity = 1,
+}: CursorGlowProps) {
+  const shouldReduceMotion = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  // Cached parent rect so we don't read layout on every mousemove.
+  const rectRef = useRef<DOMRect | null>(null);
+
+  // Only enable on devices with a fine pointer (skip touch entirely).
+  const [enabled, setEnabled] = useState(false);
+
+  // Translate to the pointer, offset by `size` so the glow stays centred.
+  const x = useMotionValue(-size * 2);
+  const y = useMotionValue(-size * 2);
+  // Spring lag gives the halo its flame-like trail; disabled for reduced motion.
+  const springConfig = { stiffness: 150, damping: 20, mass: 0.6 };
+  const xSpring = useSpring(x, springConfig);
+  const ySpring = useSpring(y, springConfig);
+
+  const fade = useMotionValue(0);
+  const fadeSpring = useSpring(fade, { stiffness: 200, damping: 30 });
+
+  const glowX = shouldReduceMotion ? x : xSpring;
+  const glowY = shouldReduceMotion ? y : ySpring;
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    setEnabled(window.matchMedia("(pointer: fine)").matches);
+  }, []);
+
+  useEffect(() => {
+    if (!enabled) return;
+    const parent = ref.current?.parentElement;
+    if (!parent) return;
+
+    // O scroll INVALIDA o rect; quem MEDE é o ponteiro.
+    //
+    // Antes, o listener de `scroll` chamava `getBoundingClientRect()`. Sob
+    // Lenis o scroll é conduzido por rAF e emite evento a cada frame durante
+    // todo o easing, então aquilo era um layout síncrono forçado por frame,
+    // dentro do próprio frame de animação. Envolver em rAF não resolveria:
+    // continuaria sendo um layout forçado por frame, só que ordenado.
+    //
+    // Aqui o scroll só escreve um booleano. A medida acontece sob demanda, no
+    // `mouseenter`/`mousemove` — isto é, apenas quando o ponteiro está de fato
+    // sobre o elemento e alguém vai usar o valor. Rolar sem hover custa uma
+    // atribuição.
+    let rectDirty = true;
+    const measure = () => {
+      rectRef.current = parent.getBoundingClientRect();
+      rectDirty = false;
+    };
+    const invalidate = () => {
+      rectDirty = true;
+    };
+
+    const handleMove = (event: MouseEvent) => {
+      if (rectDirty) measure();
+      const rect = rectRef.current;
+      if (!rect) return;
+      x.set(event.clientX - rect.left - size);
+      y.set(event.clientY - rect.top - size);
+    };
+    const handleEnter = () => {
+      // Mede na entrada porque o alvo (o h1 do hero) anima, então o rect pode
+      // estar obsoleto mesmo sem scroll.
+      measure();
+      fade.set(opacity);
+    };
+    const handleLeave = () => fade.set(0);
+
+    // `ResizeObserver` no lugar do listener de `resize`: pega também mudanças
+    // de tamanho que não vêm da janela (o hero anima na entrada).
+    const ro = new ResizeObserver(invalidate);
+    ro.observe(parent);
+
+    parent.addEventListener("mousemove", handleMove);
+    parent.addEventListener("mouseenter", handleEnter);
+    parent.addEventListener("mouseleave", handleLeave);
+    window.addEventListener("scroll", invalidate, { passive: true });
+    return () => {
+      ro.disconnect();
+      parent.removeEventListener("mousemove", handleMove);
+      parent.removeEventListener("mouseenter", handleEnter);
+      parent.removeEventListener("mouseleave", handleLeave);
+      window.removeEventListener("scroll", invalidate);
+    };
+  }, [enabled, x, y, fade, opacity, size]);
+
+  if (!enabled) return null;
+
+  return (
+    <div
+      ref={ref}
+      aria-hidden
+      className={cn(
+        "pointer-events-none absolute inset-0 overflow-hidden",
+        className,
+      )}
+    >
+      <motion.div
+        className="absolute top-0 left-0 rounded-full"
+        style={{
+          width: size * 2,
+          height: size * 2,
+          x: glowX,
+          y: glowY,
+          opacity: fadeSpring,
+          background: `radial-gradient(circle, ${from}, ${via} 40%, transparent 72%)`,
+        }}
+      />
+    </div>
+  );
+}
+
+export default CursorGlow;

@@ -67,6 +67,14 @@ export interface Config {
   };
   blocks: {};
   collections: {
+    media: Media;
+    hero: Hero;
+    contact: Contact;
+    projects: Project;
+    services: Service;
+    testimonials: Testimonial;
+    faqs: Faq;
+    'quote-requests': QuoteRequest;
     'payload-kv': PayloadKv;
     users: User;
     'payload-locked-documents': PayloadLockedDocument;
@@ -75,6 +83,14 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
+    media: MediaSelect<false> | MediaSelect<true>;
+    hero: HeroSelect<false> | HeroSelect<true>;
+    contact: ContactSelect<false> | ContactSelect<true>;
+    projects: ProjectsSelect<false> | ProjectsSelect<true>;
+    services: ServicesSelect<false> | ServicesSelect<true>;
+    testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
+    faqs: FaqsSelect<false> | FaqsSelect<true>;
+    'quote-requests': QuoteRequestsSelect<false> | QuoteRequestsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -84,10 +100,23 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
-  fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
-  locale: null;
+  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('pt' | 'en') | ('pt' | 'en')[];
+  globals: {
+    homepage: Homepage;
+    'get-quote-page': GetQuotePage;
+    menu: Menu;
+    footer: Footer;
+  };
+  globalsSelect: {
+    homepage: HomepageSelect<false> | HomepageSelect<true>;
+    'get-quote-page': GetQuotePageSelect<false> | GetQuotePageSelect<true>;
+    menu: MenuSelect<false> | MenuSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
+  };
+  locale: 'pt' | 'en';
+  widgets: {
+    collections: CollectionsWidget;
+  };
   user: User;
   jobs: {
     tasks: unknown;
@@ -111,6 +140,250 @@ export interface UserAuthOperations {
     email: string;
     password: string;
   };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: number;
+  alt: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    card?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    hero?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hero".
+ */
+export interface Hero {
+  id: number;
+  headline: string;
+  subheadline?: string | null;
+  description: string;
+  primaryCta: {
+    label: string;
+    /**
+     * Um destino em calendly.com (ou subdomínio) abre o calendário num popup por cima da página, em vez de navegar. A detecção é pelo endereço — não há campo que a ligue ou desligue. Deixar em '#' mantém o botão inerte, sem link.
+     */
+    url?: string | null;
+  };
+  secondaryCta: {
+    label: string;
+    /**
+     * Um destino em calendly.com (ou subdomínio) abre o calendário num popup por cima da página, em vez de navegar. A detecção é pelo endereço — não há campo que a ligue ou desligue. Deixar em '#' mantém o botão inerte, sem link.
+     */
+    url?: string | null;
+  };
+  backgroundImage?: (number | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact".
+ */
+export interface Contact {
+  id: number;
+  sectionTitle: string;
+  sectionSubtitle: string;
+  email: string;
+  phone: string;
+  address: string;
+  socialLinks?:
+    | {
+        platform:
+          'github' | 'linkedin' | 'twitter' | 'instagram' | 'facebook' | 'youtube' | 'discord' | 'whatsapp' | 'other';
+        url: string;
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  formEnabled?: boolean | null;
+  /**
+   * Email address that receives form submissions
+   */
+  formRecipientEmail?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects".
+ */
+export interface Project {
+  id: number;
+  title: string;
+  /**
+   * Auto-generated from title if left empty
+   */
+  slug: string;
+  description: string;
+  coverImage: number | Media;
+  tags?:
+    | {
+        tag: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * External link to the live project
+   */
+  url: string;
+  githubUrl?: string | null;
+  /**
+   * Show this project in the featured section
+   */
+  featured?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services".
+ */
+export interface Service {
+  id: number;
+  title: string;
+  /**
+   * Auto-generated from title if left empty
+   */
+  slug: string;
+  /**
+   * Solar icon name (e.g. 'code', 'server', 'globe')
+   */
+  icon?: string | null;
+  /**
+   * Brief description shown on the services card
+   */
+  shortDescription?: string | null;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * List of features or bullet points for this service
+   */
+  features?:
+    | {
+        feature: string;
+        id?: string | null;
+      }[]
+    | null;
+  coverImage?: (number | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonials".
+ */
+export interface Testimonial {
+  id: number;
+  authorName: string;
+  tag: string;
+  social: 'instagram' | 'linkedin' | 'twitter' | 'facebook' | 'youtube' | 'github' | 'whatsapp' | 'discord' | 'other';
+  avatar: number | Media;
+  quote: string;
+  featured?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faqs".
+ */
+export interface Faq {
+  id: number;
+  question: string;
+  answer: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  category: 'general' | 'services' | 'pricing' | 'technical' | 'support';
+  /**
+   * Display order (lower numbers appear first)
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "quote-requests".
+ */
+export interface QuoteRequest {
+  id: number;
+  name: string;
+  email: string;
+  message: string;
+  services?: (number | Service)[] | null;
+  /**
+   * Slugs dos serviços no momento da submissão. Sobrevive a um serviço apagado ou renomeado.
+   */
+  serviceSlugs?: string[] | null;
+  /**
+   * Locale da página onde a submissão foi feita.
+   */
+  submittedLocale?: ('en' | 'pt') | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -160,10 +433,43 @@ export interface User {
  */
 export interface PayloadLockedDocument {
   id: number;
-  document?: {
-    relationTo: 'users';
-    value: number | User;
-  } | null;
+  document?:
+    | ({
+        relationTo: 'media';
+        value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'hero';
+        value: number | Hero;
+      } | null)
+    | ({
+        relationTo: 'contact';
+        value: number | Contact;
+      } | null)
+    | ({
+        relationTo: 'projects';
+        value: number | Project;
+      } | null)
+    | ({
+        relationTo: 'services';
+        value: number | Service;
+      } | null)
+    | ({
+        relationTo: 'testimonials';
+        value: number | Testimonial;
+      } | null)
+    | ({
+        relationTo: 'faqs';
+        value: number | Faq;
+      } | null)
+    | ({
+        relationTo: 'quote-requests';
+        value: number | QuoteRequest;
+      } | null)
+    | ({
+        relationTo: 'users';
+        value: number | User;
+      } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
@@ -205,6 +511,186 @@ export interface PayloadMigration {
   batch?: number | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media_select".
+ */
+export interface MediaSelect<T extends boolean = true> {
+  alt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+  sizes?:
+    | T
+    | {
+        thumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        card?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        hero?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hero_select".
+ */
+export interface HeroSelect<T extends boolean = true> {
+  headline?: T;
+  subheadline?: T;
+  description?: T;
+  primaryCta?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+      };
+  secondaryCta?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+      };
+  backgroundImage?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact_select".
+ */
+export interface ContactSelect<T extends boolean = true> {
+  sectionTitle?: T;
+  sectionSubtitle?: T;
+  email?: T;
+  phone?: T;
+  address?: T;
+  socialLinks?:
+    | T
+    | {
+        platform?: T;
+        url?: T;
+        label?: T;
+        id?: T;
+      };
+  formEnabled?: T;
+  formRecipientEmail?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects_select".
+ */
+export interface ProjectsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  description?: T;
+  coverImage?: T;
+  tags?:
+    | T
+    | {
+        tag?: T;
+        id?: T;
+      };
+  url?: T;
+  githubUrl?: T;
+  featured?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services_select".
+ */
+export interface ServicesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  icon?: T;
+  shortDescription?: T;
+  description?: T;
+  features?:
+    | T
+    | {
+        feature?: T;
+        id?: T;
+      };
+  coverImage?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonials_select".
+ */
+export interface TestimonialsSelect<T extends boolean = true> {
+  authorName?: T;
+  tag?: T;
+  social?: T;
+  avatar?: T;
+  quote?: T;
+  featured?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faqs_select".
+ */
+export interface FaqsSelect<T extends boolean = true> {
+  question?: T;
+  answer?: T;
+  category?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "quote-requests_select".
+ */
+export interface QuoteRequestsSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  message?: T;
+  services?: T;
+  serviceSlugs?: T;
+  submittedLocale?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -267,6 +753,517 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homepage".
+ */
+export interface Homepage {
+  id: number;
+  seo?: {
+    metaTitle?: string | null;
+    metaDescription?: string | null;
+  };
+  /**
+   * Identifier for this page setup.
+   */
+  slug: string;
+  showNavbar?: boolean | null;
+  hero: {
+    enabled?: boolean | null;
+    item: number | Hero;
+  };
+  projects: {
+    enabled?: boolean | null;
+    title: string;
+    subtitle: string;
+    primaryCta?: {
+      label?: string | null;
+      /**
+       * Um destino em calendly.com (ou subdomínio) abre o calendário num popup por cima da página, em vez de navegar. A detecção é pelo endereço — não há campo que a ligue ou desligue. Deixar em '#' mantém o botão inerte, sem link.
+       */
+      url?: string | null;
+    };
+    items?: (number | Project)[] | null;
+  };
+  services: {
+    enabled?: boolean | null;
+    title: string;
+    subtitle: string;
+    ourServicesCT?: {
+      title?: string | null;
+      description?: string | null;
+      backgroundVideo?: (number | null) | Media;
+    };
+    primaryCta: {
+      label: string;
+      /**
+       * Um destino em `calendly.com` (ou subdomínio) abre o calendário num popup por cima da página, em vez de navegar — a detecção é pelo endereço, não há campo que a ligue. Deixar em `#` mantém o botão inerte, sem link.
+       */
+      url: string;
+    };
+    items?: (number | Service)[] | null;
+  };
+  testimonials?: {
+    enabled?: boolean | null;
+    title?: string | null;
+    subtitle?: string | null;
+    items?: (number | Testimonial)[] | null;
+  };
+  faqs?: {
+    enabled?: boolean | null;
+    title?: string | null;
+    subtitle?: string | null;
+    items?: (number | Faq)[] | null;
+  };
+  contact?: {
+    enabled?: boolean | null;
+    item?: (number | null) | Contact;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "get-quote-page".
+ */
+export interface GetQuotePage {
+  id: number;
+  seo?: {
+    metaTitle?: string | null;
+    metaDescription?: string | null;
+  };
+  hero?: {
+    /**
+     * Título grande no topo. Quebras de linha são respeitadas. Vazio usa o texto padrão do design.
+     */
+    headline?: string | null;
+    /**
+     * Parágrafo à direita, abaixo do headline. Vazio usa o texto padrão do design.
+     */
+    intro?: string | null;
+  };
+  /**
+   * A cápsula com o ponto verde (ex.: 'Available for new projects · Luanda, Angola').
+   */
+  availability?: {
+    enabled?: boolean | null;
+    label?: string | null;
+    /**
+     * Opcional. Vazio remove também o separador que a precede.
+     */
+    location?: string | null;
+  };
+  form?: {
+    /**
+     * Válvula de fecho da única escrita pública do site. Desligar esconde o formulário E faz a Server Action rejeitar submissões — sem deploy de código. Use se aparecer spam.
+     */
+    enabled?: boolean | null;
+    /**
+     * Rótulo pequeno acima do formulário (ex.: 'THE BRIEF').
+     */
+    eyebrow?: string | null;
+    nameLabel?: string | null;
+    emailLabel?: string | null;
+    interestsLabel?: string | null;
+    /**
+     * Os chips de 'I'm interested in…' são serviços desta lista. Um interesse que ainda não exista em Services (ex.: 'API & Integrations', 'AI Solutions') precisa primeiro de ser criado como serviço. Lista vazia esconde a secção de interesses inteira.
+     */
+    interests?: (number | Service)[] | null;
+    messageLabel?: string | null;
+    submitLabel?: string | null;
+    /**
+     * Texto ao lado do botão (ex.: 'Your details are safe — no ads, no spam.').
+     */
+    privacyNote?: string | null;
+    /**
+     * Textos de estado e de validação. Vazios usam o texto padrão em código.
+     */
+    messages?: {
+      success?: string | null;
+      error?: string | null;
+      nameRequired?: string | null;
+      emailRequired?: string | null;
+      emailInvalid?: string | null;
+      messageRequired?: string | null;
+      tooLong?: string | null;
+    };
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "menu".
+ */
+export interface Menu {
+  id: number;
+  logo: {
+    image: number | Media;
+    imageLight: number | Media;
+    /**
+     * Where the logo links to
+     */
+    url: string;
+    width: number;
+    height: number;
+  };
+  /**
+   * Navigation links shown in the navbar
+   */
+  links?:
+    | {
+        label: string;
+        /**
+         * e.g. /#services or /about
+         */
+        url: string;
+        openInNewTab?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Action buttons shown on the right side of the navbar
+   */
+  buttons?:
+    | {
+        label: string;
+        url: string;
+        variant?: ('primary' | 'outline') | null;
+        openInNewTab?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: number;
+  logo?: (number | null) | Media;
+  /**
+   * Short phrase shown below the logo
+   */
+  tagline?: string | null;
+  /**
+   * Headings for the band shown at the top of the footer on the Get Quote page only. Other pages never show this band. The email address displayed next to these headings is NOT set here — it comes from the Contact collection, so that there is a single source of truth for it.
+   */
+  directContact?: {
+    /**
+     * Sits above the email address (e.g. 'Reach Us Directly'). The email itself comes from the Contact collection.
+     */
+    reachHeading?: string | null;
+    /**
+     * Sits above the email address (e.g. 'Email Us'). The email itself comes from the Contact collection.
+     */
+    emailHeading?: string | null;
+    /**
+     * Sits above the social pills (e.g. 'Elsewhere'). The pills themselves come from Social Links below.
+     */
+    socialHeading?: string | null;
+  };
+  /**
+   * Columns of links displayed in the footer (e.g. Quick Links, Company, Products)
+   */
+  linkGroups?:
+    | {
+        title: string;
+        links?:
+          | {
+              name: string;
+              href: string;
+              isExternal?: boolean | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * CTA block shown on the right side of the footer. Um destino em calendly.com (ou subdomínio) em qualquer dos dois botões abre o calendário num popup por cima da página, em vez de navegar — a detecção é pelo endereço, não há campo que a ligue ou desligue. Deixar em '#' mantém o botão inerte, sem link.
+   */
+  cta: {
+    heading?: string | null;
+    primaryButton: {
+      label: string;
+      href: string;
+    };
+    outlineButton: {
+      label: string;
+      href: string;
+    };
+  };
+  /**
+   * Text shown in the bottom bar (e.g. 'Paradis.Labs - All rights reserved.')
+   */
+  copyrightText?: string | null;
+  /**
+   * Icons shown at the right of the bottom bar, in the order added here. Icons exist for Dribbble, LinkedIn and Instagram; any other platform falls back to showing its label as text.
+   */
+  socialLinks?:
+    | {
+        platform:
+          | 'dribbble'
+          | 'linkedin'
+          | 'instagram'
+          | 'github'
+          | 'twitter'
+          | 'facebook'
+          | 'youtube'
+          | 'discord'
+          | 'whatsapp'
+          | 'other';
+        /**
+         * Absolute URL. Opens in a new tab.
+         */
+        url: string;
+        /**
+         * Not shown on screen — it is the link's accessible name, read by screen readers (e.g. 'Paradis on LinkedIn').
+         */
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homepage_select".
+ */
+export interface HomepageSelect<T extends boolean = true> {
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+      };
+  slug?: T;
+  showNavbar?: T;
+  hero?:
+    | T
+    | {
+        enabled?: T;
+        item?: T;
+      };
+  projects?:
+    | T
+    | {
+        enabled?: T;
+        title?: T;
+        subtitle?: T;
+        primaryCta?:
+          | T
+          | {
+              label?: T;
+              url?: T;
+            };
+        items?: T;
+      };
+  services?:
+    | T
+    | {
+        enabled?: T;
+        title?: T;
+        subtitle?: T;
+        ourServicesCT?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              backgroundVideo?: T;
+            };
+        primaryCta?:
+          | T
+          | {
+              label?: T;
+              url?: T;
+            };
+        items?: T;
+      };
+  testimonials?:
+    | T
+    | {
+        enabled?: T;
+        title?: T;
+        subtitle?: T;
+        items?: T;
+      };
+  faqs?:
+    | T
+    | {
+        enabled?: T;
+        title?: T;
+        subtitle?: T;
+        items?: T;
+      };
+  contact?:
+    | T
+    | {
+        enabled?: T;
+        item?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "get-quote-page_select".
+ */
+export interface GetQuotePageSelect<T extends boolean = true> {
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+      };
+  hero?:
+    | T
+    | {
+        headline?: T;
+        intro?: T;
+      };
+  availability?:
+    | T
+    | {
+        enabled?: T;
+        label?: T;
+        location?: T;
+      };
+  form?:
+    | T
+    | {
+        enabled?: T;
+        eyebrow?: T;
+        nameLabel?: T;
+        emailLabel?: T;
+        interestsLabel?: T;
+        interests?: T;
+        messageLabel?: T;
+        submitLabel?: T;
+        privacyNote?: T;
+        messages?:
+          | T
+          | {
+              success?: T;
+              error?: T;
+              nameRequired?: T;
+              emailRequired?: T;
+              emailInvalid?: T;
+              messageRequired?: T;
+              tooLong?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "menu_select".
+ */
+export interface MenuSelect<T extends boolean = true> {
+  logo?:
+    | T
+    | {
+        image?: T;
+        imageLight?: T;
+        url?: T;
+        width?: T;
+        height?: T;
+      };
+  links?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        openInNewTab?: T;
+        id?: T;
+      };
+  buttons?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        variant?: T;
+        openInNewTab?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  logo?: T;
+  tagline?: T;
+  directContact?:
+    | T
+    | {
+        reachHeading?: T;
+        emailHeading?: T;
+        socialHeading?: T;
+      };
+  linkGroups?:
+    | T
+    | {
+        title?: T;
+        links?:
+          | T
+          | {
+              name?: T;
+              href?: T;
+              isExternal?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  cta?:
+    | T
+    | {
+        heading?: T;
+        primaryButton?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+            };
+        outlineButton?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+            };
+      };
+  copyrightText?: T;
+  socialLinks?:
+    | T
+    | {
+        platform?: T;
+        url?: T;
+        label?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "collections_widget".
+ */
+export interface CollectionsWidget {
+  data?: {
+    [k: string]: unknown;
+  };
+  width: 'full';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

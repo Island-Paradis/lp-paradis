@@ -1,0 +1,291 @@
+{
+  "label": "final-todos-os-itens",
+  "url": "http://localhost:3210/pt",
+  "viewport": "1440x900",
+  "headless": true,
+  "chromeVersion": "Chrome/152.0.7977.64",
+  "startedAt": "2026-08-28T16:19:24.103Z",
+  "regimes": [
+    {
+      "regime": "a-idle-top",
+      "seconds": 60,
+      "rafFired": 3600,
+      "rafPerSecond": 60,
+      "timeoutsScheduled": 0,
+      "metrics": {
+        "TaskDuration": {
+          "delta": 4.9752,
+          "perSecond": 0.0829
+        },
+        "ScriptDuration": {
+          "delta": 0.3758,
+          "perSecond": 0.0063
+        },
+        "LayoutDuration": {
+          "delta": 0,
+          "perSecond": 0
+        },
+        "RecalcStyleDuration": {
+          "delta": 0.2224,
+          "perSecond": 0.0037
+        },
+        "LayoutCount": {
+          "delta": 0,
+          "perSecond": 0
+        },
+        "RecalcStyleCount": {
+          "delta": 3600,
+          "perSecond": 59.999
+        },
+        "JSHeapUsedSize": {
+          "start": 8314548,
+          "end": 6123248,
+          "delta": -2191300
+        },
+        "JSHeapTotalSize": {
+          "start": 11796480,
+          "end": 8388608,
+          "delta": -3407872
+        },
+        "Nodes": {
+          "start": 1911,
+          "end": 1728,
+          "delta": -183
+        },
+        "JSEventListeners": {
+          "start": 494,
+          "end": 487,
+          "delta": -7
+        },
+        "Documents": {
+          "start": 6,
+          "end": 2,
+          "delta": -4
+        },
+        "Frames": {
+          "start": 5,
+          "end": 2,
+          "delta": -3
+        },
+        "cpuPercentMainThread": 8.29
+      }
+    },
+    {
+      "regime": "b-scroll",
+      "seconds": 34.48,
+      "rafFired": 2071,
+      "rafPerSecond": 60.1,
+      "timeoutsScheduled": 0,
+      "metrics": {
+        "TaskDuration": {
+          "delta": 2.2044,
+          "perSecond": 0.0639
+        },
+        "ScriptDuration": {
+          "delta": 0.4361,
+          "perSecond": 0.0126
+        },
+        "LayoutDuration": {
+          "delta": 0.0164,
+          "perSecond": 0.0005
+        },
+        "RecalcStyleDuration": {
+          "delta": 0.2692,
+          "perSecond": 0.0078
+        },
+        "LayoutCount": {
+          "delta": 63,
+          "perSecond": 1.8271
+        },
+        "RecalcStyleCount": {
+          "delta": 861,
+          "perSecond": 24.971
+        },
+        "JSHeapUsedSize": {
+          "start": 5813140,
+          "end": 6982412,
+          "delta": 1169272
+        },
+        "JSHeapTotalSize": {
+          "start": 8388608,
+          "end": 7602176,
+          "delta": -786432
+        },
+        "Nodes": {
+          "start": 1728,
+          "end": 1745,
+          "delta": 17
+        },
+        "JSEventListeners": {
+          "start": 487,
+          "end": 487,
+          "delta": 0
+        },
+        "Documents": {
+          "start": 2,
+          "end": 3,
+          "delta": 1
+        },
+        "Frames": {
+          "start": 2,
+          "end": 3,
+          "delta": 1
+        },
+        "cpuPercentMainThread": 6.39
+      }
+    },
+    {
+      "regime": "a2-idle-scrolled",
+      "seconds": 60,
+      "rafFired": 0,
+      "rafPerSecond": 0,
+      "timeoutsScheduled": 0,
+      "metrics": {
+        "TaskDuration": {
+          "delta": 0.0012,
+          "perSecond": 0
+        },
+        "ScriptDuration": {
+          "delta": 0,
+          "perSecond": 0
+        },
+        "LayoutDuration": {
+          "delta": 0,
+          "perSecond": 0
+        },
+        "RecalcStyleDuration": {
+          "delta": 0,
+          "perSecond": 0
+        },
+        "LayoutCount": {
+          "delta": 0,
+          "perSecond": 0
+        },
+        "RecalcStyleCount": {
+          "delta": 0,
+          "perSecond": 0
+        },
+        "JSHeapUsedSize": {
+          "start": 6995080,
+          "end": 6995080,
+          "delta": 0
+        },
+        "JSHeapTotalSize": {
+          "start": 7602176,
+          "end": 7602176,
+          "delta": 0
+        },
+        "Nodes": {
+          "start": 1745,
+          "end": 1745,
+          "delta": 0
+        },
+        "JSEventListeners": {
+          "start": 487,
+          "end": 487,
+          "delta": 0
+        },
+        "Documents": {
+          "start": 3,
+          "end": 3,
+          "delta": 0
+        },
+        "Frames": {
+          "start": 3,
+          "end": 3,
+          "delta": 0
+        },
+        "cpuPercentMainThread": 0
+      }
+    },
+    {
+      "regime": "c-pointer",
+      "seconds": 91.15,
+      "rafFired": 7269,
+      "rafPerSecond": 79.8,
+      "timeoutsScheduled": 0,
+      "metrics": {
+        "TaskDuration": {
+          "delta": 11.1303,
+          "perSecond": 0.1221
+        },
+        "ScriptDuration": {
+          "delta": 1.3364,
+          "perSecond": 0.0147
+        },
+        "LayoutDuration": {
+          "delta": 0.0024,
+          "perSecond": 0
+        },
+        "RecalcStyleDuration": {
+          "delta": 1.2462,
+          "perSecond": 0.0137
+        },
+        "LayoutCount": {
+          "delta": 12,
+          "perSecond": 0.1317
+        },
+        "RecalcStyleCount": {
+          "delta": 5473,
+          "perSecond": 60.0465
+        },
+        "JSHeapUsedSize": {
+          "start": 6911408,
+          "end": 6584016,
+          "delta": -327392
+        },
+        "JSHeapTotalSize": {
+          "start": 9961472,
+          "end": 8650752,
+          "delta": -1310720
+        },
+        "Nodes": {
+          "start": 1745,
+          "end": 1745,
+          "delta": 0
+        },
+        "JSEventListeners": {
+          "start": 493,
+          "end": 487,
+          "delta": -6
+        },
+        "Documents": {
+          "start": 3,
+          "end": 3,
+          "delta": 0
+        },
+        "Frames": {
+          "start": 3,
+          "end": 3,
+          "delta": 0
+        },
+        "cpuPercentMainThread": 12.21
+      }
+    }
+  ],
+  "environment": {
+    "pointerFine": true,
+    "reducedMotion": false,
+    "hydrated": true,
+    "lenisPresent": true,
+    "htmlClass": "js lenis",
+    "videos": [
+      {
+        "paused": true,
+        "currentSrc": "set",
+        "readyState": 4
+      }
+    ],
+    "domNodes": 950,
+    "scrollHeight": 5611
+  },
+  "afterScroll": {
+    "scrollY": 4711,
+    "atBottom": true,
+    "videos": [
+      {
+        "paused": true
+      }
+    ]
+  }
+}

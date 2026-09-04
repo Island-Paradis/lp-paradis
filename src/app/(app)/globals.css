@@ -4,14 +4,145 @@
 
 @custom-variant dark (&:is(.dark *));
 
+:root {
+  --background: #ffffff;
+  --foreground: #151718;
+  --card: #ffffff;
+  --card-foreground: #151718;
+  --popover: #ffffff;
+  --popover-foreground: #151718;
+  --primary: #212528;
+  --primary-foreground: #ffffff;
+  --secondary: #edeef0;
+  --secondary-foreground: #212528;
+  --muted: #edeef0;
+  --muted-foreground: #31373d;
+  --accent: #edeef0;
+  --accent-foreground: #212528;
+  --destructive: #ef4444;
+  --destructive-foreground: #f8fafc;
+  --border: #edeef0;
+  --input: #edeef0;
+  --ring: #212528;
+  --chart-1: #212528;
+  --chart-2: #31373d;
+  --chart-3: #151718;
+  --chart-4: #edeef0;
+  --chart-5: #000000;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #151718;
+  --sidebar-primary: #212528;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #edeef0;
+  --sidebar-accent-foreground: #212528;
+  --sidebar-border: #edeef0;
+  --sidebar-ring: #212528;
+  --font-sans: Inter, sans-serif;
+  --font-serif: Georgia, serif;
+  --font-mono: JetBrains Mono, monospace;
+  --font-gilroy: var(--font-gilroy), sans-serif;
+  --radius: 0.5rem;
+  --shadow-x: 0px;
+  --shadow-y: 4px;
+  --shadow-blur: 10px;
+  --shadow-spread: 0px;
+  --shadow-opacity: 0.1;
+  --shadow-color: #000000;
+  --shadow-2xs: 0px 4px 10px 0px hsl(0 0% 0% / 0.05);
+  --shadow-xs: 0px 4px 10px 0px hsl(0 0% 0% / 0.05);
+  --shadow-sm:
+    0px 4px 10px 0px hsl(0 0% 0% / 0.1), 0px 1px 2px -1px hsl(0 0% 0% / 0.1);
+  --shadow:
+    0px 4px 10px 0px hsl(0 0% 0% / 0.1), 0px 1px 2px -1px hsl(0 0% 0% / 0.1);
+  --shadow-md:
+    0px 4px 10px 0px hsl(0 0% 0% / 0.1), 0px 2px 4px -1px hsl(0 0% 0% / 0.1);
+  --shadow-lg:
+    0px 4px 10px 0px hsl(0 0% 0% / 0.1), 0px 4px 6px -1px hsl(0 0% 0% / 0.1);
+  --shadow-xl:
+    0px 4px 10px 0px hsl(0 0% 0% / 0.1), 0px 8px 10px -1px hsl(0 0% 0% / 0.1);
+  --shadow-2xl: 0px 4px 10px 0px hsl(0 0% 0% / 0.25);
+  --tracking-normal: -0.01em;
+  --spacing: 0.25rem;
+  --ink-950: #0a0a0a;
+  --ink-900: #161616;
+  --ink-800: #262626;
+  --ink-300: #a1a1aa;
+  --ink-50: #fafafa;
+  --radius-section: 2rem;
+  --radius-card: 1rem;
+  --surface-dark: #151718;
+  --surface-dark-2: #212528;
+  --surface-dark-3: #262626;
+  --surface-card-dark: #1a1d1f;
+  --radius-chip: 15.5px;
+  --radius-pill: 24px;
+  --radius-card-sm: 8px;
+  --radius-card-md: 12px;
+  --radius-card-lg: 13.5px;
+  --radius-card-xl: 20px;
+  --radius-panel: 24px;
+}
+
+.dark {
+  --background: #151718;
+  --foreground: #edeef0;
+  --card: #212528;
+  --card-foreground: #ffffff;
+  --popover: #151718;
+  --popover-foreground: #edeef0;
+  --primary: #edeef0;
+  --primary-foreground: #151718;
+  --secondary: #31373d;
+  --secondary-foreground: #ffffff;
+  --muted: #31373d;
+  --muted-foreground: #edeef0;
+  --accent: #31373d;
+  --accent-foreground: #ffffff;
+  --destructive: #7f1d1d;
+  --destructive-foreground: #fef2f2;
+  --border: #31373d;
+  --input: #31373d;
+  --ring: #edeef0;
+  --chart-1: #edeef0;
+  --chart-2: #31373d;
+  --chart-3: #ffffff;
+  --chart-4: #212528;
+  --chart-5: #4b5563;
+  --sidebar: #151718;
+  --sidebar-foreground: #edeef0;
+  --sidebar-primary: #edeef0;
+  --sidebar-primary-foreground: #151718;
+  --sidebar-accent: #212528;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #31373d;
+  --sidebar-ring: #edeef0;
+  --font-sans: Inter, sans-serif;
+  --font-serif: Georgia, serif;
+  --font-mono: JetBrains Mono, monospace;
+  --font-gilroy: var(--font-gilroy), sans-serif;
+  --radius: 0.5rem;
+  --shadow-x: 0px;
+  --shadow-y: 8px;
+  --shadow-blur: 15px;
+  --shadow-spread: 0px;
+  --shadow-opacity: 0.5;
+  --shadow-color: #000000;
+  --shadow-2xs: 0px 8px 15px 0px hsl(0 0% 0% / 0.25);
+  --shadow-xs: 0px 8px 15px 0px hsl(0 0% 0% / 0.25);
+  --shadow-sm:
+    0px 8px 15px 0px hsl(0 0% 0% / 0.5), 0px 1px 2px -1px hsl(0 0% 0% / 0.5);
+  --shadow:
+    0px 8px 15px 0px hsl(0 0% 0% / 0.5), 0px 1px 2px -1px hsl(0 0% 0% / 0.5);
+  --shadow-md:
+    0px 8px 15px 0px hsl(0 0% 0% / 0.5), 0px 2px 4px -1px hsl(0 0% 0% / 0.5);
+  --shadow-lg:
+    0px 8px 15px 0px hsl(0 0% 0% / 0.5), 0px 4px 6px -1px hsl(0 0% 0% / 0.5);
+  --shadow-xl:
+    0px 8px 15px 0px hsl(0 0% 0% / 0.5), 0px 8px 10px -1px hsl(0 0% 0% / 0.5);
+  --shadow-2xl: 0px 8px 15px 0px hsl(0 0% 0% / 1.25);
+}
+
 @theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --radius-2xl: calc(var(--radius) + 8px);
-  --radius-3xl: calc(var(--radius) + 12px);
-  --radius-4xl: calc(var(--radius) + 16px);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -27,6 +158,7 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
@@ -43,75 +175,115 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  --font-sans: var(--font-sans);
+  --font-gilroy: var(--font-gilroy);
+  --font-mono: var(--font-mono);
+  --font-serif: var(--font-serif);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-section: var(--radius-section);
+  --radius-card: var(--radius-card);
+  --color-ink-950: var(--ink-950);
+  --color-ink-900: var(--ink-900);
+  --color-ink-800: var(--ink-800);
+  --color-ink-300: var(--ink-300);
+  --color-ink-50: var(--ink-50);
+  --color-surface-dark: var(--surface-dark);
+  --color-surface-dark-2: var(--surface-dark-2);
+  --color-surface-dark-3: var(--surface-dark-3);
+  --color-card-dark: var(--surface-card-dark);
+  --radius-chip: var(--radius-chip);
+  --radius-pill: var(--radius-pill);
+  --radius-card-sm: var(--radius-card-sm);
+  --radius-card-md: var(--radius-card-md);
+  --radius-card-lg: var(--radius-card-lg);
+  --radius-card-xl: var(--radius-card-xl);
+  --radius-panel: var(--radius-panel);
+
+  --shadow-2xs: var(--shadow-2xs);
+  --shadow-xs: var(--shadow-xs);
+  --shadow-sm: var(--shadow-sm);
+  --shadow: var(--shadow);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-xl: var(--shadow-xl);
+  --shadow-2xl: var(--shadow-2xl);
+
+  --tracking-tighter: calc(var(--tracking-normal) - 0.05em);
+  --tracking-tight: calc(var(--tracking-normal) - 0.025em);
+  --tracking-normal: var(--tracking-normal);
+  --tracking-wide: calc(var(--tracking-normal) + 0.025em);
+  --tracking-wider: calc(var(--tracking-normal) + 0.05em);
+  --tracking-widest: calc(var(--tracking-normal) + 0.1em);
+  --animate-marquee: marquee var(--duration) infinite linear;
+  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-shine: shine var(--duration) infinite linear;
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-100% - var(--gap)));
+    }
+  }
+  @keyframes marquee-vertical {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(calc(-100% - var(--gap)));
+    }
+  }
+  /*
+   * O anel animado do `ShineBorder`.
+   *
+   * O gradiente da camada é `background-size: 300% 300%`, portanto muito maior
+   * que a caixa: o que se vê é uma janela sobre ele. Arrastar a janela na
+   * diagonal e voltar é o que faz o ponto quente dar a volta ao perímetro.
+   *
+   * A volta é ida e volta pela MESMA diagonal, e não um ciclo fechado, porque
+   * `0%` e `to` têm de coincidir — de outro modo a animação salta no fim de
+   * cada período, e num anel permanente esse salto vê-se a cada volta.
+   *
+   * `--duration` vem do call site (a prop `duration` do componente), não de cá.
+   */
+  @keyframes shine {
+    0% {
+      background-position: 0% 0%;
+    }
+    50% {
+      background-position: 100% 100%;
+    }
+    to {
+      background-position: 0% 0%;
+    }
+  }
 }
 
-:root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-}
-
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+@utility container {
+  max-width: 80rem; /* 1280px */
 }
 
 @layer base {
@@ -120,5 +292,305 @@
   }
   body {
     @apply bg-background text-foreground;
+    letter-spacing: var(--tracking-normal);
+  }
+
+  /* Rolagem suave nativa para links âncora (respeita reduced-motion). */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  /* Alvos de âncora param 120px abaixo do topo (livre da navbar fixa). */
+  [id] {
+    scroll-margin-top: 120px;
+  }
+}
+
+/*
+ * Encaixe entre o bloco de vídeo e o bloco escuro de serviços.
+ *
+ * Os dois recortes formam uma faixa branca em L entre eles. Todos os números
+ * abaixo derivam de três constantes — não ajuste nenhum no olho:
+ *
+ *   G = 18   respiro entre os dois shapes.
+ *            Vem de `md:pt-102` (408) menos a base do corpo do vídeo (390).
+ *   R = 16   raio dos cantos convexos (= --radius-2xl).
+ *   R+G = 34 raio dos cantos côncavos. Para a faixa manter 18px também na
+ *            curva, o arco côncavo e o convexo correspondente têm que ser
+ *            CONCÊNTRICOS — o que só acontece se o côncavo for R + G.
+ *
+ * Consequência: o degrau do services fica sempre em y=80, porque
+ * 408 + 80 − 470 (base da aba do vídeo) = 18 = G.
+ *
+ * A LARGURA NÃO É UMA CONSTANTE. Ela vale `min(1280, vw) − 32` abaixo de `xl`
+ * e 1280 a partir dele, então varia DENTRO de cada breakpoint. Paths que
+ * terminavam na largura do início do breakpoint (736 / 992 / 1280) só
+ * coincidiam com o elemento no primeiro pixel da faixa; em qualquer largura
+ * maior o browser descartava a parte excedente e amputava até 255px de
+ * conteúdo, que continuava sendo layoutado na largura cheia.
+ *
+ * Por isso a borda direita vai a 99999 e quem arredonda os cantos daquele lado
+ * é o `rounded-2xl` do próprio elemento — mesmo recurso já usado no eixo Y
+ * para a altura vinda do Payload (ver nota do .services_shape abaixo).
+ *
+ * Isso cobre cinco dos seis cantos direitos, os que coincidem com um canto do
+ * box: o vídeo em (W,0) e (W,470) — sua altura é exatamente `h-117.5` — e o
+ * services nos dois cantos inferiores e no superior esquerdo. O sexto, o canto
+ * superior direito do painel direito do services, fica em y=80, DENTRO do box,
+ * fora do alcance do `border-radius`; ele é restaurado pelo `::after` do
+ * wrapper (ver `.services_notch_corner` no fim do arquivo).
+ *
+ * O que sobra variando por breakpoint são só as três coordenadas do entalhe.
+ */
+
+/*
+ * Sem `will-change: transform`.
+ *
+ * Nenhum destes dois elementos anima o próprio transform — quem anima é o
+ * `div` interno do Parallax. `will-change` num elemento cujo transform nunca
+ * muda é uma promessa que nunca se cumpre: o browser reserva e mantém uma
+ * camada de composição pela vida inteira da página, em dois elementos de
+ * largura total, no aparelho onde essa memória é mais escassa.
+ *
+ * O `translateZ(0)` fica. É provavelmente o que de fato estabiliza o
+ * rasterizado do `clip-path`, e é a mais barata das duas promoções.
+ */
+
+.video_shape {
+  clip-path: inset(0 round var(--radius-2xl));
+  transform: translateZ(0);
+}
+
+@media (min-width: 768px) {
+  .video_shape {
+    clip-path: path(
+      "M 0,16 A 16,16 0,0,1 16,0 L 99999,0 L 99999,470 L 523,470 A 16,16 0,0,1 507,454 L 507,424 A 34,34 0,0,0 473,390 L 16,390 A 16,16 0,0,1 0,374 L 0,16 Z"
+    );
+  }
+}
+
+@media (min-width: 1024px) {
+  .video_shape {
+    clip-path: path(
+      "M 0,16 A 16,16 0,0,1 16,0 L 99999,0 L 99999,470 L 693,470 A 16,16 0,0,1 677,454 L 677,424 A 34,34 0,0,0 643,390 L 16,390 A 16,16 0,0,1 0,374 L 0,16 Z"
+    );
+  }
+}
+
+@media (min-width: 1280px) {
+  .video_shape {
+    clip-path: path(
+      "M 0,16 A 16,16 0,0,1 16,0 L 99999,0 L 99999,470 L 202,470 A 16,16 0,0,1 186,454 L 186,424 A 34,34 0,0,0 152,390 L 16,390 A 16,16 0,0,1 0,374 L 0,16 Z"
+    );
+  }
+}
+
+/* Sem `will-change` — ver a nota em `.video_shape`. */
+.services_shape {
+  transform: translateZ(0);
+}
+
+/*
+ * O 99999 no rodapé é deliberado: a altura do bloco vem do Payload e não é
+ * conhecida em build time. O path desce além de qualquer altura plausível e
+ * quem arredonda os cantos inferiores é o `rounded-2xl` do próprio elemento,
+ * que recorta o background independentemente do clip-path. Números fixos aqui
+ * já cortaram 352px do fundo escuro em `lg`.
+ */
+
+@media (min-width: 768px) {
+  .services_shape {
+    clip-path: path(
+      "M 0,16 A 16,16 0,0,1 16,0 L 473,0 A 16,16 0,0,1 489,16 L 489,46 A 34,34 0,0,0 523,80 L 99999,80 L 99999,99999 L 0,99999 L 0,16 Z"
+    );
+  }
+}
+
+@media (min-width: 1024px) {
+  .services_shape {
+    clip-path: path(
+      "M 0,16 A 16,16 0,0,1 16,0 L 643,0 A 16,16 0,0,1 659,16 L 659,46 A 34,34 0,0,0 693,80 L 99999,80 L 99999,99999 L 0,99999 L 0,16 Z"
+    );
+  }
+}
+
+@media (min-width: 1280px) {
+  .services_shape {
+    clip-path: path(
+      "M 0,16 A 16,16 0,0,1 16,0 L 834,0 A 16,16 0,0,1 850,16 L 850,46 A 34,34 0,0,0 884,80 L 99999,80 L 99999,99999 L 0,99999 L 0,16 Z"
+    );
+  }
+}
+
+/*
+ * O sexto canto: o superior direito do painel direito do services.
+ *
+ * Os outros cinco cantos direitos coincidem com um canto do box e o
+ * `rounded-2xl` do elemento dá conta deles. Este fica em y=80, DENTRO do box,
+ * onde o `border-radius` não chega — é o preço de levar a borda direita a
+ * 99999. Ele é redesenhado aqui.
+ *
+ * O `top` é derivado, não medido: 408 é o `md:pt-102` deste wrapper e 80 é o y
+ * do degrau nos paths acima. Mantidos como soma de propósito — se um dos dois
+ * mudar, o outro fica visível na conta.
+ *
+ * O quadrado tem o tamanho do raio e o gradiente tem centro em `0 100%`, o
+ * mesmo ponto que o `border-radius` usaria: dentro do raio fica transparente
+ * (o fundo escuro aparece), fora recebe a cor da página e recorta o canto.
+ *
+ * Tem que ser IRMÃO do .services_shape, não descendente — clip-path recorta
+ * descendentes, e o canto seria removido junto com o resto.
+ */
+
+@media (min-width: 768px) {
+  .services_notch_corner::after {
+    content: "";
+    position: absolute;
+    top: calc(408px + 80px);
+    right: 0;
+    width: 16px;
+    height: 16px;
+    background: radial-gradient(
+      circle 16px at 0 100%,
+      transparent 0 16px,
+      var(--background) 16px
+    );
+    pointer-events: none;
+  }
+}
+
+/*
+ * Rede de segurança de visibilidade.
+ *
+ * O `motion` serializa a prop `initial` como `style` inline durante o SSR
+ * (`makeLatestValues` → `useInitialMotionValues` → `buildHTMLStyles`). O HTML
+ * que sai do servidor já contém `opacity:0` em todo bloco `<Reveal>` e
+ * `translateY(110%)` em cada palavra de `<TextReveal>`, dentro de uma máscara
+ * `overflow-hidden`. Quem desfaz isso é o JavaScript. Quando ele não roda, o
+ * texto está no DOM e não chega à tela.
+ *
+ * O `!important` é o mecanismo: em folha de estilo ele vence um `style` inline
+ * sem `!important`, que é exatamente o que o `motion` produz. É deliberado, e
+ * só existe por isso.
+ *
+ * As duas condições que acionam a regra são disjuntas e nenhuma delas ocorre
+ * no caminho feliz — ver o script inline em `[locale]/layout.tsx`, que é quem
+ * escreve as duas classes:
+ *
+ *   html:not(.js)         o script nunca rodou. Sem JavaScript, bundle
+ *                         bloqueado, ou crawler. A classe é aplicada antes da
+ *                         primeira pintura, então no caminho feliz esta regra
+ *                         nunca chega a casar com conteúdo já pintado — não há
+ *                         flash.
+ *
+ *   html.reveal-failsafe  o script rodou, mas o React não sinalizou vivacidade
+ *                         dentro do prazo. Bundle carregou e a hidratação
+ *                         falhou. O timer testa se o React respondeu, não o
+ *                         estado de revelação de cada elemento — por isso é
+ *                         no-op sempre que o React está vivo, independentemente
+ *                         de quantos elementos já foram revelados.
+ *
+ * A degradação é reversível: se o React hidratar depois do prazo, o efeito de
+ * `HydrationSignal` remove `.reveal-failsafe` e as animações voltam. Custa um
+ * flash de re-ocultar naquele instante. A alternativa — manter aplicada — foi
+ * tentada e descartada: deixava todas as animações mortas até o próximo
+ * reload sempre que a hidratação passasse do prazo, que é justamente o
+ * sintoma que esta regra existe para eliminar.
+ *
+ * O seletor é estreito de propósito: só alcança `[data-reveal]`, que as
+ * primitivas aplicam exclusivamente a elementos cujo estado inicial é
+ * invisível.
+ *
+ * A regra de movimento reduzido logo abaixo compartilha esse seletor e NÃO é
+ * a mesma coisa. As duas se distinguem por qual propriedade declaram, e a
+ * diferença é o ponto: esta força `opacity` porque o conteúdo estaria
+ * ilegível; a de baixo deixa `opacity` em paz porque o fade é justamente a
+ * animação que a preferência do usuário não pede para remover.
+ */
+
+html:not(.js) [data-reveal],
+html.reveal-failsafe [data-reveal] {
+  /* biome-ignore lint/complexity/noImportantStyles: vencer o `style` inline do motion é o mecanismo, não um acidente */
+  opacity: 1 !important;
+  /* biome-ignore lint/complexity/noImportantStyles: idem */
+  transform: none !important;
+}
+
+/*
+ * Movimento reduzido, atendido em CSS e não em JavaScript.
+ *
+ * As primitivas de animação não consultam `prefers-reduced-motion` para
+ * decidir o que renderizar — ver `src/lib/use-reduced-motion.ts` e a regra em
+ * `biome.json`. Elas emitem sempre o caminho de movimento completo, e o
+ * deslocamento é neutralizado aqui. É o que mantém o HTML do servidor idêntico
+ * à primeira renderização do cliente sob qualquer preferência, que é a
+ * invariante que `hydration-integrity` estabelece.
+ *
+ * Antes disto, `useReducedMotion()` do `motion` era lido no corpo de
+ * renderização e a hidratação divergia em toda carga com a preferência ativa.
+ * Onde a árvore mudava de forma — `text-reveal` e `parallax` — o React
+ * descartava a hidratação e re-renderizava a raiz.
+ *
+ * `!important` pelo mesmo motivo da regra acima: vencer o `style` inline que o
+ * `motion` serializa. Mecanismo, não acidente.
+ *
+ * `opacity` está deliberadamente FORA. Sob movimento reduzido o fade é o que
+ * se quer preservar; o que a preferência pede para remover é deslocamento.
+ * Consequência aceita: `text-reveal` anima apenas `y`, então lá não sobra
+ * animação nenhuma — as palavras aparecem no estado final, legíveis, sem
+ * transição. Registrado no delta de `scroll-reveal-animations`.
+ *
+ * `[data-parallax]` é marcador próprio e não `[data-reveal]` de propósito: o
+ * parallax nunca é invisível, só deslocado, e marcá-lo com `data-reveal`
+ * mentiria sobre o atributo e o sujeitaria à rede de segurança acima sem
+ * necessidade. O nome é específico para recusar virar o balde onde todo
+ * `transform` decorativo cai — inclusive `transform` que sirva a layout, que
+ * esta regra quebraria. Um segundo caso legítimo ganha o seu próprio
+ * marcador.
+ */
+
+@media (prefers-reduced-motion: reduce) {
+  /* biome-ignore lint/style/noDescendingSpecificity: a especificidade menor que a da rede de segurança acima é inofensiva aqui — as duas declaram `transform: none !important` com o MESMO valor, então quando ambas casam a de cima vence sem alterar o resultado. Esta regra nunca precisa sobrepor aquela. */
+  [data-reveal],
+  [data-parallax] {
+    /* biome-ignore lint/complexity/noImportantStyles: vencer o `style` inline do motion é o mecanismo, não um acidente */
+    transform: none !important;
+  }
+}
+
+/*
+ * Texto em gradiente que não some quando o gradiente não pinta.
+ *
+ * `bg-clip-text` + `text-transparent` torna o texto literalmente transparente:
+ * o que se vê é o background recortado no formato das letras. Se o recorte não
+ * for suportado ou não for aplicado, sobra texto transparente sobre fundo
+ * claro — presente no DOM e ilegível.
+ *
+ * Por isso a cor sólida é a declaração BASE e o gradiente só assume dentro do
+ * `@supports`. A ordem é o mecanismo: qualquer falha para na cor sólida.
+ *
+ * Não dá para expressar isso em classes utilitárias inline do Tailwind, porque
+ * `@supports` não existe naquele nível — daí a classe nomeada.
+ *
+ * O `color` nos filhos diretos é reposto porque `color` é herdado: sem isso, o
+ * `<CursorGlow>` que vive dentro do `<h1>` do Hero herdaria a transparência.
+ */
+
+.gradient-text {
+  color: var(--foreground);
+}
+
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  .gradient-text {
+    background-image: linear-gradient(to right, #151718, #6e797e);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .gradient-text > * {
+    color: var(--foreground);
   }
 }
